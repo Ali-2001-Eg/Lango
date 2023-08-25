@@ -30,67 +30,69 @@ class _UserInfoScreenState extends ConsumerState<UserInfoScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: SafeArea(
-        child: Center(
-          child: Column(
-            children: [
-              Stack(
-                children: [
-                  image == null
-                      ? const CircleAvatar(
-                          radius: 64,
-                          backgroundImage: NetworkImage(
-                            'https://png.pngitem.com/pimgs/s/649-6490124_katie-notopoulos-katienotopoulos-i-write-about-tech-round.png',
+        child: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              children: [
+                Stack(
+                  children: [
+                    image == null
+                        ? const CircleAvatar(
+                            radius: 64,
+                            backgroundImage: NetworkImage(
+                              'https://png.pngitem.com/pimgs/s/649-6490124_katie-notopoulos-katienotopoulos-i-write-about-tech-round.png',
+                            ),
+                          )
+                        : CircleAvatar(
+                            backgroundImage: FileImage(
+                              image!,
+                            ),
+                            radius: 64,
                           ),
-                        )
-                      : CircleAvatar(
-                          backgroundImage: FileImage(
-                            image!,
-                          ),
-                          radius: 64,
+                    Positioned(
+                      bottom: -10,
+                      right: 0,
+                      child: IconButton(
+                          onPressed: () => _selectImage(),
+                          icon: const Icon(Icons.add_a_photo)),
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    Container(
+                      width: size(context).width * 0.85,
+                      padding: const EdgeInsets.all(20),
+                      child: TextField(
+                        controller: _nameController,
+                        decoration: const InputDecoration(
+                          hintText: 'Enter Your Name',
                         ),
-                  Positioned(
-                    bottom: -10,
-                    right: 0,
-                    child: IconButton(
-                        onPressed: () => _selectImage(),
-                        icon: const Icon(Icons.add_a_photo)),
-                  ),
-                ],
-              ),
-              Column(
-                children: [
-                  Container(
-                    width: size(context).width * 0.85,
-                    padding: const EdgeInsets.all(20),
-                    child: TextField(
-                      controller: _nameController,
-                      decoration: const InputDecoration(
-                        hintText: 'Enter Your Name',
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 30),
-                  Container(
-                    width: size(context).width * 0.85,
-                    padding: const EdgeInsets.all(20),
-                    child: TextField(
-                      controller: _descriptionController,
-                      decoration: const InputDecoration(
-                        hintText: 'Enter Your description',
+                    const SizedBox(height: 30),
+                    Container(
+                      width: size(context).width * 0.85,
+                      padding: const EdgeInsets.all(20),
+                      child: TextField(
+                        controller: _descriptionController,
+                        decoration: const InputDecoration(
+                          hintText: 'Enter Your description',
+                        ),
                       ),
                     ),
-                  ),
-                   SizedBox(height: size(context).height/6),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 50.0),
-                    child: CustomButton(
-                      text: 'Save',
-                      onPress: () => _storeUserData(),
+                     SizedBox(height: size(context).height/6),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 50.0),
+                      child: CustomButton(
+                        text: 'Save',
+                        onPress: () => _storeUserData(),
+                      ),
                     ),
-                  ),
-                ],
-              )
-            ],
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ),

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -13,7 +14,6 @@ class ContactListScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     return Padding(
         padding: const EdgeInsets.only(top: 10),
         child: SingleChildScrollView(
@@ -35,6 +35,8 @@ class ContactListScreen extends ConsumerWidget {
                         itemCount: snapshot.data!.length,
                         itemBuilder: (context, index) {
                           final contacts = snapshot.data![index];
+                          // print(contacts.isOnlyText);
+                          // print(contacts.type);
                           return Column(
                             children: [
                               InkWell(
@@ -45,10 +47,22 @@ class ContactListScreen extends ConsumerWidget {
                                     'name': contacts.name,
                                     'uid': contacts.contactId,
                                     'profilePic': contacts.profilePic,
-                                    'groupId':ref.watch(chatControllerProvider).user.groupId,
-                                    'description': ref.watch(chatControllerProvider).user.description,
-                                    'isOnline':ref.watch(chatControllerProvider).user.isOnline,
-                                    'phoneNumber':ref.watch(chatControllerProvider).user.phoneNumber,
+                                    'groupId': ref
+                                        .watch(chatControllerProvider)
+                                        .user
+                                        ?.groupId,
+                                    'description': ref
+                                        .watch(chatControllerProvider)
+                                        .user
+                                        ?.description,
+                                    'isOnline': ref
+                                        .watch(chatControllerProvider)
+                                        .user
+                                        ?.isOnline,
+                                    'phoneNumber': ref
+                                        .watch(chatControllerProvider)
+                                        .user
+                                        ?.phoneNumber,
                                   },
                                 ),
                                 child: Padding(
@@ -61,13 +75,18 @@ class ContactListScreen extends ConsumerWidget {
                                       subtitle: Padding(
                                         padding: const EdgeInsets.only(top: 6),
                                         child: Text(
-                                          contacts.lastMessage,
+                                          contacts.lastMessage
+                                                  .startsWith('https')
+                                              ? contacts.type
+                                              : contacts.lastMessage,
                                           style: const TextStyle(fontSize: 15),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
                                         ),
                                       ),
                                       leading: CircleAvatar(
                                         backgroundImage:
-                                            NetworkImage(contacts.profilePic),
+                                            CachedNetworkImageProvider(contacts.profilePic),
                                         radius: 30,
                                       ),
                                       trailing: TimeTextFormatter(

@@ -74,7 +74,7 @@ class AuthRepo {
       if (profilePic != null) {
         photoUrl = await ref
             .read<FirebaseStorageRepo>(firebaseStorageRepoProvider)
-            .storeFileTpFirebaseStorage('profilePic/$uid', profilePic);
+            .storeFileToFirebaseStorage('profilePic/$uid', profilePic);
       }
 
       UserModel user = UserModel(
@@ -111,6 +111,11 @@ class AuthRepo {
         .doc(uid)
         .snapshots()
         .map((query) => UserModel.fromJson(query.data()!));
+  }
+  Future<void> setUserState(bool isOnline) async {
+    await firestore.collection('users').doc(auth.currentUser!.uid).update({
+      'isOnline':isOnline
+    });
   }
 }
 

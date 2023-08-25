@@ -3,7 +3,8 @@ import 'package:whatsapp_clone/shared/utils/colors.dart';
 
 class CustomIndicator extends StatelessWidget {
   final double height;
-  const CustomIndicator({Key? key, this.height = 80}) : super(key: key);
+  final double? value;
+  const CustomIndicator({Key? key, this.height = 80, this.value}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +13,7 @@ class CustomIndicator extends StatelessWidget {
         height: height,
         width: height,
         padding: const EdgeInsets.all(10),
-        child: const CircularProgressIndicator(color: tabColor,strokeWidth: 5),
+        child:  CircularProgressIndicator(color: tabColor,strokeWidth: 5,value: value,),
       ),
     );
   }

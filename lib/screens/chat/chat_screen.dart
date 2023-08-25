@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:whatsapp_clone/controllers/chat_controller.dart';
 import 'package:whatsapp_clone/models/user_model.dart';
 import 'package:whatsapp_clone/shared/widgets/bottom_chat_field.dart';
 import 'package:whatsapp_clone/shared/widgets/custom_indicator.dart';
@@ -29,6 +30,7 @@ class ChatScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // print(ref.read(chatControllerProvider).user?.name);
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(

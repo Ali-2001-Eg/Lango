@@ -45,9 +45,19 @@ dependencies:
   flutter_contacts: ^1.1.5
   uuid: ^3.0.7
   intl: ^0.18.1
+  cached_network_image: ^3.2.3
+  cached_video_player: ^2.0.4
+  emoji_picker_flutter: ^1.6.1
+  enough_giphy_flutter: ^0.4.0
+  flutter_sound: ^9.2.13
+  permission_handler: ^9.2.0
+  path_provider: ^2.1.0
+  audioplayers: ^4.0.0
+  swipe_to: ^1.0.2
+  file_picker: ^5.3.1
+  syncfusion_flutter_pdfviewer: ^19.4.55
 
-
-
+#  file_picker: ^4.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

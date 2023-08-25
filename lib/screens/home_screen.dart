@@ -1,23 +1,63 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:whatsapp_clone/controllers/auth_controller.dart';
 import 'package:whatsapp_clone/screens/contact_list/contact_list_screen.dart';
 import 'package:whatsapp_clone/screens/select_contact/select_contact_screen.dart';
+import 'package:whatsapp_clone/screens/status/confirm_status_screen.dart';
+import 'package:whatsapp_clone/screens/status/status_contacts_screen.dart';
+import 'package:whatsapp_clone/shared/enums/message_enum.dart';
 import 'package:whatsapp_clone/shared/utils/colors.dart';
+import 'package:whatsapp_clone/shared/utils/functions.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   static const routeName = '/home-screen';
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
-class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
+
+class _HomeScreenState extends ConsumerState<HomeScreen>
+    with TickerProviderStateMixin, WidgetsBindingObserver {
   late TabController tabBarController;
   @override
   void initState() {
     // TODO: implement initState
-  tabBarController = TabController(length: 3, vsync: this);
+    tabBarController = TabController(length: 3, vsync: this);
+    //to listen to changes in user state
+    WidgetsBinding.instance.addObserver(this);
     super.initState();
   }
+
+  //to know if user left app or not
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // TODO: implement didChangeAppLifecycleState
+    switch (state) {
+      case AppLifecycleState.resumed:
+        ref.read(authControllerProvider).setUserState(true);
+        break;
+      case AppLifecycleState.inactive:
+        ref.read(authControllerProvider).setUserState(false);
+        break;
+      case AppLifecycleState.paused:
+        ref.read(authControllerProvider).setUserState(false);
+        break;
+      case AppLifecycleState.detached:
+        ref.read(authControllerProvider).setUserState(false);
+        break;
+    }
+    super.didChangeAppLifecycleState(state);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -47,11 +87,25 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               ),
               itemBuilder: (context) => [
                 PopupMenuItem(
-                  child: const Text(
-                    'Create Group',
-                  ),
-                  onTap: () {}
-                )
+                    child: const Text(
+                      'Create Group',
+                    ),
+                    onTap: () {}),
+                PopupMenuItem(
+                    child: const Text(
+                      'Linked Devices',
+                    ),
+                    onTap: () {}),
+                PopupMenuItem(
+                    child: const Text(
+                      'Starred Messages',
+                    ),
+                    onTap: () {}),
+                PopupMenuItem(
+                    child: const Text(
+                      'Settings',
+                    ),
+                    onTap: () {}),
               ],
             ),
           ],
@@ -77,21 +131,28 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             ],
           ),
         ),
-       body: TabBarView(
-         controller: tabBarController,
-         children:  const[
-           ContactListScreen(),
-           Center(child: Text('Stories')),
-           Center(child: Text('Calls')),
-         ],
-       ),
+        body: TabBarView(
+          controller: tabBarController,
+          children: const [
+            ContactListScreen(),
+            StatusContactsScreen(),
+            Center(child: Text('Calls')),
+          ],
+        ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.pushNamed(context, SelectContactsScreen.routeName);
+          onPressed: () async {
+            if (tabBarController.index == 0) {
+              Navigator.pushNamed(context, SelectContactsScreen.routeName);
+            } else {
+              File? pickedImage = await pickImageFromGallery(context);
+              if (pickedImage != null) {
+               Navigator.push(context, MaterialPageRoute(builder: (context) => ConfirmStatusScreen(file: pickedImage, type: MessageEnum.image),));
+              }
+            }
           },
           elevation: 0,
           backgroundColor: tabColor,
-          child: const Icon(
+          child: Icon(
             Icons.chat,
             color: Colors.white,
           ),
