@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_clone/controllers/auth_controller.dart';
 import 'package:whatsapp_clone/repository/status_repo.dart';
+import '../models/status_model.dart';
 import '../shared/enums/message_enum.dart';
 
 class StatusController {
@@ -11,20 +12,23 @@ class StatusController {
 
   StatusController(this.statusRepo, this.ref);
 
-  void addFileStatus({
+  void shareStatus({
     required MessageEnum type,
     required BuildContext context,
-    required File statusMedia,
+    File? statusMedia,
+    String? statusText,
   }) {
-    ref.watch(userDataProvider).whenData((value) => statusRepo.uploadStatusFile(
-          username: value!.name,
-          profilePic: value.profilePic,
-          phoneNumber: value.phoneNumber,
-          statusMedia: statusMedia,
-          context: context,
-          type: type,
-        ));
+    ref.watch(userDataProvider).whenData((value) => statusRepo.uploadStatus(
+        username: value!.name,
+        profilePic: value.profilePic,
+        phoneNumber: value.phoneNumber,
+        statusMedia: statusMedia,
+        context: context,
+        type: type,
+        statusText: statusText));
   }
+
+  Future<List<StatusModel>> get getStatus => statusRepo.getStatus();
 }
 
 final statusControllerProvider = Provider((ref) {

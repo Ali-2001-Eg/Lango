@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_clone/controllers/auth_controller.dart';
 import 'package:whatsapp_clone/screens/contact_list/contact_list_screen.dart';
 import 'package:whatsapp_clone/screens/select_contact/select_contact_screen.dart';
-import 'package:whatsapp_clone/screens/status/confirm_status_screen.dart';
+import 'package:whatsapp_clone/screens/status/confirm_file_screen.dart';
 import 'package:whatsapp_clone/screens/status/status_contacts_screen.dart';
 import 'package:whatsapp_clone/shared/enums/message_enum.dart';
 import 'package:whatsapp_clone/shared/utils/colors.dart';
@@ -28,6 +28,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
     tabBarController = TabController(length: 3, vsync: this);
     //to listen to changes in user state
     WidgetsBinding.instance.addObserver(this);
+
     super.initState();
   }
 
@@ -55,6 +56,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+    tabBarController.dispose();
     super.dispose();
   }
 
@@ -110,6 +112,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
             ),
           ],
           bottom: TabBar(
+            onTap: (value) => setState(() {
+              value = tabBarController.index;
+            }),
             controller: tabBarController,
             indicatorColor: tabColor,
             indicatorWeight: 4,
@@ -132,30 +137,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
           ),
         ),
         body: TabBarView(
+          physics: const BouncingScrollPhysics(),
+
           controller: tabBarController,
-          children: const [
-            ContactListScreen(),
+          children:  [
+            const ContactListScreen(),
             StatusContactsScreen(),
-            Center(child: Text('Calls')),
+            const Center(child: Text('Calls')),
           ],
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () async {
-            if (tabBarController.index == 0) {
-              Navigator.pushNamed(context, SelectContactsScreen.routeName);
-            } else {
-              File? pickedImage = await pickImageFromGallery(context);
-              if (pickedImage != null) {
-               Navigator.push(context, MaterialPageRoute(builder: (context) => ConfirmStatusScreen(file: pickedImage, type: MessageEnum.image),));
-              }
-            }
-          },
-          elevation: 0,
-          backgroundColor: tabColor,
-          child: Icon(
-            Icons.chat,
-            color: Colors.white,
-          ),
         ),
       ),
     );

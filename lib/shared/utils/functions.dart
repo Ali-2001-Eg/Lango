@@ -119,3 +119,9 @@ Future<String?> pickFile() async {
     return null; // Handle any potential errors.
   }
 }
+
+void navTo(context, screen) => Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => screen,
+    ));
+void navToNamed(context, routeName) =>
+    Navigator.of(context).pushNamed(routeName);

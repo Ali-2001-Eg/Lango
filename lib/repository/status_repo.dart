@@ -1,3 +1,4 @@
+// import 'dart:developer';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -20,21 +21,27 @@ class StatusRepo {
 
   StatusRepo(this.firestore, this.auth, this.ref);
 
-  void uploadStatusFile({
+  void uploadStatus({
     required String username,
     required String profilePic,
     required String phoneNumber,
-    required File statusMedia,
     required BuildContext context,
     required MessageEnum type,
+    File? statusMedia,
+    String? statusText,
   }) async {
     try {
       String statusId = const Uuid().v1();
       String uid = auth.currentUser!.uid;
-      var fileUrl = await ref
-          .read(firebaseStorageRepoProvider)
-          .storeFileToFirebaseStorage(
-              'status/$type/$statusId/$uid', statusMedia);
+      String status;
+      if (statusText == null) {
+        status = await ref
+            .read(firebaseStorageRepoProvider)
+            .storeFileToFirebaseStorage(
+                'status/${type.type}/$statusId/$uid', statusMedia!);
+      } else {
+        status = statusText;
+      }
       List<Contact> contacts = [];
       if (await FlutterContacts.requestPermission()) {
         contacts = await FlutterContacts.getContacts(withProperties: true);
@@ -42,43 +49,42 @@ class StatusRepo {
       List<String> audience = [];
       for (int i = 0; i < contacts.length; i++) {
         //we will get all contacts data
+        // log(contacts[i].name.first);
         var userData = await firestore
             .collection('users')
-            .where('phoneNumber',
-                isEqualTo: contacts[i].phones[0].number.replaceAll(' ', ''))
+            .where(
+              'phoneNumber',
+              isEqualTo: contacts[i].phones[0].number.replaceAll(' ', ''),
+            )
             .get();
         if (userData.docs.isNotEmpty) {
           var userModel = UserModel.fromJson(userData.docs[0].data());
           audience.add(userModel.uid);
+          var statusModel = StatusModel(
+            uid: uid,
+            username: username,
+            phoneNumber: phoneNumber,
+            status: status,
+            createdAt: DateTime.now(),
+            profilePic: profilePic,
+            statusId: statusId,
+            audience: audience,
+            type: type,
+          );
+          await firestore
+              .collection('users')
+              .doc(userModel.uid)
+              .collection('status')
+              .doc(statusId)
+              .set(statusModel.toJson());
         }
       }
-      List<String> statusFileUrls = [];
-      var statusSnapshot = await firestore
-          .collection('status')
-          .where('uid', isEqualTo: auth.currentUser!.uid)
-          .where('createdAt', //created only one day ago
-              isLessThan: DateTime.now().subtract(const Duration(hours: 24)))
-          .get();
-      if (statusSnapshot.docs.isNotEmpty) {
-        StatusModel status =
-            StatusModel.fromJson(statusSnapshot.docs[0].data());
-        statusFileUrls = status.fileUrls;
-        statusFileUrls.add(fileUrl);
-        await firestore
-            .collection('status')
-            .doc(statusSnapshot.docs[0].id)
-            .update({
-          'photoUrls': statusFileUrls,
-        });
-        return;
-      } else {
-        statusFileUrls = [fileUrl];
-      }
+
       var statusModel = StatusModel(
         uid: uid,
         username: username,
         phoneNumber: phoneNumber,
-        fileUrls: statusFileUrls,
+        status: status,
         createdAt: DateTime.now(),
         profilePic: profilePic,
         statusId: statusId,
@@ -86,13 +92,41 @@ class StatusRepo {
         type: type,
       );
       await firestore
+          .collection('users')
+          .doc(uid)
           .collection('status')
           .doc(statusId)
           .set(statusModel.toJson());
-      print(statusModel.statusId);
+      // print(statusModel.statusId);
     } catch (e) {
-      print('Error while uploading${e.toString()}');
-      // customSunackBar(e.toString(), context);
+      print('Error while \${e.toString()}');
+      // customSnackBar(e.toString(), context);
+    }
+  }
+
+  //get status
+  Future<List<StatusModel>> getStatus() async {
+    List<StatusModel> statusData = [];
+    try {
+      var snapshot = await firestore
+          .collection('users')
+          .doc(auth.currentUser!.uid)
+          .collection('status')
+          .where(
+            'createdAt',
+            isGreaterThan: DateTime.now()
+                .subtract(const Duration(days: 1))
+                .millisecondsSinceEpoch,
+          )
+          .get();
+      for (var query in snapshot.docs) {
+        StatusModel status = StatusModel.fromJson(query.data());
+        statusData.add(status);
+      }
+      return statusData;
+    } catch (e) {
+      print('Error while $e');
+      return statusData;
     }
   }
 }

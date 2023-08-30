@@ -2,13 +2,15 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:whatsapp_clone/models/status_model.dart';
 import 'package:whatsapp_clone/screens/auth/login_screen.dart';
 import 'package:whatsapp_clone/screens/auth/otp_screen.dart';
 import 'package:whatsapp_clone/screens/auth/user_info.dart';
 import 'package:whatsapp_clone/screens/chat/chat_screen.dart';
 import 'package:whatsapp_clone/screens/home_screen.dart';
 import 'package:whatsapp_clone/screens/select_contact/select_contact_screen.dart';
-import 'package:whatsapp_clone/screens/status/confirm_status_screen.dart';
+import 'package:whatsapp_clone/screens/status/confirm_file_screen.dart';
+import 'package:whatsapp_clone/screens/status/status_screen.dart';
 import 'package:whatsapp_clone/shared/enums/message_enum.dart';
 import 'package:whatsapp_clone/shared/utils/base/error_screen.dart';
 
@@ -44,12 +46,24 @@ Route<dynamic> generateRoute(RouteSettings settings) {
           return const SelectContactsScreen();
         },
       );
-      case ConfirmStatusScreen.routeName:
+    case ConfirmFileStatus.routeName:
       return MaterialPageRoute(
         builder: (context) {
           final file = settings.arguments as File;
           final type = settings.arguments as MessageEnum;
-          return  ConfirmStatusScreen(file: file,type: type);
+          return ConfirmFileStatus(file: file, type: type);
+        },
+      );
+    case StatusScreen.routeName:
+      return MaterialPageRoute(
+        builder: (context) {
+          final args = settings.arguments as Map<String, dynamic>;
+          final status = args['status'];
+          final receiverUid = args['uid'];
+          return StatusScreen(
+            status: status,
+            receiverUid: receiverUid,
+          );
         },
       );
     case ChatScreen.routeName:
