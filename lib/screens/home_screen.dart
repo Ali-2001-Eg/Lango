@@ -3,8 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_clone/controllers/auth_controller.dart';
 import 'package:whatsapp_clone/screens/contact_list/contact_list_screen.dart';
 import 'package:whatsapp_clone/screens/group/create_group_screen.dart';
+import 'package:whatsapp_clone/screens/settings/settings_screen.dart';
 import 'package:whatsapp_clone/screens/status/status_contacts_screen.dart';
 import 'package:whatsapp_clone/shared/utils/colors.dart';
+import 'package:whatsapp_clone/shared/utils/functions.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   static const routeName = '/home-screen';
@@ -65,25 +67,25 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
         key: myWidgetKey,
         appBar: AppBar(
           elevation: 0,
-          backgroundColor: appBarColor,
+          // backgroundColor: appBarColor,
           centerTitle: false,
           title: const Text(
             'WhatsApp',
             style: TextStyle(
               fontSize: 20,
-              color: Colors.grey,
+              // color: Colors.grey,
               fontWeight: FontWeight.bold,
             ),
           ),
           actions: [
             IconButton(
-              icon: const Icon(Icons.search, color: Colors.grey),
+              icon: const Icon(Icons.search, ),
               onPressed: () {},
             ),
             PopupMenuButton(
               icon: const Icon(
                 Icons.more_vert,
-                color: Colors.grey,
+                // color: Colors.grey,
               ),
               itemBuilder: (context) => [
                 PopupMenuItem(
@@ -99,14 +101,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                     onTap: () {}),
                 PopupMenuItem(
                     child: const Text(
-                      'Starred Messages',
-                    ),
-                    onTap: () {}),
-                PopupMenuItem(
-                    child: const Text(
                       'Settings',
                     ),
-                    onTap: () {}),
+                    onTap: () {
+                      Future(
+                          () => navToNamed(context, SettingsScreen.routeName));
+                    }),
               ],
             ),
           ],
@@ -115,10 +115,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
               value = tabBarController.index;
             }),
             controller: tabBarController,
-            indicatorColor: tabColor,
+            indicatorColor: Theme.of(context).indicatorColor,
             indicatorWeight: 4,
-            labelColor: tabColor,
-            unselectedLabelColor: Colors.grey,
+            labelColor: Theme.of(context).indicatorColor,
+            unselectedLabelColor: Colors.white,
             labelStyle: const TextStyle(
               fontWeight: FontWeight.bold,
             ),

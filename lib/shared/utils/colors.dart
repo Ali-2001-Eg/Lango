@@ -13,3 +13,11 @@ const chatBarMessage = Color.fromRGBO(30, 36, 40, 1);
 const mobileChatBoxColor = Color.fromRGBO(31, 44, 52, 1);
 const greyColor = Colors.grey;
 const blackColor = Colors.black;
+
+const lightAppBar = Color(0xff78C1F3);
+const lightScaffold = Color(0xffECF9FF);
+const lightMessage = Color(0xffE2F6CA);
+const lightButton = Color(0xffF8FDCF);
+const lightBar = Color(0xff016A70);
+const lightText = Color(0xff3A98B9);
+

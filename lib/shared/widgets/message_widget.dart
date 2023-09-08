@@ -30,7 +30,7 @@ class MessageWidget extends StatelessWidget {
       this.confirmScreen = false,
       this.file,
       this.caption = '',
-      this.textColor = Colors.white})
+      this.textColor = Colors.black})
       : super(key: key);
 
   @override
@@ -41,7 +41,7 @@ class MessageWidget extends StatelessWidget {
       case MessageEnum.text:
         return Text(
           message,
-          style: TextStyle(fontSize: 16, color: textColor),
+          style: Theme.of(context).textTheme.titleMedium,
         );
       case MessageEnum.audio:
         return StatefulBuilder(builder: (context, setState) {
@@ -70,8 +70,7 @@ class MessageWidget extends StatelessWidget {
               maxHeight: size(context).height / 2.5,
               minHeight: size(context).height / 6,
             ),
-            decoration: BoxDecoration(
-                border: Border.all(color: Colors.transparent, width: 2)),
+
             child: confirmScreen
                 ? Image.file(
                     file!,
@@ -93,14 +92,13 @@ class MessageWidget extends StatelessWidget {
                           child: Container(
                               constraints: BoxConstraints(
                                   maxWidth: size(context).width / 2),
-                              color: messageColor,
+                              color: Theme.of(context).cardColor,
                               alignment: AlignmentDirectional.centerEnd,
                               width: double.infinity,
                               child: Text(
                                 caption,
                                 // textAlign: TextAlign.end,
-                                style:
-                                    TextStyle(color: textColor, fontSize: 16),
+                                style: Theme.of(context).textTheme.titleMedium,
                               )),
                         ),
                     ],
@@ -156,26 +154,26 @@ class MessageWidget extends StatelessWidget {
             ));
       case MessageEnum.pdf:
         return ListTile(
-          tileColor: messageColor,
-          leading: Container(
-            decoration: BoxDecoration(
-                shape: BoxShape.circle, border: Border.all(color: Colors.grey)),
-            child: IconButton(
-                onPressed: () async {
-                  var dir = await getTemporaryDirectory();
-                  var path = '${dir.path}/documents.pdf';
-                  downloadFile(message, path)
-                      .then((value) => print(path))
-                      .catchError(
-                          (e) => print('Error Occurred ${e.toString()}'));
-                },
-                icon: const Icon(Icons.download)),
-          ),
+          tileColor: Theme.of(context).cardColor,
+          // leading: Container(
+          //   decoration: BoxDecoration(
+          //       shape: BoxShape.circle, border: Border.all(color: Colors.grey)),
+          //   child: IconButton(
+          //       onPressed: () async {
+          //         var dir = await getTemporaryDirectory();
+          //         var path = '${dir.path}/documents.pdf';
+          //         downloadFile(message, path)
+          //             .then((value) => print(path))
+          //             .catchError(
+          //                 (e) => print('Error Occurred ${e.toString()}'));
+          //       },
+          //       icon: const Icon(Icons.download)),
+          // ),
           title: Column(
             children: [
               Text(
                 caption,
-                style: TextStyle(color: textColor, fontSize: 16),
+                style: Theme.of(context).textTheme.titleMedium,
               ),
             ],
           ),

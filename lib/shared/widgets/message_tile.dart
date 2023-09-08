@@ -46,15 +46,15 @@ class MessageTile extends StatelessWidget {
           constraints: BoxConstraints(
               maxWidth: MediaQuery.of(context).size.width - 45, minHeight: 40),
           child: Card(
-            elevation: 1,
+            elevation: 0,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
             color: messageType == MessageEnum.image ||
                     messageType == MessageEnum.video ||
                     messageType == MessageEnum.pdf ||
                     messageType == MessageEnum.gif
-                ? backgroundColor
-                : messageColor,
+                ? Theme.of(context).scaffoldBackgroundColor
+                : Theme.of(context).cardColor,
             margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,

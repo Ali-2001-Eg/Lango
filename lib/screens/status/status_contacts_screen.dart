@@ -119,8 +119,8 @@ class StatusContactsScreen extends ConsumerWidget {
                         file: pickedImage, type: MessageEnum.image));
               }
             },
-            elevation: 0,
-            backgroundColor: Colors.teal,
+            // elevation: 0,
+            // backgroundColor: Colors.teal,
             child: const Icon(
               Icons.camera_alt,
               color: Colors.white,

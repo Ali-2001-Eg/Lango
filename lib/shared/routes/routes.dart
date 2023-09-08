@@ -9,6 +9,7 @@ import 'package:whatsapp_clone/screens/auth/user_info.dart';
 import 'package:whatsapp_clone/screens/chat/chat_screen.dart';
 import 'package:whatsapp_clone/screens/home_screen.dart';
 import 'package:whatsapp_clone/screens/select_contact/select_contact_screen.dart';
+import 'package:whatsapp_clone/screens/settings/settings_screen.dart';
 import 'package:whatsapp_clone/screens/status/confirm_file_screen.dart';
 import 'package:whatsapp_clone/screens/status/status_screen.dart';
 import 'package:whatsapp_clone/shared/enums/message_enum.dart';
@@ -34,6 +35,12 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (context) {
           return const UserInfoScreen();
+        },
+      );
+    case SettingsScreen.routeName:
+      return MaterialPageRoute(
+        builder: (context) {
+          return const SettingsScreen();
         },
       );
     case HomeScreen.routeName:

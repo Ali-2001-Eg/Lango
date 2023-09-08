@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:file_picker/file_picker.dart';
 
+import 'colors.dart';
+
 //screen size
 Size size(BuildContext context) => MediaQuery.of(context).size;
 
@@ -125,3 +127,58 @@ void navTo(context, screen) => Navigator.of(context).push(MaterialPageRoute(
     ));
 void navToNamed(context, routeName) =>
     Navigator.of(context).pushNamed(routeName);
+
+ThemeData get lightMode => ThemeData.light().copyWith(
+      scaffoldBackgroundColor: lightScaffold,
+      iconTheme: const IconThemeData(
+        color: lightButton,
+      ),
+      iconButtonTheme: const IconButtonThemeData(
+        style: ButtonStyle(
+          elevation: MaterialStatePropertyAll<double>(0),
+          iconColor: MaterialStatePropertyAll<Color>(lightButton),
+        ),
+      ),
+      cardColor: lightMessage,
+      indicatorColor: lightBar,
+      appBarTheme: const AppBarTheme(
+        color: lightAppBar,
+        titleTextStyle: TextStyle(color: Colors.white),
+        elevation: 0,
+      ),
+      floatingActionButtonTheme: const FloatingActionButtonThemeData(
+        elevation: 0,
+        backgroundColor: lightAppBar,
+      ),
+      textTheme: const TextTheme(
+          titleMedium: TextStyle(
+        color: lightText,
+        fontWeight: FontWeight.w500,
+      )),
+    );
+ThemeData get darkMode => ThemeData.dark().copyWith(
+      textTheme: const TextTheme(
+          titleMedium:
+              TextStyle(color: textColor, fontWeight: FontWeight.bold)),
+      scaffoldBackgroundColor: backgroundColor,
+      indicatorColor: tabColor,
+      cardColor: messageColor,
+      iconTheme: const IconThemeData(
+        color: Colors.grey,
+      ),
+      iconButtonTheme: const IconButtonThemeData(
+        style: ButtonStyle(
+          elevation: MaterialStatePropertyAll<double>(0),
+          iconColor: MaterialStatePropertyAll<Color>(Colors.grey),
+        ),
+      ),
+      appBarTheme: const AppBarTheme(
+        color: appBarColor,
+        titleTextStyle: TextStyle(color: Colors.grey),
+        elevation: 0,
+      ),
+      floatingActionButtonTheme: const FloatingActionButtonThemeData(
+        elevation: 0,
+        backgroundColor: tabColor,
+      ),
+    );

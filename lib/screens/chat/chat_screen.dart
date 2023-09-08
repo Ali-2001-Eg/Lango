@@ -4,6 +4,8 @@ import 'package:whatsapp_clone/controllers/call_controller.dart';
 import 'package:whatsapp_clone/controllers/chat_controller.dart';
 import 'package:whatsapp_clone/models/user_model.dart';
 import 'package:whatsapp_clone/screens/call/call_pickup_screen.dart';
+import 'package:whatsapp_clone/shared/enums/app_theme.dart';
+import 'package:whatsapp_clone/shared/notifiers/theme_notifier.dart';
 import 'package:whatsapp_clone/shared/widgets/bottom_chat_field.dart';
 import 'package:whatsapp_clone/shared/widgets/custom_indicator.dart';
 
@@ -40,6 +42,7 @@ class ChatScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final appTheme = ref.watch(themeProvider);
     // print(ref.read(chatControllerProvider).user?.name);
     return CallPickupScreen(
       scaffold: Scaffold(
@@ -75,12 +78,21 @@ class ChatScreen extends ConsumerWidget {
             IconButton(onPressed: () {}, icon: const Icon(Icons.more_vert)),
           ],
         ),
-        body: Column(
-          children: [
-            Expanded(
-                child: ChatList(receiverUid: uid, isGroupChat: isGroupChat)),
-            BottomChatFieldWidget(receiverUid: uid, isGroupChat: isGroupChat),
-          ],
+        body: Container(
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  colorFilter: appTheme == AppTheme.light
+                      ? const ColorFilter.linearToSrgbGamma()
+                      : const ColorFilter.srgbToLinearGamma(),
+                  fit: BoxFit.fill,
+                  image: const AssetImage('assets/images/background.png'))),
+          child: Column(
+            children: [
+              Expanded(
+                  child: ChatList(receiverUid: uid, isGroupChat: isGroupChat)),
+              BottomChatFieldWidget(receiverUid: uid, isGroupChat: isGroupChat),
+            ],
+          ),
         ),
       ),
     );

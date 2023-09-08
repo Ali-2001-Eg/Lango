@@ -4,9 +4,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_clone/controllers/auth_controller.dart';
 import 'package:whatsapp_clone/screens/home_screen.dart';
 import 'package:whatsapp_clone/screens/landing/landing_screen.dart';
+import 'package:whatsapp_clone/shared/enums/app_theme.dart';
+import 'package:whatsapp_clone/shared/notifiers/theme_notifier.dart';
 import 'package:whatsapp_clone/shared/routes/routes.dart';
 import 'package:whatsapp_clone/shared/utils/base/error_screen.dart';
 import 'package:whatsapp_clone/shared/utils/colors.dart';
+import 'package:whatsapp_clone/shared/utils/functions.dart';
 import 'package:whatsapp_clone/shared/widgets/custom_indicator.dart';
 
 void main() async {
@@ -24,15 +27,14 @@ class MyApp extends ConsumerWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.watch(themeProvider);
     return MaterialApp(
       title: 'WhatsApp',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark().copyWith(
-          scaffoldBackgroundColor: backgroundColor,
-          appBarTheme: const AppBarTheme(
-            color: appBarColor,
-            elevation: 0,
-          )),
+
+      theme: theme == AppTheme.light
+          ? lightMode
+          : darkMode,
       onGenerateRoute: (settings) => generateRoute(settings),
       //watch to keep tracking user state
       home: Scaffold(

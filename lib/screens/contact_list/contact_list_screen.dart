@@ -6,10 +6,12 @@ import 'package:whatsapp_clone/models/chat_contacts_model.dart';
 import 'package:whatsapp_clone/models/group_model.dart';
 import 'package:whatsapp_clone/screens/chat/chat_screen.dart';
 import 'package:whatsapp_clone/shared/enums/message_enum.dart';
+import 'package:whatsapp_clone/shared/notifiers/theme_notifier.dart';
 import 'package:whatsapp_clone/shared/utils/base/error_screen.dart';
 import 'package:whatsapp_clone/shared/widgets/custom_indicator.dart';
 import 'package:whatsapp_clone/shared/widgets/time_text_formatter.dart';
 import '../../controllers/chat_controller.dart';
+import '../../shared/enums/app_theme.dart';
 import '../../shared/utils/colors.dart';
 import '../select_contact/select_contact_screen.dart';
 
@@ -18,6 +20,7 @@ class ContactListScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final appTheme = ref.watch(themeProvider);
     return Scaffold(
       body: Padding(
           padding: const EdgeInsets.only(top: 10),
@@ -86,8 +89,16 @@ class ContactListScreen extends ConsumerWidget {
                                             contacts.type == 'text'
                                                 ? contacts.lastMessage
                                                 : contacts.type,
-                                            style:
-                                                const TextStyle(fontSize: 15),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleMedium!
+                                                .copyWith(
+                                                  fontSize: 15,
+                                                  color:
+                                                      appTheme == AppTheme.light
+                                                          ? Colors.black
+                                                          : Colors.grey,
+                                                ),
                                             maxLines: 1,
                                             overflow: TextOverflow.ellipsis,
                                           ),
@@ -156,8 +167,16 @@ class ContactListScreen extends ConsumerWidget {
                                               const EdgeInsets.only(top: 6),
                                           child: Text(
                                             group.lastMessageType.type,
-                                            style:
-                                                const TextStyle(fontSize: 15),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleMedium!
+                                                .copyWith(
+                                                  fontSize: 15,
+                                                  color:
+                                                      appTheme == AppTheme.light
+                                                          ? Colors.black
+                                                          : Colors.grey,
+                                                ),
                                             maxLines: 1,
                                             overflow: TextOverflow.ellipsis,
                                           ),
@@ -190,8 +209,6 @@ class ContactListScreen extends ConsumerWidget {
         onPressed: () async {
           Navigator.pushNamed(context, SelectContactsScreen.routeName);
         },
-        elevation: 0,
-        backgroundColor: tabColor,
         child: const Icon(
           Icons.chat,
           color: Colors.white,
