@@ -9,6 +9,46 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.4"
+  agora_rtc_engine:
+    dependency: transitive
+    description:
+      name: agora_rtc_engine
+      sha256: "2b9ea091c9123be01e9289167e0bcdd91aa7d8fdc24c94e23f1629c3a6e5391a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.2.2"
+  agora_rtm:
+    dependency: transitive
+    description:
+      name: agora_rtm
+      sha256: f53057125845494048e19ee6b8826fcee88937512d4c206d47a74345914e9a04
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.5.8"
+  agora_uikit:
+    dependency: "direct main"
+    description:
+      name: agora_uikit
+      sha256: "0aa9569934d2f96426010332006870b0393efb1a41e389c37b8b3cf8d2800040"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.3.6"
+  archive:
+    dependency: transitive
+    description:
+      name: archive
+      sha256: "0c8368c9b3f0abbc193b9d6133649a614204b528982bebc7026372d61677ce3a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.3.7"
+  args:
+    dependency: transitive
+    description:
+      name: args
+      sha256: eef6c46b622e0494a36c5a12d10d77fb4e855501a91c1b9ef9339326e58f0596
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.4.2"
   async:
     dependency: transitive
     description:
@@ -121,6 +161,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.1"
+  checked_yaml:
+    dependency: transitive
+    description:
+      name: checked_yaml
+      sha256: feb6bed21949061731a7a75fc5d2aa727cf160b91af9a3e464c5e3a32e28b5ff
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.3"
+  cli_util:
+    dependency: transitive
+    description:
+      name: cli_util
+      sha256: "66f86e916d285c1a93d3b79587d94bd71984a66aac4ff74e524cfa7877f1395c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.5"
   clock:
     dependency: transitive
     description:
@@ -422,6 +478,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.7"
+  flutter_launcher_icons:
+    dependency: "direct dev"
+    description:
+      name: flutter_launcher_icons
+      sha256: a9de6706cd844668beac27c0aed5910fa0534832b3c2cad61a5fd977fce82a5d
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.10.0"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -512,6 +576,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.2"
+  image:
+    dependency: transitive
+    description:
+      name: image
+      sha256: "02bafd3b4f399bfeb10034deba9753d93b55ce41cd0c4d3d8b355626f80e5b32"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.3"
   image_picker:
     dependency: "direct main"
     description:
@@ -584,6 +656,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.18.1"
+  iris_method_channel:
+    dependency: transitive
+    description:
+      name: iris_method_channel
+      sha256: "195a3224b26a6eb60dadd96d04da9f013a00541adac60cc8fdc9dbb104e581db"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.0"
   js:
     dependency: transitive
     description:
@@ -592,6 +672,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.6.5"
+  json_annotation:
+    dependency: transitive
+    description:
+      name: json_annotation
+      sha256: b10a7b2ff83d83c777edba3c6a0f97045ddadd56c944e1a23a3fdf43a1bf4467
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.8.1"
   lints:
     dependency: transitive
     description:
@@ -716,18 +804,18 @@ packages:
     dependency: "direct main"
     description:
       name: permission_handler
-      sha256: "5749ebeb7ec0c3865ea17e3eb337174b87747be816dab582c551e1aff6f6bbf3"
+      sha256: bc56bfe9d3f44c3c612d8d393bd9b174eb796d706759f9b495ac254e4294baa5
       url: "https://pub.dev"
     source: hosted
-    version: "9.2.0"
+    version: "10.4.5"
   permission_handler_android:
     dependency: transitive
     description:
       name: permission_handler_android
-      sha256: a512e0fa8abcb0659d938ec2df93a70eb1df1fdea5fdc6d79a866bfd858a28fc
+      sha256: "59c6322171c29df93a22d150ad95f3aa19ed86542eaec409ab2691b8f35f9a47"
       url: "https://pub.dev"
     source: hosted
-    version: "9.0.2+1"
+    version: "10.3.6"
   permission_handler_apple:
     dependency: transitive
     description:
@@ -776,6 +864,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.5"
+  pointycastle:
+    dependency: transitive
+    description:
+      name: pointycastle
+      sha256: "7c1e5f0d23c9016c5bbd8b1473d0d3fb3fc851b876046039509e18e0c7485f2c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.7.3"
   provider:
     dependency: transitive
     description:
@@ -1101,6 +1197,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.4.1"
+  yaml:
+    dependency: transitive
+    description:
+      name: yaml
+      sha256: "75769501ea3489fca56601ff33454fe45507ea3bfb014161abc3b43ae25989d5"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.2"
 sdks:
   dart: ">=2.19.2 <3.0.0"
   flutter: ">=3.7.0"

@@ -14,6 +14,8 @@ import 'package:whatsapp_clone/screens/status/status_screen.dart';
 import 'package:whatsapp_clone/shared/enums/message_enum.dart';
 import 'package:whatsapp_clone/shared/utils/base/error_screen.dart';
 
+import '../../screens/group/create_group_screen.dart';
+
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
     case LoginScreen.routeName:
@@ -66,6 +68,12 @@ Route<dynamic> generateRoute(RouteSettings settings) {
           );
         },
       );
+    case CreateGroupScreen.routeName:
+      return MaterialPageRoute(
+        builder: (context) {
+          return const CreateGroupScreen();
+        },
+      );
     case ChatScreen.routeName:
       final args = settings.arguments as Map<String, dynamic>;
       final name = args['name'];
@@ -74,7 +82,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       final phoneNumber = args['phoneNumber'];
       final profilePic = args['profilePic'];
       final isOnline = args['isOnline'];
-      final List<String> groupId = args['groupId'];
+      final isGroupChat = args['isGroupChat'];
+      final List<String>? groupId = args['groupId'];
       return MaterialPageRoute(
         builder: (context) {
           return ChatScreen(
@@ -82,6 +91,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
               uid: uid,
               groupId: groupId,
               profilePic: profilePic,
+              isGroupChat: isGroupChat,
               description: description,
               phoneNumber: phoneNumber,
               isOnline: isOnline);

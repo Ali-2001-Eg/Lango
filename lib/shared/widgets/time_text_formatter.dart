@@ -8,7 +8,6 @@ class TimeTextFormatter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     DateTime now = DateTime.now();
-    time;
     String timeText;
     if (time.year == now.year &&
         time.month == now.month &&

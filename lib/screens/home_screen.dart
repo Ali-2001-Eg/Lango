@@ -1,15 +1,10 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_clone/controllers/auth_controller.dart';
 import 'package:whatsapp_clone/screens/contact_list/contact_list_screen.dart';
-import 'package:whatsapp_clone/screens/select_contact/select_contact_screen.dart';
-import 'package:whatsapp_clone/screens/status/confirm_file_screen.dart';
+import 'package:whatsapp_clone/screens/group/create_group_screen.dart';
 import 'package:whatsapp_clone/screens/status/status_contacts_screen.dart';
-import 'package:whatsapp_clone/shared/enums/message_enum.dart';
 import 'package:whatsapp_clone/shared/utils/colors.dart';
-import 'package:whatsapp_clone/shared/utils/functions.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   static const routeName = '/home-screen';
@@ -21,6 +16,8 @@ class HomeScreen extends ConsumerStatefulWidget {
 
 class _HomeScreenState extends ConsumerState<HomeScreen>
     with TickerProviderStateMixin, WidgetsBindingObserver {
+  final GlobalKey<ScaffoldState> myWidgetKey = GlobalKey<ScaffoldState>();
+
   late TabController tabBarController;
   @override
   void initState() {
@@ -65,6 +62,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
     return DefaultTabController(
       length: 3,
       child: Scaffold(
+        key: myWidgetKey,
         appBar: AppBar(
           elevation: 0,
           backgroundColor: appBarColor,
@@ -92,7 +90,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                     child: const Text(
                       'Create Group',
                     ),
-                    onTap: () {}),
+                    onTap: () => Future(() => Navigator.of(context)
+                        .pushNamed(CreateGroupScreen.routeName))),
                 PopupMenuItem(
                     child: const Text(
                       'Linked Devices',
@@ -138,9 +137,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
         ),
         body: TabBarView(
           physics: const BouncingScrollPhysics(),
-
           controller: tabBarController,
-          children:  [
+          children: [
             const ContactListScreen(),
             StatusContactsScreen(),
             const Center(child: Text('Calls')),

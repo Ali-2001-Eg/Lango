@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:story_view/story_view.dart';
-import 'package:whatsapp_clone/repository/auth_repo.dart';
 import 'package:whatsapp_clone/shared/utils/colors.dart';
 import 'package:whatsapp_clone/shared/utils/functions.dart';
 import 'package:whatsapp_clone/shared/widgets/bottom_chat_field.dart';
-import 'package:whatsapp_clone/shared/widgets/custom_indicator.dart';
 import '../../models/status_model.dart';
+import '../../repositories/auth_repo.dart';
 import '../../shared/enums/message_enum.dart';
 
 class StatusScreen extends ConsumerStatefulWidget {
@@ -43,17 +42,17 @@ class _StatusScreenState extends ConsumerState<StatusScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: StoryView(
-              storyItems: storyItems,
-              controller: _controller,
-              onVerticalSwipeComplete: (direction) {
-                if (direction == Direction.down) {
-                  Navigator.pop(context);
-                }
-              },
-              indicatorColor: messageColor,
-              indicatorForegroundColor: tabColor,
-              onComplete: () => Navigator.pop(context),
-            ),
+        storyItems: storyItems,
+        controller: _controller,
+        onVerticalSwipeComplete: (direction) {
+          if (direction == Direction.down) {
+            Navigator.pop(context);
+          }
+        },
+        indicatorColor: messageColor,
+        indicatorForegroundColor: tabColor,
+        onComplete: () => Navigator.pop(context),
+      ),
       floatingActionButton: (widget.receiverUid !=
               ref.read(authRepositoryProvider).auth.currentUser!.uid)
           ? Align(
@@ -67,11 +66,12 @@ class _StatusScreenState extends ConsumerState<StatusScreen> {
                     elevation: 0,
                     backgroundColor: backgroundColor,
                     constraints: BoxConstraints(
-                      maxHeight: (size(context).height/2.5)+50
-                    ),
+                        maxHeight: (size(context).height / 2.5) + 50),
                     builder: (context) {
                       return BottomChatFieldWidget(
-                          receiverUid: widget.receiverUid);
+                        receiverUid: widget.receiverUid,
+                        isGroupChat: false,
+                      );
                     },
                   ).then((value) {
                     _controller.play();

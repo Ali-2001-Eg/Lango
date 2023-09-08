@@ -15,11 +15,13 @@ class ConfirmFileScreen extends ConsumerStatefulWidget {
   final MessageEnum messageType;
   final String receiverUid;
   final String? filename;
+  final bool isGroupChat;
   const ConfirmFileScreen(
       {Key? key,
       required this.message,
       required this.messageType,
       this.filename = '',
+      required this.isGroupChat,
       required this.receiverUid})
       : super(key: key);
 
@@ -48,12 +50,12 @@ class _ConfirmFileScreenState extends ConsumerState<ConfirmFileScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.picture_as_pdf,
                           color: tabColor,
                           size: 150,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Text(widget.filename!,
@@ -65,7 +67,7 @@ class _ConfirmFileScreenState extends ConsumerState<ConfirmFileScreen> {
                     ),
                   )
                 : Center(
-                  child: AspectRatio(
+                    child: AspectRatio(
                       aspectRatio: 9 / 16,
                       child: MessageWidget(
                           message: widget.message.path,
@@ -73,7 +75,7 @@ class _ConfirmFileScreenState extends ConsumerState<ConfirmFileScreen> {
                           confirmScreen: true,
                           file: widget.message),
                     ),
-                ),
+                  ),
           ),
           Positioned(
             right: 10,
@@ -178,13 +180,15 @@ class _ConfirmFileScreenState extends ConsumerState<ConfirmFileScreen> {
       File file, MessageEnum messageEnum, String captionText) {
     try {
       ref.read(chatControllerProvider).sendFileMessage(
-          context,
-          file,
-          widget.receiverUid,
-          messageEnum,
-          messageEnum == MessageEnum.pdf
-              ? '${widget.filename} $captionText'
-              : captionText);
+            context,
+            file,
+            widget.receiverUid,
+            messageEnum,
+            messageEnum == MessageEnum.pdf
+                ? '${widget.filename} $captionText'
+                : captionText,
+            widget.isGroupChat,
+          );
       Navigator.pop(context);
     } catch (e) {
       customSnackBar(e.toString(), context);

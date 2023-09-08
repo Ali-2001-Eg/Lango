@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -5,7 +7,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_clone/models/user_model.dart';
-import 'package:whatsapp_clone/screens/auth/login_screen.dart';
 import 'package:whatsapp_clone/screens/auth/otp_screen.dart';
 import 'package:whatsapp_clone/screens/auth/user_info.dart';
 import 'package:whatsapp_clone/screens/home_screen.dart';
@@ -112,10 +113,12 @@ class AuthRepo {
         .snapshots()
         .map((query) => UserModel.fromJson(query.data()!));
   }
+
   Future<void> setUserState(bool isOnline) async {
-    await firestore.collection('users').doc(auth.currentUser!.uid).update({
-      'isOnline':isOnline
-    });
+    await firestore
+        .collection('users')
+        .doc(auth.currentUser!.uid)
+        .update({'isOnline': isOnline});
   }
 }
 

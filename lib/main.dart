@@ -35,25 +35,27 @@ class MyApp extends ConsumerWidget {
           )),
       onGenerateRoute: (settings) => generateRoute(settings),
       //watch to keep tracking user state
-      home: ref.watch(userDataProvider).when(
-        data: (user) {
-          if (user == null) {
-            return const LandingScreen();
-          }
-          return const HomeScreen();
-        },
-        error: (error, stackTrace) {
-          return const Scaffold(
-            body: ErrorScreen(error: 'This page doesn\'t exist'),
-          );
-        },
-        loading: () {
-          return const Scaffold(
-            body: Center(
-              child: CustomIndicator(),
-            ),
-          );
-        },
+      home: Scaffold(
+        body: ref.watch(userDataProvider).when(
+          data: (user) {
+            if (user == null) {
+              return const LandingScreen();
+            }
+            return const HomeScreen();
+          },
+          error: (error, stackTrace) {
+            return const Scaffold(
+              body: ErrorScreen(error: 'This page doesn\'t exist'),
+            );
+          },
+          loading: () {
+            return const Scaffold(
+              body: Center(
+                child: CustomIndicator(),
+              ),
+            );
+          },
+        ),
       ),
     );
   }

@@ -2,8 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:whatsapp_clone/controllers/auth_controller.dart';
 import 'package:whatsapp_clone/controllers/chat_controller.dart';
 import 'package:whatsapp_clone/models/message_model.dart';
+import 'package:whatsapp_clone/repositories/auth_repo.dart';
 import 'package:whatsapp_clone/shared/enums/message_enum.dart';
 import 'package:whatsapp_clone/shared/utils/base/error_screen.dart';
 import 'package:whatsapp_clone/shared/widgets/custom_indicator.dart';
@@ -12,7 +14,10 @@ import 'message_tile.dart';
 
 class ChatList extends ConsumerStatefulWidget {
   final String receiverUid;
-  const ChatList({Key? key, required this.receiverUid}) : super(key: key);
+  final bool isGroupChat;
+  const ChatList(
+      {Key? key, required this.receiverUid, required this.isGroupChat})
+      : super(key: key);
 
   @override
   ConsumerState createState() => _ChatListState();
@@ -30,12 +35,14 @@ class _ChatListState extends ConsumerState<ChatList> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<MessageModel>>(
-        stream: ref.read(chatControllerProvider).chatStream(widget.receiverUid),
+        stream: widget.isGroupChat
+            ? ref
+                .read(chatControllerProvider)
+                .gruopChatStream(widget.receiverUid)
+            : ref.read(chatControllerProvider).chatStream(widget.receiverUid),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const CustomIndicator();
-          } else if (snapshot.hasError) {
-            return ErrorScreen(error: snapshot.error.toString());
+            return const Center(child: CustomIndicator());
           } else {
             //to scroll to the new message when chatting automatically
             SchedulerBinding.instance.addPostFrameCallback((_) {
@@ -53,16 +60,19 @@ class _ChatListState extends ConsumerState<ChatList> {
                 // print('length is ${snapshot.data!.length}');
                 // print('receiver uid is ${message.receiverUid}');
                 //to decrease performance overhead
-                if (!message.isSeen && message.receiverUid == FirebaseAuth.instance.currentUser!.uid) {
+                if (!message.isSeen &&
+                    message.receiverUid ==
+                        FirebaseAuth.instance.currentUser!.uid) {
                   ref
                       .read(chatControllerProvider)
                       .setMessageSeen(message.id, context, widget.receiverUid);
                 }
-
+              // print(message.receiverUid);
+              // print(message.senderUid);
                 return MessageTile(
                   message: message.messageText,
                   date: message.timeSent.toString(),
-                  isMe: message.receiverUid != message.senderUid,
+                  isMe: message.receiverUid !=  ref.read(authRepositoryProvider).auth.currentUser!.uid,
                   messageType: message.messageType,
                   messageReply: message.messageReply,
                   username: message.repliedTo,
@@ -74,7 +84,9 @@ class _ChatListState extends ConsumerState<ChatList> {
                         ref.watch(chatControllerProvider).user?.uid,
                     message.messageType,
                   ),
-                  isSeen: message.receiverUid != message.senderUid?message.isSeen:false,
+                  isSeen: message.receiverUid != message.senderUid
+                      ? message.isSeen
+                      : false,
                 );
               },
             );

@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:whatsapp_clone/repository/auth_repo.dart';
+import 'package:whatsapp_clone/repositories/auth_repo.dart';
 import '../models/user_model.dart';
 
 class AuthController {

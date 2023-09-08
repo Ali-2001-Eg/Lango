@@ -1,5 +1,3 @@
-import '../shared/enums/message_enum.dart';
-
 class ChatContactModel {
   final String name;
   final String profilePic;

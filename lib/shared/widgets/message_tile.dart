@@ -142,7 +142,7 @@ class MessageTile extends StatelessWidget {
                          Icon(
                           Icons.done_all,
                           size: 20,
-                          color: isSeen?CupertinoColors.systemBlue:Colors.black45,
+                          color: isSeen&&!isMe?CupertinoColors.systemBlue:Colors.black45,
                         ),
                       ],
                     ),

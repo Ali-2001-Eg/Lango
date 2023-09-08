@@ -5,7 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_clone/controllers/auth_controller.dart';
 import 'package:whatsapp_clone/controllers/message_reply_controller.dart';
 import 'package:whatsapp_clone/models/chat_contacts_model.dart';
-import 'package:whatsapp_clone/repository/chat_repo.dart';
+import 'package:whatsapp_clone/models/group_model.dart';
+import 'package:whatsapp_clone/repositories/chat_repo.dart';
 import 'package:whatsapp_clone/shared/enums/message_enum.dart';
 
 import '../models/message_model.dart';
@@ -17,20 +18,22 @@ class ChatController {
 
   ChatController(this.chatRepo, this.ref);
 
-  void sendTextMessage(
-      BuildContext context, String messageText, String receiverUid) {
+  void sendTextMessage(BuildContext context, String messageText,
+      String receiverUid, bool isGroupChat) {
     //to handel errors
     ref.read(userDataProvider).whenData((value) async =>
         chatRepo.sendTextMessage(
             messageText: messageText,
             context: context,
             receiverUid: receiverUid,
+            isGroupChat: isGroupChat,
             sender: value!,
             messageReply: ref.read(messageReplyProvider)));
     ref.read(messageReplyProvider.state).update((state) => null);
   }
 
-  void sendGifMessage(BuildContext context, String gifUrl, String receiverUid) {
+  void sendGifMessage(BuildContext context, String gifUrl, String receiverUid,
+      bool isGroupChat) {
     //to handel errors
     //https://giphy.com/gifs/imoji-laughing-3ohzdQJJ2JGvMSYvdu ==>
     //https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExdzA2bXZyeWxmZDZkbnc4d21kNGlpaHJ3dXlsaWFwM3drNms1bzhtbiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/3ohzdQJJ2JGvMSYvdu/giphy.gif
@@ -43,6 +46,7 @@ class ChatController {
         chatRepo.sendGifMessage(
             gifUrl: newGifUrl,
             context: context,
+            isGroupChat: isGroupChat,
             receiverUid: receiverUid,
             sender: value!,
             messageReply: ref.read(messageReplyProvider)));
@@ -50,7 +54,7 @@ class ChatController {
   }
 
   void sendFileMessage(BuildContext context, File file, String receiverUid,
-      MessageEnum fileType,String? caption) {
+      MessageEnum fileType, String? caption, bool isGroupChat) {
     //to handel errors
     ref.read(userDataProvider).whenData((value) async =>
         chatRepo.sendFileMessage(
@@ -59,6 +63,8 @@ class ChatController {
             ref: ref,
             senderData: value!,
             fileType: fileType,
+            isGroupChat: isGroupChat,
+            receiverUid: receiverUid,
             caption: caption,
             messageReply: ref.read(messageReplyProvider)));
     ref.read(messageReplyProvider.state).update((state) => null);
@@ -67,9 +73,15 @@ class ChatController {
   UserModel? get user => chatRepo.user;
 
   Stream<List<ChatContactModel>> get contacts => chatRepo.getChatContacts;
+
+  Stream<List<GroupModel>> get groups => chatRepo.getChatGroups;
+
   Stream<List<MessageModel>> chatStream(String receiverUid) =>
       chatRepo.getMessages(receiverUid);
-  void setMessageSeen(String messageId,BuildContext context,String receiverUid){
+  Stream<List<MessageModel>> gruopChatStream(String groupId) =>
+      chatRepo.getGroupMessages(groupId);
+  void setMessageSeen(
+      String messageId, BuildContext context, String receiverUid) {
     chatRepo.setMessageSeen(messageId, context, receiverUid);
   }
 }

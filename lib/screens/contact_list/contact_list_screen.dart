@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:whatsapp_clone/models/chat_contacts_model.dart';
+import 'package:whatsapp_clone/models/group_model.dart';
 import 'package:whatsapp_clone/screens/chat/chat_screen.dart';
+import 'package:whatsapp_clone/shared/enums/message_enum.dart';
 import 'package:whatsapp_clone/shared/utils/base/error_screen.dart';
 import 'package:whatsapp_clone/shared/widgets/custom_indicator.dart';
 import 'package:whatsapp_clone/shared/widgets/time_text_formatter.dart';
@@ -23,11 +25,12 @@ class ContactListScreen extends ConsumerWidget {
             physics: const BouncingScrollPhysics(),
             child: Column(
               children: [
+                //single chat
                 StreamBuilder<List<ChatContactModel>>(
                     stream: ref.watch(chatControllerProvider).contacts,
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const CustomIndicator();
+                        return const Center(child: CustomIndicator());
                       }
                       if (snapshot.hasError) {
                         return ErrorScreen(error: snapshot.error.toString());
@@ -66,6 +69,7 @@ class ContactListScreen extends ConsumerWidget {
                                           .watch(chatControllerProvider)
                                           .user
                                           ?.phoneNumber,
+                                      'isGroupChat': false,
                                     },
                                   ),
                                   child: Padding(
@@ -79,10 +83,9 @@ class ContactListScreen extends ConsumerWidget {
                                           padding:
                                               const EdgeInsets.only(top: 6),
                                           child: Text(
-                                            contacts.lastMessage
-                                                    .startsWith('https')
-                                                ? contacts.type
-                                                : contacts.lastMessage,
+                                            contacts.type == 'text'
+                                                ? contacts.lastMessage
+                                                : contacts.type,
                                             style:
                                                 const TextStyle(fontSize: 15),
                                             maxLines: 1,
@@ -97,6 +100,79 @@ class ContactListScreen extends ConsumerWidget {
                                         ),
                                         trailing: TimeTextFormatter(
                                           time: contacts.timeSent,
+                                        )),
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }
+                    }),
+                //group stream
+                StreamBuilder<List<GroupModel>>(
+                    stream: ref.watch(chatControllerProvider).groups,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(child: CustomIndicator());
+                      }
+                      if (snapshot.hasError) {
+                        return ErrorScreen(error: snapshot.error.toString());
+                      } else {
+                        return ListView.builder(
+                          physics: const BouncingScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: snapshot.data!.length,
+                          itemBuilder: (context, index) {
+                            final group = snapshot.data![index];
+                            // print(contacts.isOnlyText);
+                            // print(contacts.type);
+                            return Column(
+                              children: [
+                                InkWell(
+                                  onTap: () => Navigator.pushNamed(
+                                    context,
+                                    ChatScreen.routeName,
+                                    arguments: {
+                                      'name': group.name,
+                                      'uid': group.groupId,
+                                      'profilePic': group.groupPic,
+                                      'groupId': null,
+                                      'description': '',
+                                      'isOnline': false,
+                                      'phoneNumber': '',
+                                      'isGroupChat': true,
+                                    },
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(bottom: 10),
+                                    child: ListTile(
+                                        title: Text(
+                                          group.name,
+                                          style: const TextStyle(fontSize: 18),
+                                        ),
+                                        subtitle: Padding(
+                                          padding:
+                                              const EdgeInsets.only(top: 6),
+                                          child: Text(
+                                            group.lastMessageType.type,
+                                            style:
+                                                const TextStyle(fontSize: 15),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                        leading: CircleAvatar(
+                                          backgroundImage:
+                                              CachedNetworkImageProvider(
+                                                  group.groupPic),
+                                          radius: 30,
+                                        ),
+                                        trailing: Text(
+                                          DateFormat('h:mm a')
+                                              .format(group.timeSent),
+                                          style: const TextStyle(
+                                              color: Colors.grey),
                                         )),
                                   ),
                                 ),

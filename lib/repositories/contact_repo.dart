@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -32,8 +33,12 @@ class ContactRepo {
         var userData = UserModel.fromJson(doc.data());
         String selectedPhoneNum =
             '${selectedContact.phones[0].number.replaceAll(' ', '')}';
-        print(selectedPhoneNum);
-        print(userData.phoneNumber);
+        if (kDebugMode) {
+          print(selectedPhoneNum);
+        }
+        if (kDebugMode) {
+          print(userData.phoneNumber);
+        }
         if (selectedPhoneNum == userData.phoneNumber) {
           isFound = true;
           Navigator.pushNamed(
@@ -47,6 +52,7 @@ class ContactRepo {
               'profilePic': userData.profilePic,
               'isOnline': userData.isOnline,
               'groupId': userData.groupId,
+              'isGroupChat': false,
             },
           );
         }

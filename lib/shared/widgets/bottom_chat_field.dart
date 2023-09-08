@@ -20,7 +20,9 @@ import '../../controllers/message_reply_controller.dart';
 
 class BottomChatFieldWidget extends ConsumerStatefulWidget {
   final String receiverUid;
-  const BottomChatFieldWidget({Key? key, required this.receiverUid})
+  final bool isGroupChat;
+  const BottomChatFieldWidget(
+      {Key? key, required this.receiverUid, required this.isGroupChat})
       : super(key: key);
 
   @override
@@ -201,8 +203,8 @@ class _BottomChatFieldWidgetState extends ConsumerState<BottomChatFieldWidget> {
   Future<void> _sendTextMessage() async {
     // print(isRecorderInit);
     if (isTyping && _messageController.text.isNotEmpty) {
-      ref.read(chatControllerProvider).sendTextMessage(
-          context, _messageController.text, widget.receiverUid);
+      ref.read(chatControllerProvider).sendTextMessage(context,
+          _messageController.text, widget.receiverUid, widget.isGroupChat);
       setState(() {
         isTyping = false;
         _messageController.text = '';
@@ -232,7 +234,7 @@ class _BottomChatFieldWidgetState extends ConsumerState<BottomChatFieldWidget> {
         ? await pickImageFromGallery(context)
         : await pickImageFromCamera(context);
     if (image != null) {
-      _navToConfirmFile(image, MessageEnum.image,'');
+      _navToConfirmFile(image, MessageEnum.image, '', widget.isGroupChat);
       // _sendFileMessage(image, MessageEnum.image);
     }
   }
@@ -242,24 +244,22 @@ class _BottomChatFieldWidgetState extends ConsumerState<BottomChatFieldWidget> {
         ? await pickVideoFromGallery(context)
         : await pickVideoFromCamera(context);
     if (video != null) {
-     _navToConfirmFile(video, MessageEnum.video,'');
+      _navToConfirmFile(video, MessageEnum.video, '', widget.isGroupChat);
 
       // _sendFileMessage(video, MessageEnum.video);
     }
   }
 
   void _sendFileMessage(File file, MessageEnum messageEnum) {
-    ref
-        .read(chatControllerProvider)
-        .sendFileMessage(context, file, widget.receiverUid, messageEnum, null);
+    ref.read(chatControllerProvider).sendFileMessage(context, file,
+        widget.receiverUid, messageEnum, null, widget.isGroupChat);
   }
 
   Future<void> _selectGif() async {
     GiphyGif? gif = await pickGif(context);
     if (gif != null) {
-      ref
-          .read(chatControllerProvider)
-          .sendGifMessage(context, gif.url, widget.receiverUid);
+      ref.read(chatControllerProvider).sendGifMessage(
+          context, gif.url, widget.receiverUid, widget.isGroupChat);
     }
   }
 
@@ -271,7 +271,8 @@ class _BottomChatFieldWidgetState extends ConsumerState<BottomChatFieldWidget> {
 
       print('file path is $filePath');
       print('file name is $filename');
-     _navToConfirmFile(File(filePath), MessageEnum.pdf, filename);
+      _navToConfirmFile(
+          File(filePath), MessageEnum.pdf, filename, widget.isGroupChat);
     }
   }
 
@@ -377,15 +378,19 @@ class _BottomChatFieldWidgetState extends ConsumerState<BottomChatFieldWidget> {
       ),
     );
   }
-  _navToConfirmFile(File file,MessageEnum type, String filename){
+
+  _navToConfirmFile(
+      File file, MessageEnum type, String filename, bool isGroupChat) {
     Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => ConfirmFileScreen(
-              message: file,
-              messageType: type,
-              filename: filename,
-              receiverUid: widget.receiverUid,),
+            message: file,
+            messageType: type,
+            filename: filename,
+            receiverUid: widget.receiverUid,
+            isGroupChat: isGroupChat,
+          ),
         ));
   }
 }

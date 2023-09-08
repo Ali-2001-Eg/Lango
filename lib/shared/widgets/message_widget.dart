@@ -71,7 +71,7 @@ class MessageWidget extends StatelessWidget {
               minHeight: size(context).height / 6,
             ),
             decoration: BoxDecoration(
-                border: Border.all(color: messageColor, width: 2)),
+                border: Border.all(color: Colors.transparent, width: 2)),
             child: confirmScreen
                 ? Image.file(
                     file!,
@@ -107,8 +107,8 @@ class MessageWidget extends StatelessWidget {
                   ));
       case MessageEnum.video:
         return Container(
-          decoration:
-              BoxDecoration(border: Border.all(color: messageColor, width: 2)),
+          decoration: BoxDecoration(
+              border: Border.all(color: Colors.transparent, width: 2)),
           child: confirmScreen
               ? VideoPlayerItem(url: file!.path)
               : Stack(
