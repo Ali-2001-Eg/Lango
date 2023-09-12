@@ -3,6 +3,7 @@ import 'package:flutter_contacts/contact.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod/riverpod.dart';
 import 'package:whatsapp_clone/controllers/contact_controller.dart';
+import 'package:whatsapp_clone/generated/l10n.dart';
 import 'package:whatsapp_clone/screens/auth/login_screen.dart';
 import 'package:whatsapp_clone/screens/chat/chat_screen.dart';
 import 'package:whatsapp_clone/shared/utils/base/error_screen.dart';
@@ -16,7 +17,7 @@ class SelectContactsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Select Contact'),
+        title: Text(S.of(context).select_contact),
         actions: [
           IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
           IconButton(onPressed: () {}, icon: const Icon(Icons.more_vert)),
@@ -54,9 +55,7 @@ class SelectContactsScreen extends ConsumerWidget {
                 ),
                 leading: contact.photo == null
                     ? const CircleAvatar(
-                        backgroundImage: NetworkImage(
-                          'https://png.pngitem.com/pimgs/s/649-6490124_katie-notopoulos-katienotopoulos-i-write-about-tech-round.png',
-                        ),
+                        child: Icon(Icons.person),
                       )
                     : CircleAvatar(
                         backgroundImage: MemoryImage(contact.photo!),
@@ -67,8 +66,6 @@ class SelectContactsScreen extends ConsumerWidget {
         },
       );
   void _selectContact(WidgetRef ref, Contact contact, BuildContext context) {
-    ref
-        .read(selectContactsControllerProvider)
-        .selectContact(contact, context);
+    ref.read(selectContactsControllerProvider).selectContact(contact, context);
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_clone/controllers/status_controller.dart';
+import 'package:whatsapp_clone/generated/l10n.dart';
 import 'package:whatsapp_clone/shared/enums/message_enum.dart';
 
 import '../../shared/utils/colors.dart';
@@ -32,8 +33,8 @@ class ConfirmTextScreen extends ConsumerWidget {
                     textAlign: TextAlign.center,
                     style:
                         const TextStyle(fontSize: 20, decorationThickness: 0),
-                    decoration: const InputDecoration.collapsed(
-                      hintText: 'Type a status...',
+                    decoration: InputDecoration.collapsed(
+                      hintText: S.of(context).status_hint,
                     ),
                   )
                 ],

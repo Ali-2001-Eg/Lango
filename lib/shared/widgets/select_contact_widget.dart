@@ -46,9 +46,7 @@ class _SelectContactsWidgetState extends ConsumerState<SelectContactsWidget> {
                               Icons.check_box,
                               color: tabColor,
                             ))
-                        : IconButton(
-                            onPressed: () {},
-                            icon: const Icon(Icons.crop_square)),
+                        : const Icon(Icons.crop_square),
                   ),
                 ),
               );

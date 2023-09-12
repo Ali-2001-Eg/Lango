@@ -20,7 +20,7 @@ class ContactListScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final appTheme = ref.watch(themeProvider);
+    final appTheme = ref.watch(appThemeProvider);
     return Scaffold(
       body: Padding(
           padding: const EdgeInsets.only(top: 10),
@@ -33,7 +33,7 @@ class ContactListScreen extends ConsumerWidget {
                     stream: ref.watch(chatControllerProvider).contacts,
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(child: CustomIndicator());
+                        return Container();
                       }
                       if (snapshot.hasError) {
                         return ErrorScreen(error: snapshot.error.toString());
@@ -95,7 +95,8 @@ class ContactListScreen extends ConsumerWidget {
                                                 .copyWith(
                                                   fontSize: 15,
                                                   color:
-                                                      appTheme == AppTheme.light
+                                                      appTheme.selectedTheme ==
+                                                              'light'
                                                           ? Colors.black
                                                           : Colors.grey,
                                                 ),
@@ -125,7 +126,7 @@ class ContactListScreen extends ConsumerWidget {
                     stream: ref.watch(chatControllerProvider).groups,
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(child: CustomIndicator());
+                        return Container();
                       }
                       if (snapshot.hasError) {
                         return ErrorScreen(error: snapshot.error.toString());
@@ -166,14 +167,17 @@ class ContactListScreen extends ConsumerWidget {
                                           padding:
                                               const EdgeInsets.only(top: 6),
                                           child: Text(
-                                            group.lastMessageType.type,
+                                            group.lastMessageType.type == 'text'
+                                                ? group.lastMessage
+                                                : group.lastMessageType.type,
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .titleMedium!
                                                 .copyWith(
                                                   fontSize: 15,
                                                   color:
-                                                      appTheme == AppTheme.light
+                                                      appTheme.selectedTheme ==
+                                                              'light'
                                                           ? Colors.black
                                                           : Colors.grey,
                                                 ),

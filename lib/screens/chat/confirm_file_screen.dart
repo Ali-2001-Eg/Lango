@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_clone/controllers/message_reply_controller.dart';
+import 'package:whatsapp_clone/generated/l10n.dart';
 import 'package:whatsapp_clone/shared/enums/message_enum.dart';
 import 'package:whatsapp_clone/shared/utils/colors.dart';
 import 'package:whatsapp_clone/shared/widgets/message_widget.dart';
@@ -77,58 +78,21 @@ class _ConfirmFileScreenState extends ConsumerState<ConfirmFileScreen> {
                     ),
                   ),
           ),
-          Positioned(
-            right: 10,
-            top: 10,
-            child: Row(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.grey[900],
-                    shape: BoxShape.circle,
-                  ),
-                  child: IconButton(
-                      onPressed: () {}, icon: const Icon(Icons.edit)),
-                ),
-                const SizedBox(
-                  width: 15,
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.grey[900],
-                    shape: BoxShape.circle,
-                  ),
-                  child: IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.text_fields_sharp)),
-                ),
-                const SizedBox(
-                  width: 15,
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.grey[900],
-                    shape: BoxShape.circle,
-                  ),
-                  child: IconButton(
-                      onPressed: () {}, icon: const Icon(Icons.gif_sharp)),
-                ),
-              ],
-            ),
-          ),
+          //editFileRow(),
           Positioned(
             left: 10,
             top: 10,
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.grey[900],
+                color:
+                    Theme.of(context).floatingActionButtonTheme.backgroundColor,
                 shape: BoxShape.circle,
               ),
               child: IconButton(
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  icon: const Icon(Icons.close)),
+                  icon: Icon(Icons.close, color: Theme.of(context).cardColor)),
             ),
           ),
           Positioned(
@@ -139,10 +103,11 @@ class _ConfirmFileScreenState extends ConsumerState<ConfirmFileScreen> {
                     width: size(context).width * 0.85,
                     padding: const EdgeInsets.all(20),
                     child: TextField(
-                      style: const TextStyle(color: Colors.black),
+                      style: const TextStyle(
+                          color: Colors.black, decorationThickness: 0),
                       controller: _captionController,
                       decoration: InputDecoration(
-                          hintText: 'Add a caption',
+                          hintText: S.of(context).add_caption,
                           prefixIcon: const Icon(
                             Icons.add_link,
                             color: Colors.black,
@@ -157,8 +122,10 @@ class _ConfirmFileScreenState extends ConsumerState<ConfirmFileScreen> {
                           )),
                     )),
                 Container(
-                  decoration: const BoxDecoration(
-                    color: tabColor,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context)
+                        .floatingActionButtonTheme
+                        .backgroundColor,
                     shape: BoxShape.circle,
                   ),
                   child: IconButton(
@@ -166,7 +133,10 @@ class _ConfirmFileScreenState extends ConsumerState<ConfirmFileScreen> {
                         _sendFileMessage(widget.message, widget.messageType,
                             _captionController.text.trim());
                       },
-                      icon: const Icon(Icons.send)),
+                      icon: Icon(
+                        Icons.send,
+                        color: Theme.of(context).cardColor,
+                      )),
                 )
               ],
             ),
@@ -174,6 +144,46 @@ class _ConfirmFileScreenState extends ConsumerState<ConfirmFileScreen> {
         ],
       ),
     ));
+  }
+
+  Positioned editFileRow() {
+    return Positioned(
+      right: 10,
+      top: 10,
+      child: Row(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.grey[900],
+              shape: BoxShape.circle,
+            ),
+            child: IconButton(onPressed: () {}, icon: const Icon(Icons.edit)),
+          ),
+          const SizedBox(
+            width: 15,
+          ),
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.grey[900],
+              shape: BoxShape.circle,
+            ),
+            child: IconButton(
+                onPressed: () {}, icon: const Icon(Icons.text_fields_sharp)),
+          ),
+          const SizedBox(
+            width: 15,
+          ),
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.grey[900],
+              shape: BoxShape.circle,
+            ),
+            child:
+                IconButton(onPressed: () {}, icon: const Icon(Icons.gif_sharp)),
+          ),
+        ],
+      ),
+    );
   }
 
   void _sendFileMessage(

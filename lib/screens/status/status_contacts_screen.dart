@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_clone/controllers/status_controller.dart';
 import 'package:whatsapp_clone/screens/status/confirm_text_status.dart';
 import 'package:whatsapp_clone/screens/status/status_screen.dart';
+import 'package:whatsapp_clone/shared/utils/base/error_screen.dart';
 import 'package:whatsapp_clone/shared/utils/colors.dart';
 import 'package:whatsapp_clone/shared/widgets/custom_indicator.dart';
 
@@ -27,7 +28,9 @@ class StatusContactsScreen extends ConsumerWidget {
           _removeRedundantName(snapshot);
           if (snapshot.hasError) {
             customSnackBar(snapshot.error.toString(), context);
-            return Container();
+            return ErrorScreen(
+              error: snapshot.error.toString(),
+            );
           }
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const CustomIndicator();
@@ -46,7 +49,8 @@ class StatusContactsScreen extends ConsumerWidget {
                           StatusScreen.routeName,
                           arguments: {
                             'status': snapshot.data,
-                            'uid': snapshot.data![index].uid
+                            'uid': snapshot.data![index].uid,
+                            'index':index,
                           },
                         );
                       },

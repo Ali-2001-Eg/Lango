@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_clone/controllers/auth_controller.dart';
+import 'package:whatsapp_clone/generated/l10n.dart';
 import 'package:whatsapp_clone/shared/utils/functions.dart';
 import 'package:whatsapp_clone/shared/widgets/custom_button.dart';
 
@@ -65,8 +66,8 @@ class _UserInfoScreenState extends ConsumerState<UserInfoScreen> {
                       padding: const EdgeInsets.all(20),
                       child: TextField(
                         controller: _nameController,
-                        decoration: const InputDecoration(
-                          hintText: 'Enter Your Name',
+                        decoration: InputDecoration(
+                          hintText: S.of(context).enter_name,
                         ),
                       ),
                     ),
@@ -76,16 +77,16 @@ class _UserInfoScreenState extends ConsumerState<UserInfoScreen> {
                       padding: const EdgeInsets.all(20),
                       child: TextField(
                         controller: _descriptionController,
-                        decoration: const InputDecoration(
-                          hintText: 'Enter Your description',
+                        decoration: InputDecoration(
+                          hintText: S.of(context).enter_description,
                         ),
                       ),
                     ),
-                     SizedBox(height: size(context).height/6),
+                    SizedBox(height: size(context).height / 6),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 50.0),
                       child: CustomButton(
-                        text: 'Save',
+                        text: S.of(context).save,
                         onPress: () => _storeUserData(),
                       ),
                     ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_clone/controllers/auth_controller.dart';
+import 'package:whatsapp_clone/generated/l10n.dart';
 import 'package:whatsapp_clone/shared/utils/colors.dart';
 import 'package:whatsapp_clone/shared/utils/functions.dart';
 
@@ -15,7 +16,7 @@ class OtpScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: backgroundColor,
-        title: const Text('Verifying your number '),
+        title: Text(S.of(context).verify_num),
         centerTitle: true,
       ),
       body: Center(
@@ -24,7 +25,7 @@ class OtpScreen extends ConsumerWidget {
             const SizedBox(
               height: 30,
             ),
-            const Text('We have sent an SMS with a code.'),
+            Text(S.of(context).sms_sent),
             SizedBox(
               width: size(context).width * 0.5,
               child: TextField(
@@ -36,7 +37,7 @@ class OtpScreen extends ConsumerWidget {
                     _verifyOtp(context, value.trim(), ref);
                   }
                 },
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: '- - - - - - ',
                   hintStyle: TextStyle(
                     fontSize: 30,

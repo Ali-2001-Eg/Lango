@@ -9,12 +9,18 @@
     <uses-permission  android:name="android.permission.CAMERA"  />
     <uses-permission  android:name="android.permission.MODIFY_AUDIO_SETTINGS"  />
     <uses-permission  android:name="android.permission.ACCESS_NETWORK_STATE"  />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <!-- The Agora SDK requires Bluetooth permissions in case users are using Bluetooth devices.-->
     <uses-permission  android:name="android.permission.BLUETOOTH"  />
+   
     <application
         android:label="whatsapp_clone"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
+          <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyArMK2NTl7--X_61KO1JaMSll9hTc5NpIE"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

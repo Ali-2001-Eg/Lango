@@ -3,6 +3,7 @@ import 'package:whatsapp_clone/screens/auth/login_screen.dart';
 import 'package:whatsapp_clone/shared/utils/colors.dart';
 import 'package:whatsapp_clone/shared/utils/functions.dart';
 import 'package:whatsapp_clone/shared/widgets/custom_button.dart';
+import 'package:whatsapp_clone/generated/l10n.dart';
 
 class LandingScreen extends StatelessWidget {
   const LandingScreen({Key? key}) : super(key: key);
@@ -17,8 +18,8 @@ class LandingScreen extends StatelessWidget {
             const SizedBox(
               height: 50,
             ),
-            const Text(
-              'Welcome To WhatsApp',
+            Text(
+              S.of(context).welcome_landing,
               style: TextStyle(fontSize: 33, fontWeight: FontWeight.w600),
             ),
             SizedBox(height: size(context).height / 6),
@@ -29,10 +30,10 @@ class LandingScreen extends StatelessWidget {
               color: tabColor,
             ),
             SizedBox(height: size(context).height / 9),
-            const Padding(
+            Padding(
               padding: EdgeInsets.all(15),
               child: Text(
-                'Read our Privacy Policy. Tap "Agree and continue to accept the Terms of Services"',
+                S.of(context).read_our_privacy,
                 textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.grey, fontSize: 15),
               ),
@@ -43,7 +44,7 @@ class LandingScreen extends StatelessWidget {
             SizedBox(
                 width: size(context).width * 0.75,
                 child: CustomButton(
-                  text: 'AGREE AND CONTINUE',
+                  text: S.of(context).agree_continue,
                   onPress: () =>
                       Navigator.pushNamed(context, LoginScreen.routeName),
                 ))

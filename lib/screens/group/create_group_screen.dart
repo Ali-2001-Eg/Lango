@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:whatsapp_clone/generated/l10n.dart';
 import 'package:whatsapp_clone/screens/home_screen.dart';
 import 'package:whatsapp_clone/shared/utils/colors.dart';
 import 'package:whatsapp_clone/shared/utils/functions.dart';
@@ -34,7 +35,16 @@ class _CreateGroupScreenState extends ConsumerState<CreateGroupScreen> {
     return Scaffold(
       // key: myWidgetKey,
       appBar: AppBar(
-        title: const Text('Create Group'),
+        title: Text(S.of(context).create_group),
+        actions: [
+          IconButton(
+            onPressed: _createGroup,
+            icon: const Icon(Icons.done),
+            style: ButtonStyle(
+                backgroundColor:
+                    getTheme(context).iconButtonTheme.style!.iconColor),
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
@@ -84,7 +94,8 @@ class _CreateGroupScreenState extends ConsumerState<CreateGroupScreen> {
               child: TextField(
                 controller: _controller,
                 style: const TextStyle(decorationThickness: 0),
-                decoration: const InputDecoration(hintText: 'Enter Group Name'),
+                decoration:
+                    InputDecoration(hintText: S.of(context).enter_group_name),
               ),
             ),
             const SizedBox(
@@ -96,16 +107,6 @@ class _CreateGroupScreenState extends ConsumerState<CreateGroupScreen> {
             ),
             const SelectContactsWidget(),
           ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        heroTag: 'btn6',
-        onPressed: _createGroup,
-        backgroundColor: tabColor,
-        elevation: 0,
-        child: const Icon(
-          Icons.check,
-          color: Colors.white,
         ),
       ),
     );

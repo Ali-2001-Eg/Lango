@@ -4,6 +4,7 @@ import 'package:enough_giphy_flutter/enough_giphy_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:intl/intl.dart';
 
 import 'colors.dart';
 
@@ -153,13 +154,22 @@ ThemeData get lightMode => ThemeData.light().copyWith(
       textTheme: const TextTheme(
           titleMedium: TextStyle(
         color: lightText,
+        height: 2,
+        fontSize: 20,
         fontWeight: FontWeight.w500,
       )),
+      inputDecorationTheme: const InputDecorationTheme(
+          fillColor: lightChatBox, iconColor: lightText),
     );
 ThemeData get darkMode => ThemeData.dark().copyWith(
       textTheme: const TextTheme(
-          titleMedium:
-              TextStyle(color: textColor, fontWeight: FontWeight.bold)),
+        titleMedium: TextStyle(
+          color: textColor,
+          fontWeight: FontWeight.bold,
+          height: 2,
+          fontSize: 20,
+        ),
+      ),
       scaffoldBackgroundColor: backgroundColor,
       indicatorColor: tabColor,
       cardColor: messageColor,
@@ -181,4 +191,11 @@ ThemeData get darkMode => ThemeData.dark().copyWith(
         elevation: 0,
         backgroundColor: tabColor,
       ),
+      inputDecorationTheme: const InputDecorationTheme(
+          fillColor: mobileChatBoxColor, iconColor: greyColor),
     );
+TextStyle? getTextTheme(context) => Theme.of(context).textTheme.titleMedium;
+
+ThemeData getTheme(context) => Theme.of(context);
+
+bool get isArabic => Intl.getCurrentLocale() == 'ar' ? true : false;

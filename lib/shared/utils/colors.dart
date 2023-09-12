@@ -20,4 +20,4 @@ const lightMessage = Color(0xffE2F6CA);
 const lightButton = Color(0xffF8FDCF);
 const lightBar = Color(0xff016A70);
 const lightText = Color(0xff3A98B9);
-
+const lightChatBox = Color(0xffB0DAFF);

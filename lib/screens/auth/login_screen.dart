@@ -6,16 +6,17 @@ import 'package:whatsapp_clone/shared/utils/colors.dart';
 import 'package:whatsapp_clone/shared/utils/functions.dart';
 import 'package:whatsapp_clone/shared/widgets/custom_button.dart';
 
+import '../../generated/l10n.dart';
+
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
   static const routeName = '/login-screen';
   @override
   ConsumerState<LoginScreen> createState() => _LoginScreenState();
-
 }
 
 class _LoginScreenState extends ConsumerState<LoginScreen> {
-   Country? country;
+  Country? country;
   final TextEditingController _phoneController = TextEditingController();
   @override
   void dispose() {
@@ -28,7 +29,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     // print('build');
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Enter your phone number'),
+        title: Text(S.of(context).enter_phone_num),
         backgroundColor: backgroundColor,
       ),
       body: SingleChildScrollView(
@@ -40,10 +41,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             children: [
               Column(
                 children: [
-                  const Text('WhatsApp will need to verify your phone number.'),
+                  Text(S.of(context).login_heading),
                   const SizedBox(height: 10),
                   TextButton(
-                      onPressed: _pickCountry, child: const Text('Pick Country')),
+                      onPressed: _pickCountry,
+                      child: Text(S.of(context).pick_country)),
                   const SizedBox(height: 10),
                   Row(
                     children: [
@@ -56,8 +58,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         child: TextField(
                             controller: _phoneController,
                             keyboardType: TextInputType.phone,
-                            decoration: const InputDecoration(
-                              hintText: 'Phone number',
+                            decoration: InputDecoration(
+                              hintText: S.of(context).phone_num,
                             )),
                       )
                     ],
@@ -67,7 +69,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 120),
                 child: CustomButton(
-                  text: 'Next',
+                  text: S.of(context).next,
                   onPress: _submitPhoneNumber,
                 ),
               )
@@ -100,7 +102,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           .signInWithPhone(context, '+${country!.phoneCode}$phoneNumber');
     } else {
       print('error');
-      customSnackBar('Fill out all the fields', context);
+      customSnackBar(S.of(context).login_snackbar_error, context);
     }
   }
 }

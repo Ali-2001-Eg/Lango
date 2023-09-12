@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_clone/shared/utils/colors.dart';
+import 'package:whatsapp_clone/shared/utils/functions.dart';
 import 'package:whatsapp_clone/shared/widgets/message_widget.dart';
 
 import '../../controllers/message_reply_controller.dart';
 
 class MessageReplyWidget extends ConsumerWidget {
-  const MessageReplyWidget({super.key});
+  final bool fromStatusScreen;
+  const MessageReplyWidget({super.key, required this.fromStatusScreen});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -45,9 +47,17 @@ class MessageReplyWidget extends ConsumerWidget {
           const SizedBox(
             height: 8,
           ),
-          MessageWidget(
-              message: messageReply.message,
-              messageType: messageReply.messageType)
+          (fromStatusScreen)
+              ? ConstrainedBox(
+                  constraints:
+                      BoxConstraints(maxHeight: size(context).height / 10),
+                  child: MessageWidget(
+                      message: messageReply.message,
+                      messageType: messageReply.messageType),
+                )
+              : MessageWidget(
+                  message: messageReply.message,
+                  messageType: messageReply.messageType)
         ],
       ),
     );

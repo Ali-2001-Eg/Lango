@@ -52,8 +52,9 @@ class MessageTile extends StatelessWidget {
             color: messageType == MessageEnum.image ||
                     messageType == MessageEnum.video ||
                     messageType == MessageEnum.pdf ||
-                    messageType == MessageEnum.gif
-                ? Theme.of(context).scaffoldBackgroundColor
+                    messageType == MessageEnum.gif ||
+                    messageType == MessageEnum.audio
+                ? Colors.transparent
                 : Theme.of(context).cardColor,
             margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
             child: Column(
@@ -63,69 +64,61 @@ class MessageTile extends StatelessWidget {
                   constraints: BoxConstraints(
                       maxWidth: size(context).width - 50,
                       minWidth: size(context).width / 3),
-                  child: Container(
-                    padding: const EdgeInsets.only(
-                        left: 10, right: 10, top: 10, bottom: 10),
-                    child: Column(
-                      children: [
-                        if (isReplying) ...[
-                          Container(
-                            constraints: BoxConstraints(
-                              maxWidth: size(context).width - 50,
-                              minWidth: size(context).width / 3,
-                            ),
-                            // color: Colors.red,
-                            decoration: BoxDecoration(
-                              color: Colors.green.shade600,
-                              borderRadius: BorderRadius.circular(3),
-                            ),
-                            padding: const EdgeInsets.all(5),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                InkWell(
-                                  onTap: () {
-
-                                  },
-                                  child: Text(
-                                    isMe?'~you ':username,
-                                    style:  TextStyle(
-                                        fontWeight: FontWeight.bold,color: Colors.grey[900]),
-                                  ),
-                                ),
-                                MessageWidget(
-                                  messageType: messageReplyType,
-                                  message: messageReply,
-                                  textColor: Colors.grey[900]!,
-
-                                ),
-                              ],
-                            ),
+                  child: Column(
+                    children: [
+                      if (isReplying) ...[
+                        Container(
+                          constraints: BoxConstraints(
+                            maxWidth: size(context).width - 50,
+                            minWidth: size(context).width / 3,
                           ),
-                        ],
-                        MessageWidget(
-                          messageType: messageType,
-                          message: message,
-                          caption: caption,
+                          // color: Colors.red,
+                          decoration: BoxDecoration(
+                            color: Colors.green.shade600,
+                            borderRadius: BorderRadius.circular(3),
+                          ),
+                          padding: const EdgeInsets.all(5),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              InkWell(
+                                onTap: () {},
+                                child: Text(
+                                  isMe ? '~you ' : username,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.grey[900]),
+                                ),
+                              ),
+                              MessageWidget(
+                                messageType: messageReplyType,
+                                message: messageReply,
+                                textColor: Colors.grey[900]!,
+                              ),
+                            ],
+                          ),
                         ),
                       ],
-                    ),
+                      MessageWidget(
+                        messageType: messageType,
+                        message: message,
+                        caption: caption,
+                      ),
+                    ],
                   ),
                 ),
                 Container(
                   decoration: BoxDecoration(
-                  color: Colors.grey,
-                    borderRadius: BorderRadius.circular(5),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Colors.black38,
-                        offset: Offset(0,5),
-                        spreadRadius: 3,
-                        blurRadius: 1,
-                        blurStyle: BlurStyle.inner
-                      )
-                    ]
-                  ),
+                      color: Colors.grey,
+                      borderRadius: BorderRadius.circular(5),
+                      boxShadow: const [
+                        BoxShadow(
+                            color: Colors.black38,
+                            offset: Offset(0, 5),
+                            spreadRadius: 3,
+                            blurRadius: 1,
+                            blurStyle: BlurStyle.inner)
+                      ]),
                   child: Padding(
                     padding: const EdgeInsets.all(3),
                     child: Row(
@@ -133,16 +126,18 @@ class MessageTile extends StatelessWidget {
                       children: [
                         Text(
                           DateFormat('h:mm a').format(DateTime.parse(date)),
-                          style:
-                              const TextStyle(color: Colors.black, fontSize: 12),
+                          style: const TextStyle(
+                              color: Colors.black, fontSize: 12),
                         ),
                         const SizedBox(
                           width: 5,
                         ),
-                         Icon(
+                        Icon(
                           Icons.done_all,
                           size: 20,
-                          color: isSeen&&!isMe?CupertinoColors.systemBlue:Colors.black45,
+                          color: isSeen && !isMe
+                              ? CupertinoColors.systemBlue
+                              : Colors.black45,
                         ),
                       ],
                     ),

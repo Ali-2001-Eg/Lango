@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:io';
 
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
@@ -8,11 +9,14 @@ import 'package:flutter_sound/flutter_sound.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+
 import 'package:whatsapp_clone/controllers/chat_controller.dart';
+import 'package:whatsapp_clone/generated/l10n.dart';
+import 'package:whatsapp_clone/screens/chat/confirm_file_screen.dart';
+import 'package:whatsapp_clone/screens/chat/maps_screen.dart';
 import 'package:whatsapp_clone/shared/enums/message_enum.dart';
 import 'package:whatsapp_clone/shared/utils/colors.dart';
 import 'package:whatsapp_clone/shared/utils/functions.dart';
-import 'package:whatsapp_clone/screens/chat/confirm_file_screen.dart';
 import 'package:whatsapp_clone/shared/widgets/message_reply_widget.dart';
 import 'package:whatsapp_clone/shared/widgets/modal_bottom_sheet_item.dart';
 
@@ -21,8 +25,16 @@ import '../../controllers/message_reply_controller.dart';
 class BottomChatFieldWidget extends ConsumerStatefulWidget {
   final String receiverUid;
   final bool isGroupChat;
-  const BottomChatFieldWidget(
-      {Key? key, required this.receiverUid, required this.isGroupChat})
+  final bool isStatusReply;
+  final String? status;
+  FocusNode? focusNode = FocusNode();
+  BottomChatFieldWidget(
+      {Key? key,
+      required this.receiverUid,
+      required this.isGroupChat,
+      required this.isStatusReply,
+      this.status,
+      this.focusNode})
       : super(key: key);
 
   @override
@@ -33,7 +45,6 @@ class BottomChatFieldWidget extends ConsumerStatefulWidget {
 class _BottomChatFieldWidgetState extends ConsumerState<BottomChatFieldWidget> {
   bool isTyping = false;
   bool emojiTyping = false;
-  final FocusNode _focusNode = FocusNode();
   final TextEditingController _messageController = TextEditingController();
   FlutterSoundRecorder? _soundRecorder;
   bool isRecorderInit = false;
@@ -61,141 +72,170 @@ class _BottomChatFieldWidgetState extends ConsumerState<BottomChatFieldWidget> {
     final messageReply = ref.watch(messageReplyProvider);
     final bool isShowMessageReply = messageReply != null;
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: Column(
-        children: [
-          isShowMessageReply ? const MessageReplyWidget() : const SizedBox(),
-          Row(
-            children: [
-              Expanded(
-                child: TextField(
-                  onChanged: (value) {
-                    if (_messageController.text.isNotEmpty) {
-                      setState(() {
-                        isTyping = true;
-                      });
-                    }
-                    if (_messageController.text == '') {
-                      setState(() {
-                        isTyping = false;
-                      });
-                    }
-                  },
-                  controller: _messageController,
-                  focusNode: _focusNode,
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: mobileChatBoxColor,
-                    prefixIcon: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: SizedBox(
-                        width: 60,
-                        child: Row(
-                          children: [
-                            InkWell(
-                              onTap: _selectKeyboardDisplayed,
-                              child: const Icon(
-                                Icons.emoji_emotions,
-                                color: Colors.grey,
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            InkWell(
-                              onTap: _selectGif,
-                              child: const Icon(
-                                Icons.gif_box,
-                                color: Colors.grey,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    suffixIcon: !isTyping
-                        ? SizedBox(
-                            width: 100,
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: Column(
+          children: [
+            isShowMessageReply
+                ? MessageReplyWidget(
+                    fromStatusScreen: widget.isStatusReply,
+                  )
+                : const SizedBox(),
+            Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    constraints:
+                        BoxConstraints(maxHeight: size(context).height / 6),
+                    child: TextField(
+                      onChanged: (value) {
+                        if (_messageController.text.isNotEmpty) {
+                          setState(() {
+                            isTyping = true;
+                          });
+                        }
+                        if (_messageController.text == '') {
+                          setState(() {
+                            isTyping = false;
+                          });
+                        }
+                      },
+                      controller: _messageController,
+                      focusNode: widget.focusNode,
+                      maxLines: null,
+                      style: getTextTheme(context)!
+                          .copyWith(fontSize: 16, decorationThickness: 0),
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor:
+                            getTheme(context).inputDecorationTheme.fillColor,
+                        prefixIcon: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: SizedBox(
+                            width: 60,
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 InkWell(
-                                    onTap: () =>
-                                        _selectImage(ImageSource.camera),
-                                    child: const Icon(Icons.camera_alt,
-                                        color: Colors.grey)),
+                                  onTap: _selectKeyboardDisplayed,
+                                  child: Icon(
+                                    Icons.emoji_emotions,
+                                    color: getTheme(context)
+                                        .inputDecorationTheme
+                                        .iconColor,
+                                  ),
+                                ),
                                 const SizedBox(
-                                  width: 10,
+                                  width: 5,
                                 ),
                                 InkWell(
-                                    onTap: () {
-                                      _showModalBottomSheet();
-                                      // _selectVideo(ImageSource.gallery);
-                                    },
-                                    child: const Icon(
-                                        Icons.attach_file_outlined,
-                                        color: Colors.grey)),
-                                const SizedBox(
-                                  width: 10,
+                                  onTap: _selectGif,
+                                  child: Icon(
+                                    Icons.gif_box,
+                                    color: getTheme(context)
+                                        .inputDecorationTheme
+                                        .iconColor,
+                                  ),
                                 ),
-                                InkWell(
-                                    onTap: () =>
-                                        _selectImage(ImageSource.gallery),
-                                    child: const Icon(
-                                      Icons.photo_camera_back,
-                                      color: Colors.grey,
-                                    )),
                               ],
                             ),
-                          )
-                        : const SizedBox.shrink(),
-                    hintText: 'Type a message...',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(35),
-                      borderSide:
-                          const BorderSide(width: 0, style: BorderStyle.none),
+                          ),
+                        ),
+                        suffixIcon: !isTyping
+                            ? SizedBox(
+                                width: 100,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    InkWell(
+                                        onTap: () =>
+                                            _selectImage(ImageSource.camera),
+                                        child: Icon(
+                                          Icons.camera_alt,
+                                          color: getTheme(context)
+                                              .inputDecorationTheme
+                                              .iconColor,
+                                        )),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    InkWell(
+                                        onTap: () {
+                                          _showModalBottomSheet();
+                                          // _selectVideo(ImageSource.gallery);
+                                        },
+                                        child: Icon(
+                                          Icons.attach_file_outlined,
+                                          color: getTheme(context)
+                                              .inputDecorationTheme
+                                              .iconColor,
+                                        )),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    InkWell(
+                                        onTap: () =>
+                                            _selectImage(ImageSource.gallery),
+                                        child: Icon(
+                                          Icons.photo_camera_back,
+                                          color: getTheme(context)
+                                              .inputDecorationTheme
+                                              .iconColor,
+                                        )),
+                                  ],
+                                ),
+                              )
+                            : const SizedBox.shrink(),
+                        hintText: S.of(context).chat_box_hint,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(35),
+                          borderSide: const BorderSide(
+                              width: 0, style: BorderStyle.none),
+                        ),
+                        contentPadding: const EdgeInsets.all(10),
+                      ),
                     ),
-                    contentPadding: const EdgeInsets.all(10),
                   ),
                 ),
-              ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-                child: CircleAvatar(
-                  backgroundColor: Colors.teal,
-                  radius: 23,
-                  child: GestureDetector(
-                    onTap: _sendTextMessage,
-                    child: Icon(
-                      isTyping
-                          ? Icons.send
-                          : isRecording
-                              ? Icons.close
-                              : Icons.mic,
-                      size: 20,
-                      color: Colors.white,
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                  child: CircleAvatar(
+                    backgroundColor:
+                        getTheme(context).inputDecorationTheme.iconColor,
+                    radius: 23,
+                    child: GestureDetector(
+                      onTap: _sendTextMessage,
+                      child: Icon(
+                        isTyping
+                            ? Icons.send
+                            : isRecording
+                                ? Icons.close
+                                : Icons.mic,
+                        size: 20,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
-          if (emojiTyping)
-            SizedBox(
-              height: 310,
-              child: EmojiPicker(
-                onEmojiSelected: (category, emoji) {
-                  setState(() {
-                    _messageController.text =
-                        _messageController.text + emoji.emoji;
-                    isTyping = true;
-                  });
-                },
-              ),
-            )
-        ],
+              ],
+            ),
+            if (emojiTyping)
+              SizedBox(
+                height: 310,
+                child: EmojiPicker(
+                  onEmojiSelected: (category, emoji) {
+                    setState(() {
+                      _messageController.text =
+                          _messageController.text + emoji.emoji;
+                      isTyping = true;
+                    });
+                  },
+                ),
+              )
+          ],
+        ),
       ),
     );
   }
@@ -219,13 +259,17 @@ class _BottomChatFieldWidgetState extends ConsumerState<BottomChatFieldWidget> {
         //to save our voice notes
 
         await _soundRecorder!.stopRecorder();
+        _sendFileMessage(File(path), MessageEnum.audio);
       } else {
         await _soundRecorder!.startRecorder(toFile: path);
-        _sendFileMessage(File(path), MessageEnum.audio);
       }
       setState(() {
         isRecording = !isRecording;
       });
+      if (widget.isStatusReply) {
+        Navigator.pop(context);
+        widget.focusNode!.unfocus();
+      }
     }
   }
 
@@ -290,10 +334,10 @@ class _BottomChatFieldWidgetState extends ConsumerState<BottomChatFieldWidget> {
 
   void _selectKeyboardDisplayed() {
     if (emojiTyping) {
-      _focusNode.requestFocus();
+      widget.focusNode!.requestFocus();
       _hideEmojiKeyboard();
     } else {
-      _focusNode.unfocus();
+      widget.focusNode!.unfocus();
       _showEmojiKeyboard();
     }
   }
@@ -332,17 +376,17 @@ class _BottomChatFieldWidgetState extends ConsumerState<BottomChatFieldWidget> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ModalBottomSheetItem(
-                    text: 'Document',
+                    text: S.of(context).doc,
                     backgroundColor: Colors.purpleAccent,
                     onPress: () => _selectDoc(),
                     icon: Icons.book),
                 ModalBottomSheetItem(
-                    text: 'Camera',
+                    text: S.of(context).cam,
                     backgroundColor: Colors.red,
                     onPress: () => _selectVideo(ImageSource.gallery),
                     icon: Icons.camera_alt_rounded),
                 ModalBottomSheetItem(
-                    text: 'Gallery',
+                    text: S.of(context).gal,
                     backgroundColor: Colors.orangeAccent,
                     onPress: () => _selectImage(ImageSource.gallery),
                     icon: Icons.photo_camera_back),
@@ -352,27 +396,20 @@ class _BottomChatFieldWidgetState extends ConsumerState<BottomChatFieldWidget> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ModalBottomSheetItem(
-                    text: 'Audio',
-                    backgroundColor: Colors.orangeAccent,
-                    onPress: () {},
-                    icon: Icons.headphones),
-                ModalBottomSheetItem(
-                    text: 'Location',
+                    text: S.of(context).loc,
                     backgroundColor: Colors.green,
-                    onPress: () {},
+                    onPress: () {
+                      print('tapped');
+                      Future(() => navTo(context, const MapsScreen()));
+                    },
                     icon: Icons.location_on),
                 ModalBottomSheetItem(
-                    text: 'Contacts',
+                    text: S.of(context).con,
                     backgroundColor: Colors.blueAccent,
                     onPress: () {},
                     icon: Icons.person),
               ],
             ),
-            ModalBottomSheetItem(
-                text: 'Poll',
-                backgroundColor: Colors.lightGreen,
-                onPress: () {},
-                icon: Icons.poll_rounded)
           ],
         ),
       ),

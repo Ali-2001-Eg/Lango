@@ -7,6 +7,7 @@ import 'package:whatsapp_clone/screens/settings/settings_screen.dart';
 import 'package:whatsapp_clone/screens/status/status_contacts_screen.dart';
 import 'package:whatsapp_clone/shared/utils/colors.dart';
 import 'package:whatsapp_clone/shared/utils/functions.dart';
+import 'package:whatsapp_clone/generated/l10n.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   static const routeName = '/home-screen';
@@ -70,7 +71,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
           // backgroundColor: appBarColor,
           centerTitle: false,
           title: const Text(
-            'WhatsApp',
+            'Chat & Live',
             style: TextStyle(
               fontSize: 20,
               // color: Colors.grey,
@@ -79,7 +80,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
           ),
           actions: [
             IconButton(
-              icon: const Icon(Icons.search, ),
+              icon: const Icon(
+                Icons.search,
+              ),
               onPressed: () {},
             ),
             PopupMenuButton(
@@ -89,24 +92,27 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
               ),
               itemBuilder: (context) => [
                 PopupMenuItem(
-                    child: const Text(
-                      'Create Group',
+                    child: Text(
+                      S.of(context).create_group,
+                      style: getTextTheme(context)!.copyWith(fontSize: 18),
                     ),
                     onTap: () => Future(() => Navigator.of(context)
                         .pushNamed(CreateGroupScreen.routeName))),
                 PopupMenuItem(
-                    child: const Text(
-                      'Linked Devices',
-                    ),
-                    onTap: () {}),
-                PopupMenuItem(
-                    child: const Text(
-                      'Settings',
+                    child: Text(
+                      S.of(context).settings,
+                      style: getTextTheme(context)!.copyWith(fontSize: 18),
                     ),
                     onTap: () {
                       Future(
                           () => navToNamed(context, SettingsScreen.routeName));
                     }),
+                PopupMenuItem(
+                    child: Text(
+                      'About us',
+                      style: getTextTheme(context)!.copyWith(fontSize: 18),
+                    ),
+                    onTap: () {}),
               ],
             ),
           ],
@@ -122,15 +128,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
             labelStyle: const TextStyle(
               fontWeight: FontWeight.bold,
             ),
-            tabs: const [
+            tabs: [
               Tab(
-                text: 'CHATS',
+                text: S.of(context).chat,
               ),
               Tab(
-                text: 'STATUS',
+                text: S.of(context).status,
               ),
               Tab(
-                text: 'CALLS',
+                text: S.of(context).calls,
               ),
             ],
           ),
