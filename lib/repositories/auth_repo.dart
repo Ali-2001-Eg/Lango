@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_clone/models/user_model.dart';
+import 'package:whatsapp_clone/repositories/firebase_notification_repo.dart';
 import 'package:whatsapp_clone/screens/auth/otp_screen.dart';
 import 'package:whatsapp_clone/screens/auth/user_info.dart';
 import 'package:whatsapp_clone/screens/home_screen.dart';
@@ -85,6 +86,7 @@ class AuthRepo {
         profilePic: photoUrl,
         phoneNumber: auth.currentUser!.phoneNumber!,
         isOnline: true,
+        token: (await ref.read(firebaseMessagingRepoProvider).loadToken()),
         groupId: [],
       );
       await firestore.collection('users').doc(uid).set(user.toJson());
@@ -112,6 +114,16 @@ class AuthRepo {
         .doc(uid)
         .snapshots()
         .map((query) => UserModel.fromJson(query.data()!));
+  }
+
+  Future<String> getUsername(String uid) async {
+    var senderName = await firestore.collection('users').doc(uid).get();
+
+    final username = senderName.data()?['username'];
+
+    if (username == null) {}
+
+    return username;
   }
 
   Future<void> setUserState(bool isOnline) async {

@@ -58,6 +58,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "select_contact":
             MessageLookupByLibrary.simpleMessage("اختر جهات الاتصال"),
         "settings": MessageLookupByLibrary.simpleMessage("الاعدادات"),
+        "share": MessageLookupByLibrary.simpleMessage("مشاركه 🌎🚀"),
         "sms_sent": MessageLookupByLibrary.simpleMessage(
             "تم ارسال كود التأكد الي رقم التليفون"),
         "status": MessageLookupByLibrary.simpleMessage("الحالات"),

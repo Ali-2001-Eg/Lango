@@ -7,17 +7,23 @@ import 'package:whatsapp_clone/controllers/chat_controller.dart';
 import 'package:whatsapp_clone/models/message_model.dart';
 import 'package:whatsapp_clone/repositories/auth_repo.dart';
 import 'package:whatsapp_clone/shared/enums/message_enum.dart';
+import 'package:whatsapp_clone/repositories/firebase_notification_repo.dart';
 import 'package:whatsapp_clone/shared/utils/base/error_screen.dart';
 import 'package:whatsapp_clone/shared/widgets/custom_indicator.dart';
 import '../../controllers/message_reply_controller.dart';
+import '../../controllers/notification_controller.dart';
 import 'message_tile.dart';
 
 class ChatList extends ConsumerStatefulWidget {
   final String receiverUid;
   final bool isGroupChat;
-  const ChatList(
-      {Key? key, required this.receiverUid, required this.isGroupChat})
-      : super(key: key);
+  final String token;
+  const ChatList({
+    Key? key,
+    required this.receiverUid,
+    required this.isGroupChat,
+    required this.token,
+  }) : super(key: key);
 
   @override
   ConsumerState createState() => _ChatListState();
@@ -55,6 +61,7 @@ class _ChatListState extends ConsumerState<ChatList> {
               physics: const BouncingScrollPhysics(),
               itemBuilder: (context, index) {
                 final message = snapshot.data![index];
+                print('chat list token is  ${widget.token}');
                 // print(message.isSeen);
                 // print('current uuid is ${FirebaseAuth.instance.currentUser!.uid}');
                 // print('length is ${snapshot.data!.length}');
@@ -67,12 +74,21 @@ class _ChatListState extends ConsumerState<ChatList> {
                       .read(chatControllerProvider)
                       .setMessageSeen(message.id, context, widget.receiverUid);
                 }
-              // print(message.receiverUid);
-              // print(message.senderUid);
+                if (!message.isSeen) {
+                  ref.read(chatControllerProvider).notifyReceiver(
+                        body: message.messageText,
+                        receiverUid: widget.receiverUid,
+                        token: widget.token,
+                        isGroupChat: widget.isGroupChat,
+                      );
+                }
+                // print(message.receiverUid);
+                // print(message.senderUid);
                 return MessageTile(
                   message: message.messageText,
                   date: message.timeSent.toString(),
-                  isMe: message.receiverUid !=  ref.read(authRepositoryProvider).auth.currentUser!.uid,
+                  isMe: message.receiverUid !=
+                      ref.read(authRepositoryProvider).auth.currentUser!.uid,
                   messageType: message.messageType,
                   messageReply: message.messageReply,
                   username: message.repliedTo,

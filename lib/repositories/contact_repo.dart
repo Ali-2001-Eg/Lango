@@ -41,8 +41,7 @@ class ContactRepo {
         }
         if (selectedPhoneNum == userData.phoneNumber) {
           isFound = true;
-          Navigator.pushNamed(
-            context,
+          navigatorKey.currentState!.pushNamed(
             ChatScreen.routeName,
             arguments: {
               'name': userData.name,
@@ -53,6 +52,7 @@ class ContactRepo {
               'isOnline': userData.isOnline,
               'groupId': userData.groupId,
               'isGroupChat': false,
+              'token': userData.token,
             },
           );
         }

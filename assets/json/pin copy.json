@@ -1,0 +1,20 @@
+{
+    "to":"d8kCLtG8QMiJt-NIXrEfSP:APA91bFq0viujcNT9l1bMSyivLT0m7sEey0nnW2_4iVbj6Sz-r0Tvnc3UXf22j8jUxSG9-LkA-N5F3fW7ZeiNlJMn8WoH02t92PbJMC3DihU2pNkhuirxHqOOoijnq9_iYcv38deZdLA",
+    "notifications": {
+        "title":"You have received a message from Ali Mazen",
+        "body":"testing body from postman",
+        "sound":"default"
+    },"android": {
+        "priority":"HIGH",
+        "notifications": {
+        "notifications_priority":"PRIORITY_MAX",
+        "sound":"default",
+        "default_sound":true,
+        "default_vibrate_timing":true
+        }
+    },"data":{
+        "type":"order",
+        "id":87,
+        "click_action":"FLUTTER_NOTIFICATION_CLICK"
+    }
+    }

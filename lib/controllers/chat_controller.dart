@@ -84,6 +84,18 @@ class ChatController {
       String messageId, BuildContext context, String receiverUid) {
     chatRepo.setMessageSeen(messageId, context, receiverUid);
   }
+
+  void notifyReceiver(
+          {required String body,
+          required String token,
+          required String receiverUid,
+          required bool isGroupChat}) =>
+      ref.read(userDataProvider).whenData((value) => chatRepo.sendNotification(
+          body: body,
+          sender: value!,
+          token: token,
+          receiverUid: receiverUid,
+          isGroupChat: isGroupChat));
 }
 
 final chatControllerProvider = Provider((ref) {

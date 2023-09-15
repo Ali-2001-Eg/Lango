@@ -11,21 +11,17 @@ class SettingsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final themeNotifier = ref.read(appThemeProvider);
-    final localeNotifier = ref.read(localeProvider.notifier);
+    final localeNotifier = ref.read(localeProvider);
 
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          StatefulBuilder(
-            builder: (context, setState) => ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  themeNotifier.toggleTheme();
-                });
-              },
-              child: const Text('Toggle Theme'),
-            ),
+          ElevatedButton(
+            onPressed: () {
+              themeNotifier.toggleTheme();
+            },
+            child: const Text('Toggle Theme'),
           ),
           ElevatedButton(
             onPressed: () {

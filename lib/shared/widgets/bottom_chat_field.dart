@@ -54,7 +54,6 @@ class _BottomChatFieldWidgetState extends ConsumerState<BottomChatFieldWidget> {
     // TODO: implement dispose
     _messageController.dispose();
     _soundRecorder!.closeRecorder();
-
     isRecorderInit = false;
 
     super.dispose();
@@ -400,7 +399,11 @@ class _BottomChatFieldWidgetState extends ConsumerState<BottomChatFieldWidget> {
                     backgroundColor: Colors.green,
                     onPress: () {
                       print('tapped');
-                      Future(() => navTo(context, const MapsScreen()));
+                      Future(() => navTo(
+                          context,
+                          MapsScreen(
+                              receiverUid: widget.receiverUid,
+                              isGroupChat: widget.isGroupChat)));
                     },
                     icon: Icons.location_on),
                 ModalBottomSheetItem(

@@ -6,14 +6,17 @@ class ChatContactModel {
   final String lastMessage;
   final bool isOnlyText;
   final String type;
-  ChatContactModel(
-      {required this.name,
-      required this.profilePic,
-      required this.contactId,
-      required this.timeSent,
-      required this.lastMessage,
-      required this.type,
-      required this.isOnlyText});
+  final String token;
+  ChatContactModel({
+    required this.name,
+    required this.profilePic,
+    required this.contactId,
+    required this.timeSent,
+    required this.lastMessage,
+    required this.type,
+    required this.isOnlyText,
+    required this.token,
+  });
 
   Map<String, dynamic> toJson() {
     return {
@@ -24,6 +27,7 @@ class ChatContactModel {
       'lastMessage': lastMessage,
       'isOnlyText': isOnlyText,
       'type': type,
+      'token': token,
     };
   }
 
@@ -35,6 +39,7 @@ class ChatContactModel {
         timeSent: DateTime.fromMillisecondsSinceEpoch(json['timeSent']),
         lastMessage: json['lastMessage'],
         type: json['type'],
+        token: json['token'],
         isOnlyText: json['isOnlyText']);
   }
 }

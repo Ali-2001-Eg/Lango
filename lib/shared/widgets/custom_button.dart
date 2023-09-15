@@ -13,12 +13,14 @@ class CustomButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPress,
       style: ElevatedButton.styleFrom(
-        backgroundColor: getTheme(context).floatingActionButtonTheme.backgroundColor,
-        minimumSize: const Size(double.infinity, 50)
-      ),
-      child: Text(
-        text,
-        style: const TextStyle(color: Colors.black),
+          backgroundColor:
+              getTheme(context).floatingActionButtonTheme.backgroundColor,
+          minimumSize: const Size(double.infinity, 50)),
+      child: Center(
+        child: Text(
+          text,
+          style: getTextTheme(context)!.copyWith(fontSize: 20),
+        ),
       ),
     );
   }

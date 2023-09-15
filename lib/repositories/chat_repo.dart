@@ -14,13 +14,15 @@ import 'package:whatsapp_clone/shared/enums/message_enum.dart';
 import 'package:whatsapp_clone/shared/utils/functions.dart';
 
 import '../controllers/message_reply_controller.dart';
+import '../controllers/notification_controller.dart';
+import 'firebase_notification_repo.dart';
 import '../shared/repos/firebase_storage_repo.dart';
 
 class ChatRepo {
   final FirebaseAuth auth;
   final FirebaseFirestore firestore;
-
-  ChatRepo(this.auth, this.firestore);
+  final ProviderRef ref;
+  ChatRepo(this.auth, this.firestore, this.ref);
   UserModel? user;
   //send text message
   Future<void> sendTextMessage({
@@ -54,6 +56,32 @@ class ChatRepo {
       isGroupChat: isGroupChat,
       caption: null,
     );
+    if (sender.uid != auth.currentUser!.uid) {
+      print('sent notification');
+    }
+  }
+
+  Future<void> sendNotification({
+    required String body,
+    required UserModel sender,
+    required String receiverUid,
+    required String token,
+    required bool isGroupChat,
+  }) async {
+    ref.read(notificationControllerProvider).getNotifications(
+      body: body,
+      token: token,
+      data: {
+        'name': sender.name,
+        'uid': sender.uid,
+        'description': sender.description,
+        'phoneNumber': sender.phoneNumber,
+        'profilePic': sender.profilePic,
+        'isOnline': sender.isOnline,
+        'groupId': sender.groupId,
+        'isGroupChat': isGroupChat
+      },
+    ).then((value) => print('body is: {$body}'));
   }
 
   Future<void> sendGifMessage({
@@ -128,6 +156,7 @@ class ChatRepo {
         name: senderData.name,
         profilePic: senderData.profilePic,
         contactId: senderData.uid,
+        token: senderData.token,
         timeSent: timeSent,
         isOnlyText: isText,
         type: type,
@@ -144,6 +173,7 @@ class ChatRepo {
         profilePic: receiverData.profilePic,
         contactId: receiverData.uid,
         timeSent: timeSent,
+        token: receiverData.token,
         isOnlyText: isText,
         type: type,
         lastMessage: message);
@@ -238,6 +268,7 @@ class ChatRepo {
             contactId: chatContact.contactId,
             timeSent: chatContact.timeSent,
             lastMessage: chatContact.lastMessage,
+            token: chatContact.token,
             isOnlyText: true,
             type: chatContact.type,
           ));
@@ -404,5 +435,5 @@ class ChatRepo {
 }
 
 final chatRepoProvider = Provider(
-  (ref) => ChatRepo(FirebaseAuth.instance, FirebaseFirestore.instance),
+  (ref) => ChatRepo(FirebaseAuth.instance, FirebaseFirestore.instance, ref),
 );

@@ -2,7 +2,9 @@
 class Assets {
   Assets._();
 
+  static const String imagesAppIcon = 'assets/images/app_icon.png';
   static const String imagesBackground = 'assets/images/background.png';
-  static const String imagesImg = 'assets/images/badge.png';
+  static const String imagesBadge = 'assets/images/badge.png';
+  static const String imagesImg = 'assets/images/marker.png';
 
 }

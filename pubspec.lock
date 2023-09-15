@@ -5,10 +5,10 @@ packages:
     dependency: transitive
     description:
       name: _flutterfire_internals
-      sha256: "5dce45a06d386358334eb1689108db6455d90ceb0d75848d5f4819283d4ee2b8"
+      sha256: "1a5e13736d59235ce0139621b4bbe29bc89839e202409081bc667eb3cd20674c"
       url: "https://pub.dev"
     source: hosted
-    version: "1.3.4"
+    version: "1.3.5"
   agora_rtc_engine:
     dependency: transitive
     description:
@@ -405,10 +405,10 @@ packages:
     dependency: "direct main"
     description:
       name: firebase_core
-      sha256: "2e9324f719e90200dc7d3c4f5d2abc26052f9f2b995d3b6626c47a0dfe1c8192"
+      sha256: c78132175edda4bc532a71e01a32964e4b4fcf53de7853a422d96dac3725f389
       url: "https://pub.dev"
     source: hosted
-    version: "2.15.0"
+    version: "2.15.1"
   firebase_core_platform_interface:
     dependency: transitive
     description:
@@ -421,10 +421,34 @@ packages:
     dependency: transitive
     description:
       name: firebase_core_web
-      sha256: "0fd5c4b228de29b55fac38aed0d9e42514b3d3bd47675de52bf7f8fccaf922fa"
+      sha256: "4cf4d2161530332ddc3c562f19823fb897ff37a9a774090d28df99f47370e973"
       url: "https://pub.dev"
     source: hosted
-    version: "2.6.0"
+    version: "2.7.0"
+  firebase_messaging:
+    dependency: "direct main"
+    description:
+      name: firebase_messaging
+      sha256: "6c1a2a047d6f165b7c5f947467ac5138731a2af82c7af1c12d691dbb834f6b73"
+      url: "https://pub.dev"
+    source: hosted
+    version: "14.6.7"
+  firebase_messaging_platform_interface:
+    dependency: transitive
+    description:
+      name: firebase_messaging_platform_interface
+      sha256: bcba58d28f8cda607a323240c6d314c2c62b62ebfbb0f2d704ebefef07b52b5f
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.5.6"
+  firebase_messaging_web:
+    dependency: transitive
+    description:
+      name: firebase_messaging_web
+      sha256: "962d09ec9dfa486cbbc218258ad41e8ec7997a2eba46919049496e1cafd960c5"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.5.6"
   firebase_storage:
     dependency: "direct main"
     description:
@@ -486,6 +510,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.10.0"
+  flutter_linkify:
+    dependency: "direct main"
+    description:
+      name: flutter_linkify
+      sha256: "74669e06a8f358fee4512b4320c0b80e51cffc496607931de68d28f099254073"
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.0.0"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -565,6 +597,38 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  geocoding:
+    dependency: "direct main"
+    description:
+      name: geocoding
+      sha256: b34c0501bbbaf3190b85bef3078b27cf66c28a8915c6d3af50d67f356aa7da31
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.0"
+  geocoding_android:
+    dependency: transitive
+    description:
+      name: geocoding_android
+      sha256: "609db1d71bc364dd9d0616f72a41c01e0c74f3a3807efb85e0d5a67e57baf50f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.2"
+  geocoding_ios:
+    dependency: transitive
+    description:
+      name: geocoding_ios
+      sha256: c85495ce8fb34e4fbd2dd8fc5f79263d622d9f88c4af948c965daf6b27a7f3a1
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.0"
+  geocoding_platform_interface:
+    dependency: transitive
+    description:
+      name: geocoding_platform_interface
+      sha256: "8848605d307d844d89937cdb4b8ad7dfa880552078f310fa24d8a460f6dddab4"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.1"
   geolocator:
     dependency: "direct main"
     description:
@@ -670,7 +734,7 @@ packages:
     source: hosted
     version: "0.15.4"
   http:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: http
       sha256: "5895291c13fa8a3bd82e76d5627f69e0d85ca6a30dcac95c4ea19a5d555879c2"
@@ -797,6 +861,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.8.1"
+  linkify:
+    dependency: transitive
+    description:
+      name: linkify
+      sha256: "4139ea77f4651ab9c315b577da2dd108d9aa0bd84b5d03d33323f1970c645832"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.0.0"
   lints:
     dependency: transitive
     description:
@@ -813,6 +885,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.4.0"
+  lottie:
+    dependency: "direct main"
+    description:
+      name: lottie
+      sha256: "893da7a0022ec2fcaa616f34529a081f617e86cc501105b856e5a3184c58c7c2"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.4.3"
   matcher:
     dependency: transitive
     description:
@@ -1250,6 +1330,70 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.2"
+  url_launcher:
+    dependency: "direct main"
+    description:
+      name: url_launcher
+      sha256: eb1e00ab44303d50dd487aab67ebc575456c146c6af44422f9c13889984c00f3
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.1.11"
+  url_launcher_android:
+    dependency: transitive
+    description:
+      name: url_launcher_android
+      sha256: b04af59516ab45762b2ca6da40fa830d72d0f6045cd97744450b73493fa76330
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.1.0"
+  url_launcher_ios:
+    dependency: transitive
+    description:
+      name: url_launcher_ios
+      sha256: "7c65021d5dee51813d652357bc65b8dd4a6177082a9966bc8ba6ee477baa795f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.1.5"
+  url_launcher_linux:
+    dependency: transitive
+    description:
+      name: url_launcher_linux
+      sha256: b651aad005e0cb06a01dbd84b428a301916dc75f0e7ea6165f80057fee2d8e8e
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.6"
+  url_launcher_macos:
+    dependency: transitive
+    description:
+      name: url_launcher_macos
+      sha256: b55486791f666e62e0e8ff825e58a023fd6b1f71c49926483f1128d3bbd8fe88
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.7"
+  url_launcher_platform_interface:
+    dependency: transitive
+    description:
+      name: url_launcher_platform_interface
+      sha256: "95465b39f83bfe95fcb9d174829d6476216f2d548b79c38ab2506e0458787618"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.5"
+  url_launcher_web:
+    dependency: transitive
+    description:
+      name: url_launcher_web
+      sha256: ba140138558fcc3eead51a1c42e92a9fb074a1b1149ed3c73e66035b2ccd94f2
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.19"
+  url_launcher_windows:
+    dependency: transitive
+    description:
+      name: url_launcher_windows
+      sha256: "95fef3129dc7cfaba2bc3d5ba2e16063bb561fc6d78e63eee16162bc70029069"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.8"
   uuid:
     dependency: "direct main"
     description:

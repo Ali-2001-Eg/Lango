@@ -19,11 +19,14 @@ class _AudioPlayerItemState extends State<AudioPlayerItem> {
   @override
   void initState() {
     audioPlayer = AudioPlayer();
-    audioPlayer.onPlayerStateChanged.listen((event) {
+    if(mounted) {
+      audioPlayer.onPlayerStateChanged.listen((event) {
+
       setState(() {
         isPlaying = event == PlayerState.playing;
       });
     });
+    }
     audioPlayer.onDurationChanged.listen((event) {
       setState(() {
         duration = event;

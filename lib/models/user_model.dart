@@ -6,7 +6,7 @@ class UserModel {
   final String phoneNumber;
   final bool isOnline;
   final List<String> groupId;
-
+  final String token;
   UserModel({
     required this.name,
     required this.uid,
@@ -15,6 +15,7 @@ class UserModel {
     required this.phoneNumber,
     required this.isOnline,
     required this.groupId,
+    required this.token,
   });
 
   Map<String, dynamic> toJson() {
@@ -26,6 +27,7 @@ class UserModel {
       "phoneNumber": phoneNumber,
       "isOnline": isOnline,
       "groupId": groupId,
+      "token": token,
     };
   }
 
@@ -38,6 +40,7 @@ class UserModel {
       phoneNumber: json["phoneNumber"],
       isOnline: json["isOnline"],
       groupId: List<String>.from(json["groupId"]),
+      token: json["token"],
     );
   }
 //

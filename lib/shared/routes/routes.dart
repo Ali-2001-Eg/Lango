@@ -90,6 +90,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       final profilePic = args['profilePic'];
       final isOnline = args['isOnline'];
       final isGroupChat = args['isGroupChat'];
+      final token = args['token'];
+
       final List<String>? groupId = args['groupId'];
       return MaterialPageRoute(
         builder: (context) {
@@ -101,6 +103,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
               isGroupChat: isGroupChat,
               description: description,
               phoneNumber: phoneNumber,
+              token: token,
               isOnline: isOnline);
         },
       );

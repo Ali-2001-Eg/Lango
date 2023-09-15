@@ -42,25 +42,31 @@ dependencies:
   file_picker: ^5.3.1
   firebase_auth: ^4.7.1
   firebase_core: ^2.15.0
+  firebase_messaging: ^14.6.7
   firebase_storage: ^11.2.5
   flutter:
     sdk: flutter
   flutter_contacts: ^1.1.5
+  flutter_linkify: ^6.0.0
   flutter_localization: null
   flutter_riverpod: ^2.3.6
   flutter_sound: ^9.2.13
+  geocoding: ^2.1.0
   geolocator: ^10.0.1
   google_maps_flutter: ^2.3.0
   image_picker: ^1.0.1
   intl: ^0.17.0
+  lottie: ^1.4.2
   path_provider: ^2.1.0
   permission_handler: ^10.2.0
   shared_preferences: ^2.2.1
   story_view: ^0.15.0
   swipe_to: ^1.0.2
   syncfusion_flutter_pdfviewer: ^19.4.55
+  url_launcher: ^6.1.11
   uuid: ^3.0.7
- 
+  http: ^0.13.4
+  #onesignal_flutter: ^5.0.0
 #  file_picker: ^4.0.0
 dev_dependencies:
   flutter_launcher_icons: ^0.10.0
@@ -81,5 +87,7 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/json/
+
 flutter_intl:
   enabled: true

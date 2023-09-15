@@ -60,6 +60,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "select_contact":
             MessageLookupByLibrary.simpleMessage("Select Contact"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
+        "share": MessageLookupByLibrary.simpleMessage("Send 🌎🚀"),
         "sms_sent": MessageLookupByLibrary.simpleMessage(
             "We have sent an SMS with a code."),
         "status": MessageLookupByLibrary.simpleMessage("STATUS"),

@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -8,8 +9,10 @@ import 'package:whatsapp_clone/screens/landing/landing_screen.dart';
 import 'package:whatsapp_clone/shared/enums/app_theme.dart';
 import 'package:whatsapp_clone/shared/notifiers/localization.dart';
 import 'package:whatsapp_clone/shared/notifiers/theme_notifier.dart';
+import 'package:whatsapp_clone/repositories/firebase_notification_repo.dart';
 import 'package:whatsapp_clone/shared/routes/routes.dart';
 import 'package:whatsapp_clone/shared/utils/base/error_screen.dart';
+import 'package:whatsapp_clone/shared/utils/base/notifications_config.dart';
 import 'package:whatsapp_clone/shared/utils/functions.dart';
 import 'package:whatsapp_clone/shared/widgets/custom_indicator.dart';
 import 'generated/l10n.dart';
@@ -18,7 +21,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-
+  await FirebaseMessagingRepo(FirebaseMessaging.instance).init();
   //to listen to providers
   runApp(const ProviderScope(
     child: MyApp(),
@@ -33,9 +36,10 @@ class MyApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final locale = ref.watch(localeProvider);
     final theme = ref.watch(appThemeProvider);
+
     return MaterialApp(
       title: 'Chat & Live',
-      locale: locale == const Locale('en')
+      locale: locale.selectedLocale == 'en'
           ? const Locale('en')
           : const Locale('ar'),
       debugShowCheckedModeBanner: false,

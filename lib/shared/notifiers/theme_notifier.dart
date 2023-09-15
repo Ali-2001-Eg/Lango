@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../enums/app_theme.dart';
 
 class ThemeNotifier extends ChangeNotifier {
-  late String _selectedTheme;
+  String _selectedTheme = 'light';
 
   ThemeNotifier() {
     // Initialize the selected theme from local storage (SharedPreferences)

@@ -13,6 +13,7 @@ import 'package:whatsapp_clone/shared/widgets/bottom_chat_field.dart';
 import 'package:whatsapp_clone/shared/widgets/custom_indicator.dart';
 
 import '../../controllers/auth_controller.dart';
+import '../../repositories/firebase_notification_repo.dart';
 import '../../shared/widgets/chat_list.dart';
 
 class ChatScreen extends ConsumerWidget {
@@ -25,6 +26,7 @@ class ChatScreen extends ConsumerWidget {
   final List<String>? groupId;
   final bool isOnline;
   final bool isGroupChat;
+  final String token;
   const ChatScreen({
     Key? key,
     required this.name,
@@ -34,6 +36,7 @@ class ChatScreen extends ConsumerWidget {
     required this.isGroupChat,
     required this.profilePic,
     this.groupId,
+    required this.token,
     required this.isOnline,
   }) : super(key: key);
 
@@ -46,7 +49,7 @@ class ChatScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final appTheme = ref.watch(appThemeProvider);
-    // print(ref.read(chatControllerProvider).user?.name);
+    print('graped token is ${token}');
     return Directionality(
       textDirection: TextDirection.ltr,
       child: CallPickupScreen(
@@ -104,8 +107,11 @@ class ChatScreen extends ConsumerWidget {
             child: Column(
               children: [
                 Expanded(
-                    child:
-                        ChatList(receiverUid: uid, isGroupChat: isGroupChat)),
+                    child: ChatList(
+                  receiverUid: uid,
+                  isGroupChat: isGroupChat,
+                  token: token,
+                )),
                 BottomChatFieldWidget(
                   receiverUid: uid,
                   isGroupChat: isGroupChat,

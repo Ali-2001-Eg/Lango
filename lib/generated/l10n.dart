@@ -389,6 +389,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Send 🌎🚀`
+  String get share {
+    return Intl.message(
+      'Send 🌎🚀',
+      name: 'share',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

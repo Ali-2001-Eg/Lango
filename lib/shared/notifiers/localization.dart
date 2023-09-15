@@ -1,12 +1,37 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-final localeProvider = StateNotifierProvider((ref) => LocalizationNotifier());
+final localeProvider = ChangeNotifierProvider<LocalizationNotifier>(
+    (ref) => LocalizationNotifier());
 
-class LocalizationNotifier extends StateNotifier<Locale> {
-  LocalizationNotifier() : super(const Locale('en'));
+class LocalizationNotifier extends ChangeNotifier {
+  String _selectedLocale = 'en';
+
+  LocalizationNotifier() {
+    _loadLocale();
+  }
+  String get selectedLocale => _selectedLocale;
+
   void toggleLocale() {
-    state =
-        state == const Locale('en') ? const Locale('ar') : const Locale('en');
+    if (_selectedLocale == 'en') {
+      _selectedLocale = 'ar';
+    } else {
+      _selectedLocale = 'en';
+    }
+    _saveSelectedLocale();
+    notifyListeners();
+  }
+
+  void _loadLocale() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    _selectedLocale = prefs.getString('selectedLocale') ?? 'en';
+
+    notifyListeners();
+  }
+
+  void _saveSelectedLocale() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('selectedLocale', _selectedLocale);
   }
 }

@@ -165,7 +165,7 @@ ThemeData get darkMode => ThemeData.dark().copyWith(
       textTheme: const TextTheme(
         titleMedium: TextStyle(
           color: textColor,
-          fontWeight: FontWeight.bold,
+          fontWeight: FontWeight.w500,
           height: 2,
           fontSize: 20,
         ),
@@ -199,3 +199,5 @@ TextStyle? getTextTheme(context) => Theme.of(context).textTheme.titleMedium;
 ThemeData getTheme(context) => Theme.of(context);
 
 bool get isArabic => Intl.getCurrentLocale() == 'ar' ? true : false;
+
+final navigatorKey = GlobalKey<NavigatorState>();

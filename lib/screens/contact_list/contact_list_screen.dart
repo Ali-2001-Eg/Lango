@@ -11,6 +11,7 @@ import 'package:whatsapp_clone/shared/utils/base/error_screen.dart';
 import 'package:whatsapp_clone/shared/widgets/custom_indicator.dart';
 import 'package:whatsapp_clone/shared/widgets/time_text_formatter.dart';
 import '../../controllers/chat_controller.dart';
+import '../../repositories/firebase_notification_repo.dart';
 import '../../shared/enums/app_theme.dart';
 import '../../shared/utils/colors.dart';
 import '../select_contact/select_contact_screen.dart';
@@ -21,6 +22,7 @@ class ContactListScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final appTheme = ref.watch(appThemeProvider);
+
     return Scaffold(
       body: Padding(
           padding: const EdgeInsets.only(top: 10),
@@ -44,7 +46,7 @@ class ContactListScreen extends ConsumerWidget {
                           itemCount: snapshot.data!.length,
                           itemBuilder: (context, index) {
                             final contacts = snapshot.data![index];
-                            // print(contacts.isOnlyText);
+                            print(contacts.name);
                             // print(contacts.type);
                             return Column(
                               children: [
@@ -73,6 +75,7 @@ class ContactListScreen extends ConsumerWidget {
                                           .user
                                           ?.phoneNumber,
                                       'isGroupChat': false,
+                                      'token': contacts.token,
                                     },
                                   ),
                                   child: Padding(
@@ -138,7 +141,7 @@ class ContactListScreen extends ConsumerWidget {
                           itemBuilder: (context, index) {
                             final group = snapshot.data![index];
                             // print(contacts.isOnlyText);
-                            // print(contacts.type);
+
                             return Column(
                               children: [
                                 InkWell(
@@ -154,6 +157,10 @@ class ContactListScreen extends ConsumerWidget {
                                       'isOnline': false,
                                       'phoneNumber': '',
                                       'isGroupChat': true,
+                                      'token': ref
+                                          .watch(chatControllerProvider)
+                                          .user
+                                          ?.token,
                                     },
                                   ),
                                   child: Padding(
