@@ -29,6 +29,9 @@ class CallPickupScreen extends ConsumerWidget {
           } else if (snapshot.hasData && snapshot.data!.data() != null) {
             CallModel callData = CallModel.fromJson(
                 snapshot.data!.data() as Map<String, dynamic>);
+
+            /*  ref.read(callControllerProvider).notifyReciever(callData, false); */
+
             if (!callData.hasDialled) {
               return Scaffold(
                 body: Container(

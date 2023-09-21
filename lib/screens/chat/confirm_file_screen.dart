@@ -74,6 +74,8 @@ class _ConfirmFileScreenState extends ConsumerState<ConfirmFileScreen> {
                           message: widget.message.path,
                           messageType: widget.messageType,
                           confirmScreen: true,
+                          receiverUid: widget.receiverUid,
+                          messageId: '',
                           file: widget.message),
                     ),
                   ),

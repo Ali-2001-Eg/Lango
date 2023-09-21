@@ -80,6 +80,8 @@ class _BottomChatFieldWidgetState extends ConsumerState<BottomChatFieldWidget> {
             isShowMessageReply
                 ? MessageReplyWidget(
                     fromStatusScreen: widget.isStatusReply,
+                    messageId: '',
+                    receiverUid: widget.receiverUid,
                   )
                 : const SizedBox(),
             Row(
@@ -242,8 +244,11 @@ class _BottomChatFieldWidgetState extends ConsumerState<BottomChatFieldWidget> {
   Future<void> _sendTextMessage() async {
     // print(isRecorderInit);
     if (isTyping && _messageController.text.isNotEmpty) {
-      ref.read(chatControllerProvider).sendTextMessage(context,
-          _messageController.text, widget.receiverUid, widget.isGroupChat);
+      ref.read(chatControllerProvider).sendTextMessage(
+          context,
+          _messageController.text.trim(),
+          widget.receiverUid,
+          widget.isGroupChat);
       setState(() {
         isTyping = false;
         _messageController.text = '';

@@ -1,3 +1,4 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
@@ -22,6 +23,18 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await FirebaseMessagingRepo(FirebaseMessaging.instance).init();
+  AwesomeNotifications().initialize(null, [
+    NotificationChannel(
+      channelKey: 'call_channel',
+      channelName: 'call_channel_name',
+      channelDescription: 'Calling Notification',
+      defaultColor: Colors.redAccent,
+      ledColor: Colors.white,
+      importance: NotificationImportance.Max,
+      channelShowBadge: true,
+      defaultRingtoneType: DefaultRingtoneType.Ringtone,
+    ),
+  ]);
   //to listen to providers
   runApp(const ProviderScope(
     child: MyApp(),

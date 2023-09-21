@@ -12,26 +12,29 @@ class MessageTextFormatterWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Linkify(
-      onOpen: (link) async {
-        print('url is ${link.url}');
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Linkify(
+        onOpen: (link) async {
+          print('url is ${link.url}');
 
-        try {
-          if (await canLaunchUrlString(link.url)) {
-            await launchUrlString('${link.url}');
+          try {
+            if (await canLaunchUrlString(link.url)) {
+              await launchUrlString('${link.url}');
+            }
+          } catch (e) {
+            //print(e.toString());
+            customSnackBar(e.toString(), context);
           }
-        } catch (e) {
-          //print(e.toString());
-          customSnackBar(e.toString(), context);
-        }
-      },
-      text: text,
-      style: getTextTheme(context),
-      linkStyle: getTextTheme(context)!.copyWith(
-        fontSize: 13,
-        fontWeight: FontWeight.w700,
-        color: Colors.blue,
-        decoration: TextDecoration.underline,
+        },
+        text: text,
+        style: getTextTheme(context),
+        linkStyle: getTextTheme(context)!.copyWith(
+          fontSize: 13,
+          fontWeight: FontWeight.w700,
+          color: Colors.blue,
+          decoration: TextDecoration.underline,
+        ),
       ),
     );
   }

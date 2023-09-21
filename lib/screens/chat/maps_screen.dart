@@ -81,9 +81,9 @@ class _HomePageState extends ConsumerState<MapsScreen> {
         child: ElevatedButton.icon(
           onPressed: () =>
               _shareLocation().then((value) => Navigator.of(context).pop()),
-          icon: Icon(Icons.send),
+          icon: const Icon(Icons.send),
           style: ButtonStyle(
-              padding: MaterialStatePropertyAll<EdgeInsetsGeometry?>(
+              padding: const MaterialStatePropertyAll<EdgeInsetsGeometry?>(
                   EdgeInsets.all(15)),
               backgroundColor: MaterialStatePropertyAll(
                   getTheme(context).appBarTheme.backgroundColor)),

@@ -11,6 +11,7 @@ import 'package:whatsapp_clone/shared/utils/base/agora_config.dart';
 import 'package:whatsapp_clone/shared/widgets/custom_indicator.dart';
 
 class CallScreen extends ConsumerStatefulWidget {
+  static const String routeName = '/call-screen';
   final String channelId;
   final CallModel callData;
   final bool isGroupChat;
@@ -57,6 +58,11 @@ class _CallScreenState extends ConsumerState<CallScreen> {
                   AgoraVideoViewer(client: client!),
                   AgoraVideoButtons(
                     client: client!,
+                    addScreenSharing: true,
+                    screenSharingButtonWidget: IconButton(
+                      icon: const Icon(Icons.computer),
+                      onPressed: () {},
+                    ),
                     disconnectButtonChild: InkWell(
                         highlightColor: Colors.grey,
                         splashColor: Colors.transparent,

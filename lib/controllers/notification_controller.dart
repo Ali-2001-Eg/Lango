@@ -6,14 +6,34 @@ class NotificationController {
   final ProviderRef ref;
   final FirebaseMessagingRepo repo;
   NotificationController(this.ref, this.repo);
-  Future<void> getNotifications(
+
+  Future<void> postMessageNotification(
       {required String body,
       required Map<String, dynamic> data,
       required String token}) async {
     ref.read(userDataProvider).whenData(
           (value) async => repo.postNotification(
-              body: body, data: data, senderName: value!.name, token: token),
+              body: body,
+              data: data,
+              title: '${value!.name} Sent You a message',
+              token: token),
         );
+  }
+
+  Future<void> postCallNotification(
+      {required String body,
+      required Map<String, dynamic> data,
+      required String receiver,
+      required String token}) async {
+    (value) async => ref
+        .read(userDataProvider)
+        .whenData((value) => repo.postCallingNotification(
+              title: 'Incoming Call',
+              body: body,
+              token: token,
+              data: data,
+              channelName: '$receiver ${value!.name}',
+            ));
   }
 }
 

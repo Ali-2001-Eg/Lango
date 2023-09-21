@@ -22,20 +22,14 @@ File? _image;
 final TextEditingController _controller = TextEditingController();
 
 class _CreateGroupScreenState extends ConsumerState<CreateGroupScreen> {
-  final GlobalKey<ScaffoldState> myWidgetKey = GlobalKey<ScaffoldState>();
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // key: myWidgetKey,
       appBar: AppBar(
-        title: Text(S.of(context).create_group),
+        title: Text(
+          S.of(context).create_group,
+          style: getTextTheme(context),
+        ),
         actions: [
           IconButton(
             onPressed: _createGroup,
@@ -46,67 +40,89 @@ class _CreateGroupScreenState extends ConsumerState<CreateGroupScreen> {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(
-              height: 10,
-            ),
-            Center(
-              child: Stack(
-                children: [
-                  _image == null
-                      ? const CircleAvatar(
-                          radius: 64,
-                          backgroundColor: Colors.grey,
-                          child: Icon(
-                            Icons.image,
-                            size: 80,
-                            color: Colors.white,
-                          ),
-                        )
-                      : CircleAvatar(
-                          backgroundImage: FileImage(
-                            _image!,
-                          ),
-                          radius: 100,
-                        ),
-                  Positioned(
-                    bottom: -6,
-                    right: 6,
-                    child: IconButton(
-                        onPressed: _selectImage,
-                        icon: const Icon(
-                          Icons.add_a_photo,
-                          size: 25,
-                        )),
-                  ),
-                ],
+      body: WillPopScope(
+        onWillPop: () async {
+          setState(() {
+            _controller.clear();
+            _image = null;
+          });
+          return true;
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: TextField(
+                    controller: _controller,
+                    decoration: InputDecoration(
+                      hintText: 'Enter Group Name',
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          borderSide: BorderSide(
+                              color: getTheme(context)
+                                  .inputDecorationTheme
+                                  .fillColor!)),
+                    )),
               ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                controller: _controller,
-                style: const TextStyle(decorationThickness: 0),
-                decoration:
-                    InputDecoration(hintText: S.of(context).enter_group_name),
+              const SizedBox(
+                height: 10,
               ),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            const Text(
-              'Select Contacts',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SelectContactsWidget(),
-          ],
+              Center(
+                child: Stack(
+                  children: [
+                    _image == null
+                        ? Container(
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                                color: getTheme(context).cardColor,
+                                borderRadius: BorderRadius.circular(15)),
+                            child: const CircleAvatar(
+                              radius: 64,
+                              backgroundColor: Colors.grey,
+                              child: Icon(
+                                Icons.image,
+                                size: 80,
+                                color: Colors.white,
+                              ),
+                            ),
+                          )
+                        : CircleAvatar(
+                            backgroundImage: FileImage(
+                              _image!,
+                            ),
+                            radius: 100,
+                          ),
+                    Positioned(
+                      bottom: -6,
+                      right: 0,
+                      child: IconButton(
+                          onPressed: _selectImage,
+                          icon: Icon(
+                            Icons.add_a_photo,
+                            size: 25,
+                            color: getTheme(context).hintColor,
+                          )),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Text(
+                'Select Contacts',
+                style: getTextTheme(context)!
+                    .copyWith(color: getTheme(context).cardColor),
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              const SelectContactsWidget(),
+            ],
+          ),
         ),
       ),
     );

@@ -5,6 +5,7 @@ import 'package:whatsapp_clone/controllers/chat_controller.dart';
 import 'package:whatsapp_clone/generated/l10n.dart';
 import 'package:whatsapp_clone/models/user_model.dart';
 import 'package:whatsapp_clone/screens/call/call_pickup_screen.dart';
+import 'package:whatsapp_clone/screens/decription/description_screen.dart';
 import 'package:whatsapp_clone/shared/enums/app_theme.dart';
 import 'package:whatsapp_clone/shared/notifiers/theme_notifier.dart';
 import 'package:whatsapp_clone/shared/utils/colors.dart';
@@ -13,6 +14,7 @@ import 'package:whatsapp_clone/shared/widgets/bottom_chat_field.dart';
 import 'package:whatsapp_clone/shared/widgets/custom_indicator.dart';
 
 import '../../controllers/auth_controller.dart';
+import '../../models/call_model.dart';
 import '../../repositories/firebase_notification_repo.dart';
 import '../../shared/widgets/chat_list.dart';
 
@@ -41,9 +43,20 @@ class ChatScreen extends ConsumerWidget {
   }) : super(key: key);
 
   void makeCall(WidgetRef ref, BuildContext context) {
+    /* CallModel callData = CallModel(
+        callerId: uid,
+        callerName: name,
+        receiverId: uid,
+        receiverName: name,
+        callerPic: profilePic,
+        receiverPic: profilePic,
+        callId: 'callId',
+        hasDialled: false,
+        token: token);
+    ref.read(callControllerProvider).notifyReciever(callData, isGroupChat); */
     ref
         .read(callControllerProvider)
-        .call(name, profilePic, isGroupChat, uid, context);
+        .call(name, profilePic, isGroupChat, uid, context, token);
   }
 
   @override
@@ -57,7 +70,13 @@ class ChatScreen extends ConsumerWidget {
           resizeToAvoidBottomInset: true,
           appBar: AppBar(
             title: isGroupChat
-                ? Text(name)
+                ? Text(
+                    name,
+                    style: getTextTheme(context)!.copyWith(
+                        color: appTheme.selectedTheme == 'light'
+                            ? lightScaffold
+                            : Colors.white),
+                  )
                 : StreamBuilder<UserModel>(
                     stream: ref.read(authControllerProvider).userData(uid),
                     builder: (context, snapshot) {
@@ -89,9 +108,26 @@ class ChatScreen extends ConsumerWidget {
                     }),
             actions: [
               IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => DescriptionScreen(
+                                isGroupChat: isGroupChat,
+                                name: name,
+                                phoneNumber: phoneNumber,
+                                pic: profilePic,
+                                description: description,
+                                id: uid)));
+                  },
+                  icon: const Icon(
+                    Icons.info,
+                    size: 20,
+                  )),
+              IconButton(
                   onPressed: () => makeCall(ref, context),
                   icon: const Icon(
-                    Icons.video_call,
+                    Icons.call,
                     size: 30,
                   )),
             ],

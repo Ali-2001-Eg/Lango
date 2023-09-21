@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:whatsapp_clone/controllers/notification_controller.dart';
 import 'package:whatsapp_clone/models/call_model.dart';
 import 'package:whatsapp_clone/models/group_model.dart';
 import 'package:whatsapp_clone/screens/call/call_screen.dart';
@@ -14,16 +15,18 @@ final callRepoProvider = Provider(
   (ref) => CallRepo(
     auth: FirebaseAuth.instance,
     firestore: FirebaseFirestore.instance,
+    ref: ref,
   ),
 );
 
 class CallRepo {
   final FirebaseAuth auth;
   final FirebaseFirestore firestore;
-
+  final ProviderRef ref;
   CallRepo({
     required this.auth,
     required this.firestore,
+    required this.ref,
   });
 
   void call(
@@ -134,5 +137,14 @@ class CallRepo {
       }
       customSnackBar(e.toString(), context);
     }
+  }
+
+  void notifyReceiver(
+      CallModel callData, String body, Map<String, dynamic> data) {
+    ref.read(notificationControllerProvider).postCallNotification(
+        body: body,
+        data: data,
+        receiver: callData.receiverName,
+        token: callData.token);
   }
 }

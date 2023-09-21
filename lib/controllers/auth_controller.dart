@@ -46,6 +46,10 @@ class AuthController {
   Future<String> getUsername(String uid) async {
     return await authRepo.getUsername(uid);
   }
+
+  Future<void> signOut() async {
+    await authRepo.signOut();
+  }
 }
 
 final authControllerProvider = Provider((ref) {

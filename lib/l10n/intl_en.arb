@@ -33,5 +33,11 @@
     "select_contact":"Select Contact",
     "status_hint":"Type a status...",
     "reply":"Reply",
-    "share":"Send 🌎🚀"
+    "share":"Send 🌎🚀",
+    "choose_lang":"Choose Your Locale Language",
+    "choose_theme":"Choose Your Favourite App Theme",
+    "delete_account":"Delete Account",
+    "app_lang":"App Language:",
+    "contacts":"Your Contacts",
+    "groups":"Groups and Channels"
 }

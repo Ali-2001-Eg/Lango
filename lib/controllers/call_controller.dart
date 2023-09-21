@@ -28,6 +28,7 @@ class CallController {
     bool isGroupChat,
     String receiverUid,
     BuildContext context,
+    String receiverToken,
   ) {
     ref.read(userDataProvider).whenData((value) {
       var callId = const Uuid().v1();
@@ -39,6 +40,7 @@ class CallController {
         callerPic: value.profilePic,
         receiverPic: receiverProfilePic,
         callId: callId,
+        token: value.token,
         hasDialled: true,
       );
       CallModel receiverData = CallModel(
@@ -49,6 +51,7 @@ class CallController {
         callerPic: value.profilePic,
         receiverPic: receiverProfilePic,
         callId: callId,
+        token: receiverToken,
         hasDialled: false, //default
       );
       //using callabale class
@@ -68,4 +71,16 @@ class CallController {
       isGroupChat
           ? callRepo.endGroupCall(callerId, receiverId, context)
           : callRepo.endCall(callerId, receiverId, context);
+  /* void notifyReciever(CallModel callData, bool isGroupChat) {
+    print('calling notification');
+    callRepo.notifyReceiver(
+      callData,
+      'incoming call from ${callData.callerName}',
+      {
+        'channelId': callData.callId,
+        'callData': callData,
+        'isGroupChat': isGroupChat,
+      },
+    );
+  } */
 }

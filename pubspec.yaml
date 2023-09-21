@@ -66,6 +66,7 @@ dependencies:
   url_launcher: ^6.1.11
   uuid: ^3.0.7
   http: ^0.13.4
+  awesome_notifications: ^0.6.21
   #onesignal_flutter: ^5.0.0
 #  file_picker: ^4.0.0
 dev_dependencies:

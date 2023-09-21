@@ -44,7 +44,7 @@ class _ChatListState extends ConsumerState<ChatList> {
         stream: widget.isGroupChat
             ? ref
                 .read(chatControllerProvider)
-                .gruopChatStream(widget.receiverUid)
+                .groupChatStream(widget.receiverUid)
             : ref.read(chatControllerProvider).chatStream(widget.receiverUid),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -100,6 +100,8 @@ class _ChatListState extends ConsumerState<ChatList> {
                         ref.watch(chatControllerProvider).user?.uid,
                     message.messageType,
                   ),
+                  receiverUid: message.receiverUid,
+                  messageId: message.id,
                   isSeen: message.receiverUid != message.senderUid
                       ? message.isSeen
                       : false,

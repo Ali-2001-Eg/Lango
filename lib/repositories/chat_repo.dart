@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 import 'package:whatsapp_clone/models/chat_contacts_model.dart';
@@ -15,7 +16,6 @@ import 'package:whatsapp_clone/shared/utils/functions.dart';
 
 import '../controllers/message_reply_controller.dart';
 import '../controllers/notification_controller.dart';
-import 'firebase_notification_repo.dart';
 import '../shared/repos/firebase_storage_repo.dart';
 
 class ChatRepo {
@@ -56,9 +56,6 @@ class ChatRepo {
       isGroupChat: isGroupChat,
       caption: null,
     );
-    if (sender.uid != auth.currentUser!.uid) {
-      print('sent notification');
-    }
   }
 
   Future<void> sendNotification({
@@ -68,7 +65,7 @@ class ChatRepo {
     required String token,
     required bool isGroupChat,
   }) async {
-    ref.read(notificationControllerProvider).getNotifications(
+    ref.read(notificationControllerProvider).postMessageNotification(
       body: body,
       token: token,
       data: {
@@ -206,6 +203,7 @@ class ChatRepo {
         timeSent: timeSent,
         messageReply: messageReply == null ? '' : messageReply.message,
         messageReplyType:
+            //default message reply type is text
             messageReply == null ? MessageEnum.text : messageReply.messageType,
         repliedTo: messageReply == null
             ? ''
@@ -249,6 +247,7 @@ class ChatRepo {
           .collection('users')
           .doc(auth.currentUser!.uid)
           .collection('chats')
+          .orderBy('timeSent', descending: true)
           .snapshots()
           .asyncMap((query) async {
         //async map to await and implement map method
@@ -276,8 +275,11 @@ class ChatRepo {
         return contacts;
       });
 
-  Stream<List<GroupModel>> get getChatGroups =>
-      firestore.collection('groups').snapshots().map((query) {
+  Stream<List<GroupModel>> get getChatGroups => firestore
+          .collection('groups')
+          .orderBy('timeSent', descending: true)
+          .snapshots()
+          .map((query) {
         List<GroupModel> groups = [];
         for (var doc in query.docs) {
           var group = GroupModel.fromJson(doc.data());
@@ -430,6 +432,45 @@ class ChatRepo {
       });
     } catch (e) {
       customSnackBar(e.toString(), context);
+    }
+  }
+
+  Future<void> deleteMessage(
+    String messageId,
+    BuildContext context,
+    String receiverUid,
+  ) async {
+    try {
+      //delete message in sender collection
+      //for sender collection
+      await firestore
+          .collection('users')
+          .doc(auth.currentUser!.uid)
+          .collection('chats')
+          .doc(receiverUid)
+          .collection('messages')
+          .doc(messageId)
+          .delete();
+
+      //for receiver collection
+      await firestore
+          .collection('users')
+          .doc(receiverUid)
+          .collection('chats')
+          .doc(auth.currentUser!.uid)
+          .collection('messages')
+          .doc(messageId)
+          .delete();
+    } catch (e) {
+      customSnackBar(e.toString(), context);
+    }
+  }
+
+  void copyMessageToClipboard(String message) {
+    try {
+      Clipboard.setData(ClipboardData(text: message));
+    } catch (e) {
+      print('error while copying ${e.toString}');
     }
   }
 }

@@ -3,11 +3,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_clone/controllers/auth_controller.dart';
 import 'package:whatsapp_clone/screens/contact_list/contact_list_screen.dart';
 import 'package:whatsapp_clone/screens/group/create_group_screen.dart';
+import 'package:whatsapp_clone/screens/profile/edit_profile_screen.dart';
+import 'package:whatsapp_clone/screens/search/search_screen.dart';
 import 'package:whatsapp_clone/screens/settings/settings_screen.dart';
 import 'package:whatsapp_clone/screens/status/status_contacts_screen.dart';
 import 'package:whatsapp_clone/shared/utils/colors.dart';
 import 'package:whatsapp_clone/shared/utils/functions.dart';
 import 'package:whatsapp_clone/generated/l10n.dart';
+
+import '../controllers/group_controller.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   static const routeName = '/home-screen';
@@ -83,7 +87,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
               icon: const Icon(
                 Icons.search,
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, SearchScreen.routeName);
+              },
             ),
             PopupMenuButton(
               icon: const Icon(
@@ -109,10 +115,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                     }),
                 PopupMenuItem(
                     child: Text(
-                      'About us',
+                      'Edit Profile',
                       style: getTextTheme(context)!.copyWith(fontSize: 18),
                     ),
-                    onTap: () {}),
+                    onTap: () {
+                      Future(() =>
+                          navToNamed(context, EditProfileScreen.routeName));
+                    }),
               ],
             ),
           ],

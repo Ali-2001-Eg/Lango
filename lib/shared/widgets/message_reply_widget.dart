@@ -8,7 +8,14 @@ import '../../controllers/message_reply_controller.dart';
 
 class MessageReplyWidget extends ConsumerWidget {
   final bool fromStatusScreen;
-  const MessageReplyWidget({super.key, required this.fromStatusScreen});
+  final String receiverUid;
+  final String messageId;
+  const MessageReplyWidget({
+    super.key,
+    required this.fromStatusScreen,
+    required this.receiverUid,
+    required this.messageId,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -29,7 +36,7 @@ class MessageReplyWidget extends ConsumerWidget {
             children: [
               Expanded(
                 child: Text(
-                  messageReply!.isMe ? '~ Me' : '~ Opposite',
+                  !messageReply!.isMe ? '~ Me' : '~ Opposite',
                   style: const TextStyle(fontWeight: FontWeight.bold),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -52,12 +59,18 @@ class MessageReplyWidget extends ConsumerWidget {
                   constraints:
                       BoxConstraints(maxHeight: size(context).height / 10),
                   child: MessageWidget(
-                      message: messageReply.message,
-                      messageType: messageReply.messageType),
+                    message: messageReply.message,
+                    messageType: messageReply.messageType,
+                    receiverUid: receiverUid,
+                    messageId: messageId,
+                  ),
                 )
               : MessageWidget(
                   message: messageReply.message,
-                  messageType: messageReply.messageType)
+                  messageType: messageReply.messageType,
+                  receiverUid: receiverUid,
+                  messageId: messageId,
+                )
         ],
       ),
     );

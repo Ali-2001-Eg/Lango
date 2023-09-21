@@ -86,7 +86,10 @@ class AuthRepo {
         profilePic: photoUrl,
         phoneNumber: auth.currentUser!.phoneNumber!,
         isOnline: true,
-        token: (await ref.read(firebaseMessagingRepoProvider).loadToken()),
+        token: (await ref
+            .read(firebaseMessagingRepoProvider)
+            .firebaseMessaging
+            .getToken())!,
         groupId: [],
       );
       await firestore.collection('users').doc(uid).set(user.toJson());
@@ -131,6 +134,10 @@ class AuthRepo {
         .collection('users')
         .doc(auth.currentUser!.uid)
         .update({'isOnline': isOnline});
+  }
+
+  Future<void> signOut() async {
+    await auth.signOut();
   }
 }
 

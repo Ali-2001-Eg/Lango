@@ -24,12 +24,19 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "add_caption": MessageLookupByLibrary.simpleMessage("اضف عنوان"),
         "agree_continue": MessageLookupByLibrary.simpleMessage("أكمل"),
+        "app_lang": MessageLookupByLibrary.simpleMessage("لغه التطبيق"),
         "calls": MessageLookupByLibrary.simpleMessage("المكالمات"),
         "cam": MessageLookupByLibrary.simpleMessage("كاميرا"),
         "chat": MessageLookupByLibrary.simpleMessage("المحادثات"),
         "chat_box_hint": MessageLookupByLibrary.simpleMessage("ارسل..."),
+        "choose_lang":
+            MessageLookupByLibrary.simpleMessage("اختر لغتك المفضله"),
+        "choose_theme":
+            MessageLookupByLibrary.simpleMessage("اختر نظام التطبيق"),
         "con": MessageLookupByLibrary.simpleMessage("جهات الاتصال"),
+        "contacts": MessageLookupByLibrary.simpleMessage("جهات الاتصال"),
         "create_group": MessageLookupByLibrary.simpleMessage("إنشاء مجموعه"),
+        "delete_account": MessageLookupByLibrary.simpleMessage("إزاله الحساب"),
         "doc": MessageLookupByLibrary.simpleMessage("ملف"),
         "enter_description":
             MessageLookupByLibrary.simpleMessage("ادخل الوصف الخاص بك"),
@@ -39,6 +46,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "enter_phone_num":
             MessageLookupByLibrary.simpleMessage("ادخل رقم التليفون"),
         "gal": MessageLookupByLibrary.simpleMessage("المعرض"),
+        "groups": MessageLookupByLibrary.simpleMessage("المجموعات و القنوات"),
         "incoming_call": MessageLookupByLibrary.simpleMessage("مكالمه من"),
         "language": MessageLookupByLibrary.simpleMessage("العربيه"),
         "loc": MessageLookupByLibrary.simpleMessage("الموقع"),

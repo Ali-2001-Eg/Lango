@@ -7,6 +7,7 @@ class CallModel {
   final String receiverPic;
   final String callId;
   final bool hasDialled;
+  final String token;
 
   CallModel({
     required this.callerId,
@@ -17,6 +18,7 @@ class CallModel {
     required this.receiverPic,
     required this.callId,
     required this.hasDialled,
+    required this.token,
   });
 
   Map<String, dynamic> tojson() {
@@ -29,19 +31,21 @@ class CallModel {
       'receiverPic': receiverPic,
       'callId': callId,
       'hasDialled': hasDialled,
+      'token': token
     };
   }
 
-  factory CallModel.fromJson(Map<String, dynamic> map) {
+  factory CallModel.fromJson(Map<String, dynamic> json) {
     return CallModel(
-      callerId: map['callerId'] as String,
-      callerName: map['callerName'] as String,
-      receiverId: map['receiverId'] as String,
-      receiverName: map['receiverName'] as String,
-      callerPic: map['callerPic'] as String,
-      receiverPic: map['receiverPic'] as String,
-      callId: map['callId'] as String,
-      hasDialled: map['hasDialled'] as bool,
+      callerId: json['callerId'] as String,
+      callerName: json['callerName'] as String,
+      receiverId: json['receiverId'] as String,
+      receiverName: json['receiverName'] as String,
+      callerPic: json['callerPic'] as String,
+      receiverPic: json['receiverPic'] as String,
+      callId: json['callId'] as String,
+      hasDialled: json['hasDialled'] as bool,
+      token: json['token'] as String,
     );
   }
 }

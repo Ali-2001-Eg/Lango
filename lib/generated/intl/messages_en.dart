@@ -25,13 +25,21 @@ class MessageLookup extends MessageLookupByLibrary {
         "add_caption": MessageLookupByLibrary.simpleMessage("Add a caption"),
         "agree_continue":
             MessageLookupByLibrary.simpleMessage("AGREE AND CONTINUE"),
+        "app_lang": MessageLookupByLibrary.simpleMessage("App Language:"),
         "calls": MessageLookupByLibrary.simpleMessage("CALLS"),
         "cam": MessageLookupByLibrary.simpleMessage("Camera"),
         "chat": MessageLookupByLibrary.simpleMessage("CHATS"),
         "chat_box_hint":
             MessageLookupByLibrary.simpleMessage("Type a message..."),
+        "choose_lang":
+            MessageLookupByLibrary.simpleMessage("Choose Your Locale Language"),
+        "choose_theme": MessageLookupByLibrary.simpleMessage(
+            "Choose Your Favourite App Theme"),
         "con": MessageLookupByLibrary.simpleMessage("Contacts"),
+        "contacts": MessageLookupByLibrary.simpleMessage("Your Contacts"),
         "create_group": MessageLookupByLibrary.simpleMessage("Create Group"),
+        "delete_account":
+            MessageLookupByLibrary.simpleMessage("Delete Account"),
         "doc": MessageLookupByLibrary.simpleMessage("Document"),
         "enter_description":
             MessageLookupByLibrary.simpleMessage("Enter Your Description"),
@@ -41,6 +49,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "enter_phone_num":
             MessageLookupByLibrary.simpleMessage("Enter your phone number"),
         "gal": MessageLookupByLibrary.simpleMessage("Gallery"),
+        "groups": MessageLookupByLibrary.simpleMessage("Groups and Channels"),
         "incoming_call": MessageLookupByLibrary.simpleMessage("Incoming Call"),
         "language": MessageLookupByLibrary.simpleMessage("English"),
         "loc": MessageLookupByLibrary.simpleMessage("Location"),

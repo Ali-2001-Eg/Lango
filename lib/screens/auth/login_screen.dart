@@ -29,51 +29,61 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     // print('build');
     return Scaffold(
       appBar: AppBar(
-        title: Text(S.of(context).enter_phone_num),
+        title:
+            Text(S.of(context).enter_phone_num, style: getTextTheme(context)),
         backgroundColor: backgroundColor,
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(15),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                children: [
-                  Text(S.of(context).login_heading),
-                  const SizedBox(height: 10),
-                  TextButton(
-                      onPressed: _pickCountry,
-                      child: Text(S.of(context).pick_country)),
-                  const SizedBox(height: 10),
-                  Row(
-                    children: [
-                      if (country != null) Text('+${country!.phoneCode}'),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      SizedBox(
-                        width: size(context).width * 0.7,
-                        child: TextField(
-                            controller: _phoneController,
-                            keyboardType: TextInputType.phone,
-                            decoration: InputDecoration(
-                              hintText: S.of(context).phone_num,
-                            )),
-                      )
-                    ],
-                  ),
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 120),
-                child: CustomButton(
-                  text: S.of(context).next,
-                  onPress: _submitPhoneNumber,
+      body: Center(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(15),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Column(
+                  children: [
+                    Text(S.of(context).login_heading,
+                        style: getTextTheme(context)),
+                    const SizedBox(height: 10),
+                    TextButton(
+                        onPressed: _pickCountry,
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStatePropertyAll(
+                              getTheme(context).cardColor),
+                        ),
+                        child: Text(S.of(context).pick_country,
+                            style: getTextTheme(context))),
+                    const SizedBox(height: 10),
+                    Row(
+                      children: [
+                        if (country != null) Text('+${country!.phoneCode}'),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        SizedBox(
+                          width: size(context).width * 0.7,
+                          child: TextField(
+                              textAlign: TextAlign.center,
+                              controller: _phoneController,
+                              keyboardType: TextInputType.phone,
+                              decoration: InputDecoration(
+                                hintText: S.of(context).phone_num,
+                              )),
+                        )
+                      ],
+                    ),
+                  ],
                 ),
-              )
-            ],
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 100, vertical: 100),
+                  child: CustomButton(
+                    text: S.of(context).next,
+                    onPress: _submitPhoneNumber,
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),

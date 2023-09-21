@@ -16,6 +16,8 @@ import 'package:whatsapp_clone/shared/enums/message_enum.dart';
 import 'package:whatsapp_clone/shared/utils/base/error_screen.dart';
 
 import '../../screens/group/create_group_screen.dart';
+import '../../screens/profile/edit_profile_screen.dart';
+import '../../screens/search/search_screen.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
@@ -53,6 +55,18 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (context) {
           return const SelectContactsScreen();
+        },
+      );
+    case EditProfileScreen.routeName:
+      return MaterialPageRoute(
+        builder: (context) {
+          return const EditProfileScreen();
+        },
+      );
+    case SearchScreen.routeName:
+      return MaterialPageRoute(
+        builder: (context) {
+          return const SearchScreen();
         },
       );
     case ConfirmFileStatus.routeName:

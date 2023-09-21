@@ -11,6 +11,7 @@ import 'package:whatsapp_clone/shared/enums/message_enum.dart';
 
 import '../models/message_model.dart';
 import '../models/user_model.dart';
+import '../shared/utils/functions.dart';
 
 class ChatController {
   final ChatRepo chatRepo;
@@ -78,7 +79,7 @@ class ChatController {
 
   Stream<List<MessageModel>> chatStream(String receiverUid) =>
       chatRepo.getMessages(receiverUid);
-  Stream<List<MessageModel>> gruopChatStream(String groupId) =>
+  Stream<List<MessageModel>> groupChatStream(String groupId) =>
       chatRepo.getGroupMessages(groupId);
   void setMessageSeen(
       String messageId, BuildContext context, String receiverUid) {
@@ -96,6 +97,18 @@ class ChatController {
           token: token,
           receiverUid: receiverUid,
           isGroupChat: isGroupChat));
+  void deleteMessage(
+    String messageId,
+    BuildContext context,
+    String receiverUid,
+  ) {
+    chatRepo.deleteMessage(messageId, context, receiverUid).then(
+        (value) => customSnackBar('message deleted Successfully', context));
+  }
+
+  void copyToClipboard(String message) {
+    chatRepo.copyMessageToClipboard(message);
+  }
 }
 
 final chatControllerProvider = Provider((ref) {

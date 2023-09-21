@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_brace_in_string_interps
+
 import 'dart:developer';
 import 'dart:io';
 
@@ -8,8 +10,10 @@ import 'package:flutter_contacts/contact.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 import 'package:whatsapp_clone/models/group_model.dart';
+import 'package:whatsapp_clone/models/user_model.dart';
 import 'package:whatsapp_clone/shared/enums/message_enum.dart';
 import 'package:whatsapp_clone/shared/repos/firebase_storage_repo.dart';
+import 'package:whatsapp_clone/shared/utils/functions.dart';
 // ignore: unused_import
 import 'package:whatsapp_clone/shared/widgets/select_contact_widget.dart';
 
@@ -63,8 +67,89 @@ class GroupRepo {
           .collection('groups')
           .doc(groupId)
           .set(groupModel.toJson());
+      uids.forEach((element) async {
+        await firestore.collection('users').doc(element).update({
+          'groupId': FieldValue.arrayUnion([groupId])
+        });
+      });
     } catch (e) {
       print(e.toString());
     }
+  }
+
+  Future<void> toggleGroupJoin(String groupId) async {
+    var userDoc =
+        await firestore.collection('users').doc(auth.currentUser!.uid).get();
+    List groupIds = userDoc['groupId'];
+    print('condition ${groupIds.contains(groupId)}');
+    if (groupIds.contains(groupId)) {
+      //for group collection
+      await firestore.collection('groups').doc(groupId).update({
+        'membersUid': FieldValue.arrayRemove([auth.currentUser!.uid]),
+      });
+      //for user collection
+      await firestore.collection('users').doc(auth.currentUser!.uid).update({
+        'groupId': FieldValue.arrayRemove([groupId])
+      });
+    } else {
+      //for leaving group
+      await firestore.collection('groups').doc(groupId).update({
+        'membersUid': FieldValue.arrayUnion([auth.currentUser!.uid]),
+      });
+
+      await firestore.collection('users').doc(auth.currentUser!.uid).update({
+        'groupId': FieldValue.arrayUnion([groupId])
+      });
+    }
+  }
+
+  Future<bool> isUserJoined(String groupId) async {
+    var userDoc =
+        await firestore.collection('users').doc(auth.currentUser!.uid).get();
+    List groupIds = userDoc.data()!['groupId'];
+    if (groupIds.contains(groupId)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  List<GroupModel>? _searchedGroups;
+  List<GroupModel> get searchedGroups => _searchedGroups!;
+  Stream<List<GroupModel>> searchByName(String searchText) {
+    print('Ali');
+    return firestore
+        .collection('groups')
+        .where('name', isGreaterThan: searchText)
+        .snapshots()
+        .map((event) {
+      _searchedGroups = [];
+      for (var element in event.docs) {
+        _searchedGroups!.add(GroupModel.fromJson(element.data()));
+      }
+      return _searchedGroups!;
+    });
+  }
+
+  Future<List<UserModel>> getGroupMembers(String groupId) async {
+    print('ali');
+    var groupDoc = await firestore.collection('groups').doc(groupId).get();
+    List members = groupDoc.data()!['membersUid'];
+    print('members are $members');
+    List<UserModel> groupMembers = [];
+    UserModel user;
+    for (int i = 0; i < members.length; i++) {
+      var userData = await firestore
+          .collection('users')
+          .where('uid', isEqualTo: members[i])
+          .get();
+      print(userData.docs.isNotEmpty && userData.docs[0].exists);
+      if (userData.docs.isNotEmpty && userData.docs[0].exists) {
+        user = UserModel.fromJson(userData.docs[0].data());
+        groupMembers.add(user);
+      }
+    }
+    print('groupMembers are ${groupMembers.length} members');
+    return groupMembers;
   }
 }

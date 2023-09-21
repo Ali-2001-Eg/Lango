@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_clone/shared/enums/message_enum.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:whatsapp_clone/shared/utils/functions.dart';
@@ -9,6 +10,9 @@ import 'package:whatsapp_clone/shared/widgets/pdf_viewerScreen.dart';
 import 'package:whatsapp_clone/shared/widgets/text_message_formatter_widget.dart';
 import 'package:whatsapp_clone/shared/widgets/video_player_item.dart';
 
+import '../../controllers/chat_controller.dart';
+import '../../controllers/message_reply_controller.dart';
+import '../../repositories/auth_repo.dart';
 import '../utils/colors.dart';
 import 'audio_player_item.dart';
 
@@ -19,10 +23,14 @@ class MessageWidget extends StatelessWidget {
   final bool confirmScreen;
   final File? file;
   final String caption;
+  final String receiverUid;
+  final String messageId;
   const MessageWidget(
       {Key? key,
       required this.message,
       required this.messageType,
+      required this.receiverUid,
+      required this.messageId,
       this.confirmScreen = false,
       this.file,
       this.caption = '',
