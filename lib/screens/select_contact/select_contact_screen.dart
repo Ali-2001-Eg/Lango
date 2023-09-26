@@ -18,10 +18,6 @@ class SelectContactsScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(S.of(context).select_contact),
-        actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
-          IconButton(onPressed: () {}, icon: const Icon(Icons.more_vert)),
-        ],
       ),
       body: ref.watch(getContactProvider).when(
             data: (contact) {
@@ -37,6 +33,7 @@ class SelectContactsScreen extends ConsumerWidget {
   ListView _contactList(List<Contact> contactList, WidgetRef ref) =>
       ListView.builder(
         itemCount: contactList.length,
+        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         physics: const BouncingScrollPhysics(),
         itemBuilder: (_, i) {
           final contact = contactList[i];

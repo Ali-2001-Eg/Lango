@@ -1,9 +1,11 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_clone/controllers/status_controller.dart';
+import 'package:whatsapp_clone/repositories/auth_repo.dart';
 import 'package:whatsapp_clone/screens/status/confirm_text_status.dart';
 import 'package:whatsapp_clone/screens/status/status_screen.dart';
 import 'package:whatsapp_clone/shared/utils/base/error_screen.dart';
@@ -13,7 +15,7 @@ import 'package:whatsapp_clone/shared/widgets/custom_indicator.dart';
 import '../../models/status_model.dart';
 import '../../shared/enums/message_enum.dart';
 import '../../shared/utils/functions.dart';
-import 'confirm_file_screen.dart';
+import 'confirm_file_status_screen.dart';
 
 class StatusContactsScreen extends ConsumerWidget {
   final List<String> orderedList = [];
@@ -22,8 +24,8 @@ class StatusContactsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      body: FutureBuilder<List<StatusModel>>(
-        future: ref.read(statusControllerProvider).getStatus,
+      body: StreamBuilder<List<StatusModel>>(
+        stream: ref.read(statusControllerProvider).getStatus,
         builder: (context, snapshot) {
           _removeRedundantName(snapshot);
           if (snapshot.hasError) {
@@ -36,21 +38,23 @@ class StatusContactsScreen extends ConsumerWidget {
             return const CustomIndicator();
           } else {
             return ListView.builder(
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
               itemCount: orderedList.length,
               padding: const EdgeInsets.only(top: 20),
               itemBuilder: (context, index) {
-                var status = snapshot.data![index];
+                var status = _setMyStatusFirst(snapshot, ref)[index];
                 return Column(
                   children: [
                     InkWell(
                       onTap: () {
+                        print(status.status);
                         Navigator.pushNamed(
                           context,
                           StatusScreen.routeName,
                           arguments: {
                             'status': snapshot.data,
                             'uid': snapshot.data![index].uid,
-                            'index':index,
+                            'index': index,
                           },
                         );
                       },
@@ -135,14 +139,36 @@ class StatusContactsScreen extends ConsumerWidget {
     );
   }
 
+  List<StatusModel> _setMyStatusFirst(
+      AsyncSnapshot<List<StatusModel>> snapshot, WidgetRef ref) {
+    List<StatusModel> modifiedList = [];
+    List<int> myIndices = [];
+    for (int i = 0; i < snapshot.data!.length; i++) {
+      if (snapshot.data![i].uid ==
+          ref.read(authRepositoryProvider).auth.currentUser!.uid) {
+        myIndices.add(i);
+      }
+    }
+    for (int index in myIndices) {
+      modifiedList.add(snapshot.data![index]);
+    }
+    for (int i = 0; i < snapshot.data!.length; i++) {
+      if (!myIndices.contains(i)) {
+        modifiedList.add(snapshot.data![i]);
+      }
+    }
+    print(modifiedList.length);
+    return modifiedList;
+  }
+
   void _removeRedundantName(AsyncSnapshot<List<StatusModel>> snapshot) {
     if (snapshot.connectionState == ConnectionState.waiting) {
       return;
     }
-    snapshot.data!.forEach((element) {
+    for (var element in snapshot.data!) {
       if (!orderedList.contains(element.username)) {
         orderedList.add(element.username);
       }
-    });
+    }
   }
 }

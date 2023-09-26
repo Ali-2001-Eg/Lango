@@ -50,42 +50,52 @@ class MyApp extends ConsumerWidget {
     final locale = ref.watch(localeProvider);
     final theme = ref.watch(appThemeProvider);
 
-    return MaterialApp(
-      title: 'Chat & Live',
-      locale: locale.selectedLocale == 'en'
-          ? const Locale('en')
-          : const Locale('ar'),
-      debugShowCheckedModeBanner: false,
-      localizationsDelegates: const [
-        S.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: S.delegate.supportedLocales,
-      theme: theme.selectedTheme == 'light' ? lightMode : darkMode,
-      onGenerateRoute: (settings) => generateRoute(settings),
-      //watch to keep tracking user state
-      home: Scaffold(
-        body: ref.watch(userDataProvider).when(
-          data: (user) {
-            if (user == null) {
-              return const LandingScreen();
-            }
-            return const HomeScreen();
-          },
-          error: (error, stackTrace) {
-            return const Scaffold(
-              body: ErrorScreen(error: 'This page doesn\'t exist'),
-            );
-          },
-          loading: () {
-            return const Scaffold(
-              body: Center(
-                child: CustomIndicator(),
-              ),
-            );
-          },
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode focus = FocusScope.of(context);
+        if (!focus.hasPrimaryFocus) {
+          focus.unfocus();
+        }
+      },
+      child: MaterialApp(
+        title: 'Chat & Live',
+        locale: locale.selectedLocale == 'en'
+            ? const Locale('en')
+            : const Locale('ar'),
+        debugShowCheckedModeBanner: false,
+        localizationsDelegates: const [
+          S.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: S.delegate.supportedLocales,
+        theme: theme.selectedTheme == 'light'
+            ? lightMode(context)
+            : darkMode(context),
+        onGenerateRoute: (settings) => generateRoute(settings),
+        //watch to keep tracking user state
+        home: Scaffold(
+          body: ref.watch(userDataProvider).when(
+            data: (user) {
+              if (user == null) {
+                return const LandingScreen();
+              }
+              return const HomeScreen();
+            },
+            error: (error, stackTrace) {
+              return const Scaffold(
+                body: ErrorScreen(error: 'This page doesn\'t exist'),
+              );
+            },
+            loading: () {
+              return const Scaffold(
+                body: Center(
+                  child: CustomIndicator(),
+                ),
+              );
+            },
+          ),
         ),
       ),
     );

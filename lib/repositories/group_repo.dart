@@ -44,11 +44,14 @@ class GroupRepo {
             .where('phoneNumber',
                 isEqualTo: contacts[i].phones[0].number.replaceAll(' ', ''))
             .get();
-        // log(userData.docs[0].data().toString());
+        log(userData.docs[0].data().toString());
         if (userData.docs.isNotEmpty && userData.docs[0].exists) {
           uids.add(userData.docs[0].data()['uid']);
         }
+        log(uids.toString());
       }
+      //to have non redaundant values
+      var distinctUids = uids.toSet().toList();
       var groupId = const Uuid().v1();
       String pic = await ref
           .read(firebaseStorageRepoProvider)
@@ -61,7 +64,7 @@ class GroupRepo {
         lastMessageType: MessageEnum.text,
         timeSent: DateTime.now(),
         senderId: auth.currentUser!.uid,
-        membersUid: [auth.currentUser!.uid, ...uids],
+        membersUid: [auth.currentUser!.uid, ...distinctUids],
       );
       await firestore
           .collection('groups')
@@ -72,27 +75,14 @@ class GroupRepo {
           'groupId': FieldValue.arrayUnion([groupId])
         });
       });
-    } catch (e) {
-      print(e.toString());
-    }
+    } catch (e) {}
   }
 
-  Future<void> toggleGroupJoin(String groupId) async {
-    var userDoc =
-        await firestore.collection('users').doc(auth.currentUser!.uid).get();
-    List groupIds = userDoc['groupId'];
-    print('condition ${groupIds.contains(groupId)}');
-    if (groupIds.contains(groupId)) {
-      //for group collection
-      await firestore.collection('groups').doc(groupId).update({
-        'membersUid': FieldValue.arrayRemove([auth.currentUser!.uid]),
-      });
-      //for user collection
-      await firestore.collection('users').doc(auth.currentUser!.uid).update({
-        'groupId': FieldValue.arrayRemove([groupId])
-      });
-    } else {
-      //for leaving group
+  Future<void> joinGroup(String groupId) async {
+    var groupDoc = await firestore.collection('groups').doc(groupId).get();
+    List users = groupDoc.data()!['membersUid'];
+    if (!users.contains(auth.currentUser!.uid)) {
+      print('join enters if statements');
       await firestore.collection('groups').doc(groupId).update({
         'membersUid': FieldValue.arrayUnion([auth.currentUser!.uid]),
       });
@@ -103,39 +93,41 @@ class GroupRepo {
     }
   }
 
-  Future<bool> isUserJoined(String groupId) async {
-    var userDoc =
-        await firestore.collection('users').doc(auth.currentUser!.uid).get();
-    List groupIds = userDoc.data()!['groupId'];
-    if (groupIds.contains(groupId)) {
-      return true;
-    } else {
-      return false;
+  Future<int> getAllGroupsNumbers() async {
+    var groups = await firestore.collection('groups').get();
+    return groups.docs.length;
+  }
+
+  Future<void> leaveGroup(String groupId) async {
+    var groupDoc = await firestore.collection('groups').doc(groupId).get();
+    List users = groupDoc.data()!['membersUid'];
+    if (users.contains(auth.currentUser!.uid)) {
+      print('leave enters if statements');
+
+      await firestore.collection('groups').doc(groupId).update({
+        'membersUid': FieldValue.arrayRemove([auth.currentUser!.uid]),
+      });
+
+      await firestore.collection('users').doc(auth.currentUser!.uid).update({
+        'groupId': FieldValue.arrayRemove([groupId])
+      });
     }
   }
 
-  List<GroupModel>? _searchedGroups;
-  List<GroupModel> get searchedGroups => _searchedGroups!;
-  Stream<List<GroupModel>> searchByName(String searchText) {
-    print('Ali');
+  Stream<bool> isUserJoined(String groupId) =>
+      firestore.collection('groups').doc(groupId).snapshots().map((event) =>
+          event.data()!['membersUid'].contains(auth.currentUser!.uid));
+
+  Stream searchByName(String searchText) {
     return firestore
         .collection('groups')
-        .where('name', isGreaterThan: searchText)
-        .snapshots()
-        .map((event) {
-      _searchedGroups = [];
-      for (var element in event.docs) {
-        _searchedGroups!.add(GroupModel.fromJson(element.data()));
-      }
-      return _searchedGroups!;
-    });
+        .where('name', isGreaterThanOrEqualTo: searchText)
+        .snapshots();
   }
 
   Future<List<UserModel>> getGroupMembers(String groupId) async {
-    print('ali');
     var groupDoc = await firestore.collection('groups').doc(groupId).get();
     List members = groupDoc.data()!['membersUid'];
-    print('members are $members');
     List<UserModel> groupMembers = [];
     UserModel user;
     for (int i = 0; i < members.length; i++) {
@@ -143,13 +135,21 @@ class GroupRepo {
           .collection('users')
           .where('uid', isEqualTo: members[i])
           .get();
-      print(userData.docs.isNotEmpty && userData.docs[0].exists);
       if (userData.docs.isNotEmpty && userData.docs[0].exists) {
         user = UserModel.fromJson(userData.docs[0].data());
         groupMembers.add(user);
       }
     }
-    print('groupMembers are ${groupMembers.length} members');
     return groupMembers;
+  }
+
+  Stream<List<GroupModel>> getAllGroups() {
+    List<GroupModel> groups = [];
+    return firestore.collection('groups').snapshots().map((event) {
+      for (var element in event.docs) {
+        groups.add(GroupModel.fromJson(element.data()));
+      }
+      return groups;
+    });
   }
 }

@@ -19,7 +19,8 @@ class CustomButton extends StatelessWidget {
       child: Center(
         child: Text(
           text,
-          style: getTextTheme(context)!.copyWith(fontSize: 20),
+          style: getTextTheme(context)!
+              .copyWith(fontSize: 20, color: Colors.white),
         ),
       ),
     );

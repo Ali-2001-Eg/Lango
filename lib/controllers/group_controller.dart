@@ -21,15 +21,19 @@ class GroupController {
   void createGroup(String groupName, File groupPic, List<Contact> contacts) =>
       groupRepo.createGroup(groupName, groupPic, contacts);
 
-  void toggleGroupJoin(String groupId) => groupRepo.toggleGroupJoin(groupId);
+  Future<void> joinGroup(String groupId) async =>
+      await groupRepo.joinGroup(groupId);
 
-  Future<bool> isUserJoined(String groupId) => groupRepo.isUserJoined(groupId);
+  Future<void> leaveGroup(String groupId) async =>
+      await groupRepo.leaveGroup(groupId);
 
-  Stream<List<GroupModel>> searchByName(String groupName) =>
-      groupRepo.searchByName(groupName);
+  Stream<bool> isUserJoined(String groupId) => groupRepo.isUserJoined(groupId);
+
+  Stream searchByName(String groupName) => groupRepo.searchByName(groupName);
 
   Future<List<UserModel>> getGroupMembers(String groupId) =>
       groupRepo.getGroupMembers(groupId);
 
-  List<GroupModel> get searchedGroupsList => groupRepo.searchedGroups;
+  Stream<List<GroupModel>> get groups => groupRepo.getAllGroups();
+  Future<int> get getGroupsCount => groupRepo.getAllGroupsNumbers();
 }

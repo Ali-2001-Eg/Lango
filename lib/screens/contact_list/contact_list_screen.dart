@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:lottie/lottie.dart';
 import 'package:whatsapp_clone/generated/l10n.dart';
 import 'package:whatsapp_clone/models/chat_contacts_model.dart';
 import 'package:whatsapp_clone/models/group_model.dart';
@@ -52,12 +53,26 @@ class ContactListScreen extends ConsumerWidget {
                             ConnectionState.waiting) {
                           return const CustomIndicator();
                         }
+                        if (snapshot.data!.isEmpty) {
+                          return Center(
+                              child: Column(
+                            children: [
+                              const Text('Chat with your first contact'),
+                              SizedBox(
+                                  width: 200,
+                                  child: Lottie.asset(
+                                      'assets/json/empty_chat.json')),
+                            ],
+                          ));
+                        }
                         if (snapshot.hasError) {
                           return ErrorScreen(error: snapshot.error.toString());
                         } else {
                           return ListView.builder(
                             physics: const BouncingScrollPhysics(),
                             shrinkWrap: true,
+                            keyboardDismissBehavior:
+                                ScrollViewKeyboardDismissBehavior.onDrag,
                             itemCount: snapshot.data!.length,
                             itemBuilder: (context, index) {
                               final contacts = snapshot.data![index];
@@ -98,8 +113,7 @@ class ContactListScreen extends ConsumerWidget {
                                       child: ListTile(
                                           title: Text(
                                             contacts.name,
-                                            style:
-                                                const TextStyle(fontSize: 18),
+                                            style: getTextTheme(context),
                                           ),
                                           subtitle: Padding(
                                             padding:
@@ -154,12 +168,26 @@ class ContactListScreen extends ConsumerWidget {
                     stream: ref.watch(chatControllerProvider).groups,
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Container();
+                        return const CustomIndicator();
+                      }
+                      if (snapshot.data!.isEmpty) {
+                        return Center(
+                            child: Column(
+                          children: [
+                            const Text('Search & Join Groups ...'),
+                            SizedBox(
+                                width: 200,
+                                child: Lottie.asset(
+                                    'assets/json/empty_chat.json')),
+                          ],
+                        ));
                       }
                       if (snapshot.hasError) {
                         return ErrorScreen(error: snapshot.error.toString());
                       } else {
                         return ListView.builder(
+                          keyboardDismissBehavior:
+                              ScrollViewKeyboardDismissBehavior.onDrag,
                           physics: const BouncingScrollPhysics(),
                           shrinkWrap: true,
                           itemCount: snapshot.data!.length,
@@ -189,8 +217,9 @@ class ContactListScreen extends ConsumerWidget {
                                     },
                                   ),
                                   child: Padding(
-                                    padding: const EdgeInsets.only(bottom: 10),
-                                    child: ListTile(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 10),
+                                      child: ListTile(
                                         title: Text(
                                           group.name,
                                           style: const TextStyle(fontSize: 18),
@@ -223,14 +252,9 @@ class ContactListScreen extends ConsumerWidget {
                                                   group.groupPic),
                                           radius: 30,
                                         ),
-                                        trailing: Text(
-                                          DateFormat('h:mm a').format(
-                                              DateTime.parse(
-                                                  group.timeSent.toString())),
-                                          style: const TextStyle(
-                                              color: Colors.grey),
-                                        )),
-                                  ),
+                                        trailing: TimeTextFormatter(
+                                            time: group.timeSent),
+                                      )),
                                 ),
                               ],
                             );

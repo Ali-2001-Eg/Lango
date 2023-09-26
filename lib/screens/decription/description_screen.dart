@@ -6,7 +6,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:whatsapp_clone/controllers/group_controller.dart';
+import 'package:whatsapp_clone/generated/l10n.dart';
 import 'package:whatsapp_clone/screens/chat/chat_screen.dart';
+import 'package:whatsapp_clone/screens/home_screen.dart';
 import 'package:whatsapp_clone/shared/utils/base/error_screen.dart';
 import 'package:whatsapp_clone/shared/widgets/custom_button.dart';
 import 'package:whatsapp_clone/shared/widgets/custom_indicator.dart';
@@ -23,7 +25,7 @@ class DescriptionScreen extends ConsumerWidget {
   final String pic;
   final String description;
   final String id;
-  DescriptionScreen({
+  const DescriptionScreen({
     super.key,
     required this.isGroupChat,
     required this.name,
@@ -33,10 +35,9 @@ class DescriptionScreen extends ConsumerWidget {
     required this.id,
   });
 
-  bool _isJoined = false;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final appTheme = ref.watch(appThemeProvider);
+    final appTheme = ref.watch(appThemeProvider.notifier);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -46,16 +47,32 @@ class DescriptionScreen extends ConsumerWidget {
                   ? lightScaffold
                   : Colors.white),
         ),
+        actions: [
+          isGroupChat
+              ? Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: IconButton(
+                      onPressed: () {
+                        _leaveGroup(ref, context);
+                      },
+                      icon: const Icon(
+                        Icons.logout,
+                        color: Colors.red,
+                      )),
+                )
+              : Container(),
+        ],
       ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
-        child: _descreptionbody(context, ref),
+        child: _descreptionbody(context, ref, appTheme),
       ),
     );
   }
 
-  Widget _descreptionbody(BuildContext context, WidgetRef ref) {
-    _isUserJoined(id, ref);
+  Widget _descreptionbody(
+      BuildContext context, WidgetRef ref, ThemeNotifier appTheme) {
+    //_isUserJoined(id, ref);
     return SizedBox(
       child: Column(
         children: [
@@ -66,56 +83,84 @@ class DescriptionScreen extends ConsumerWidget {
             ),
           ),
           _buildDescriptionTile(
-              context, isGroupChat ? 'Group Name' : 'Username', name),
+              context,
+              isGroupChat ? S.of(context).group_name : S.of(context).username,
+              name),
           !isGroupChat
-              ? _buildDescriptionTile(context, 'Description', description)
+              ? _buildDescriptionTile(
+                  context, S.of(context).description, description)
               : Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: Text(
-                        'Group Members',
+                        S.of(context).group_members,
                         style: getTextTheme(context),
                       ),
                     ),
                     const Divider(
-                      //indent: 50,
+                      //color: greyColor,
                       endIndent: 50,
                       thickness: 5,
                     ),
-                    _groupMembers(ref),
+                    _groupMembers(ref, appTheme),
                   ],
                 ),
           !isGroupChat
               ? GestureDetector(
-                  onTap: () =>
-                      Clipboard.setData(ClipboardData(text: phoneNumber)).then(
-                          (value) =>
-                              customSnackBar('Copied Succesfully', context)),
+                  onTap: () => Clipboard.setData(
+                          ClipboardData(text: phoneNumber))
+                      .then((value) =>
+                          customSnackBar(S.of(context).copy_snackbar, context)),
                   child: _buildDescriptionTile(
-                      context, 'PhoneNumber', phoneNumber,
+                      context, S.of(context).phone_nember, phoneNumber,
                       isPhoneNumber: true),
                 )
-              : StatefulBuilder(builder: (context, setState) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 25, vertical: 15),
-                    child: CustomButton(
-                      onPress: () {
-                        ref.read(groupControllerProvider).toggleGroupJoin(id);
-                        setState(() => _isJoined = !_isJoined);
-                      },
-                      text: !_isJoined ? 'Leave Group' : 'Join Group',
-                    ),
-                  );
-                }),
+              : StreamBuilder(
+                  stream: _isUserJoined(id, ref),
+                  builder: (context, snap) {
+                    if (snap.hasData) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 25, vertical: 15),
+                        child: CustomButton(
+                            onPress: () {
+                              snap.data
+                                  ? _leaveGroup(ref, context)
+                                  : _joinGroup(ref, context);
+                            },
+                            text: snap.data
+                                ? S.of(context).leave_group
+                                : S.of(context).join_group),
+                      );
+                    } else {
+                      return const CustomIndicator();
+                    }
+                  }),
         ],
       ),
     );
   }
 
-  FutureBuilder<List<UserModel>> _groupMembers(WidgetRef ref) {
+  void _leaveGroup(WidgetRef ref, BuildContext context) {
+    ref
+        .read(groupControllerProvider)
+        .leaveGroup(id)
+        .then((value) => Navigator.pushNamed(context, HomeScreen.routeName))
+        .then(
+            (value) => customSnackBar('You left $name successfully!', context));
+  }
+
+  void _joinGroup(WidgetRef ref, BuildContext context) {
+    ref
+        .read(groupControllerProvider)
+        .joinGroup(id)
+        .then((value) => Navigator.pop(context));
+  }
+
+  FutureBuilder<List<UserModel>> _groupMembers(
+      WidgetRef ref, ThemeNotifier appTheme) {
     return FutureBuilder<List<UserModel>>(
         future: ref.read(groupControllerProvider).getGroupMembers(id),
         builder: (context, snapshot) {
@@ -131,14 +176,25 @@ class DescriptionScreen extends ConsumerWidget {
 
           return ListView.builder(
               itemCount: snapshot.data!.length,
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
               shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (_, i) {
                 var member = snapshot.data![i];
                 return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 15),
                   child: ListTile(
                     title: Text(member.name),
-                    subtitle: Text(member.isOnline ? 'online' : 'offline'),
+                    subtitle: Text(
+                      member.isOnline
+                          ? S.of(context).online
+                          : S.of(context).offline,
+                      style: TextStyle(
+                        color: appTheme.selectedTheme == 'light'
+                            ? getTheme(context).appBarTheme.backgroundColor
+                            : getTheme(context).cardColor,
+                      ),
+                    ),
                     leading: CircleAvatar(
                       radius: 30,
                       backgroundImage:
@@ -165,7 +221,11 @@ class DescriptionScreen extends ConsumerWidget {
                                 },
                                 icon: Icon(
                                   Icons.message,
-                                  color: getTheme(context).cardColor,
+                                  color: appTheme.selectedTheme == 'light'
+                                      ? getTheme(context)
+                                          .appBarTheme
+                                          .backgroundColor
+                                      : getTheme(context).cardColor,
                                 ))
                             : null,
                   ),
@@ -192,36 +252,34 @@ class DescriptionScreen extends ConsumerWidget {
           margin: const EdgeInsets.all(20),
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            border: Border.all(color: Colors.white),
+            border: Border.all(
+                color: getTheme(context).appBarTheme.backgroundColor!),
             borderRadius: BorderRadius.circular(20),
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(description, style: getTextTheme(context)),
-              const SizedBox(
-                width: 15,
-              ),
-              isPhoneNumber
-                  ? Icon(
-                      Icons.copy,
-                      color: getTheme(context).cardColor,
-                    )
-                  : Container()
-            ],
+          child: Directionality(
+            textDirection: TextDirection.ltr,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(description, style: getTextTheme(context)),
+                const SizedBox(
+                  width: 15,
+                ),
+                isPhoneNumber
+                    ? Icon(
+                        Icons.copy,
+                        color: getTheme(context).appBarTheme.backgroundColor,
+                      )
+                    : Container()
+              ],
+            ),
           ),
         )
       ],
     );
   }
 
-  Future<bool> _isUserJoined(String groupId, ref) async {
-    return await ref
-        .read(groupControllerProvider)
-        .isUserJoined(groupId)
-        .then((value) {
-      print('value is $value');
-      return value;
-    });
+  Stream _isUserJoined(String groupId, ref) {
+    return ref.read(groupControllerProvider).isUserJoined(groupId);
   }
 }

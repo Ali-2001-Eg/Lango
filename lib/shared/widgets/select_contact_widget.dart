@@ -20,14 +20,16 @@ List<int> selectedContactsIndex = [];
 class _SelectContactsWidgetState extends ConsumerState<SelectContactsWidget> {
   @override
   Widget build(BuildContext context) {
-    print(selectedContactsIndex);
+    // print(selectedContactsIndex);
     return ref.watch(getContactProvider).when(
           data: (data) => Expanded(
               child: ListView.builder(
+            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
             itemCount: data.length,
             physics: const BouncingScrollPhysics(),
             itemBuilder: (context, index) {
               final contact = data[index];
+              // print(data.length);
               return InkWell(
                 onTap: () => _selectContact(index, contact),
                 child: Padding(

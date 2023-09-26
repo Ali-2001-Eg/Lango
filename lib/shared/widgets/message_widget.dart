@@ -24,13 +24,12 @@ class MessageWidget extends StatelessWidget {
   final File? file;
   final String caption;
   final String receiverUid;
-  final String messageId;
+
   const MessageWidget(
       {Key? key,
       required this.message,
       required this.messageType,
       required this.receiverUid,
-      required this.messageId,
       this.confirmScreen = false,
       this.file,
       this.caption = '',
@@ -61,12 +60,17 @@ class MessageWidget extends StatelessWidget {
                     fit: BoxFit.cover,
                   )
                 : Stack(
+                    clipBehavior: Clip.antiAlias,
                     children: [
-                      CachedNetworkImage(
-                        imageUrl: message,
-                        fit: BoxFit.cover,
-                        progressIndicatorBuilder: (context, url, progress) =>
-                            CustomIndicator(value: progress.progress),
+                      Container(
+                        decoration: BoxDecoration(
+                            border:
+                                Border.all(color: getTheme(context).cardColor),
+                            borderRadius: BorderRadius.circular(20),
+                            image: DecorationImage(
+                              image: CachedNetworkImageProvider(message),
+                              fit: BoxFit.fill,
+                            )),
                       ),
                       if (caption != '')
                         Positioned(
@@ -82,82 +86,64 @@ class MessageWidget extends StatelessWidget {
                               child: Text(
                                 caption,
                                 // textAlign: TextAlign.end,
-                                style: Theme.of(context).textTheme.titleMedium,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium!
+                                    .copyWith(color: Colors.white),
                               )),
                         ),
                     ],
                   ));
       case MessageEnum.video:
-        return Container(
-          decoration: BoxDecoration(
-              border: Border.all(color: Colors.transparent, width: 2)),
-          child: confirmScreen
-              ? VideoPlayerItem(url: file!.path)
-              : Stack(
-                  children: [
-                    VideoPlayerItem(url: message),
-                    if (caption != '')
-                      Positioned(
-                        bottom: 0,
-                        right: 0,
-                        left: 0,
-                        child: Container(
-                            constraints: BoxConstraints(
-                                maxWidth: size(context).width / 2),
-                            color: messageColor,
-                            alignment: AlignmentDirectional.centerEnd,
-                            width: double.infinity,
-                            child: Text(
-                              caption,
-                              // textAlign: TextAlign.end,
-                              style: TextStyle(color: textColor, fontSize: 16),
-                            )),
+        return confirmScreen
+            ? VideoPlayerItem(url: file!.path)
+            : Stack(
+                children: [
+                  Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: getTheme(context).cardColor),
+                        borderRadius: BorderRadius.circular(30),
                       ),
-                  ],
-                ),
-        );
+                      child: VideoPlayerItem(url: message)),
+                  if (caption != '')
+                    Positioned(
+                      bottom: 0,
+                      right: 0,
+                      left: 0,
+                      child: Text(
+                        caption,
+                        // textAlign: TextAlign.end,
+                        style: TextStyle(color: textColor, fontSize: 16),
+                      ),
+                    ),
+                ],
+              );
       case MessageEnum.gif:
         return Container(
-            width: size(context).width / 2,
-            constraints: BoxConstraints(
-              maxHeight: size(context).height / 3,
-              minHeight: size(context).height / 6,
-            ),
-            decoration: const BoxDecoration(
+          width: size(context).width / 2,
+          constraints: BoxConstraints(
+            maxHeight: size(context).height / 3,
+            minHeight: size(context).height / 6,
+          ),
+          decoration: BoxDecoration(
               color: backgroundColor,
-            ),
-            child: CachedNetworkImage(
-              imageUrl: message,
-              fit: BoxFit.cover,
-              progressIndicatorBuilder: (context, url, progress) =>
-                  CustomIndicator(value: progress.progress),
-              // errorWidget: (context, url, error) => const Icon(
-              //   Icons.error,
-              //   color: Colors.red,
-              // ),
-            ));
+              borderRadius: BorderRadius.circular(30),
+              border: Border.all(color: getTheme(context).cardColor, width: 2),
+              image: DecorationImage(
+                  image: CachedNetworkImageProvider(message),
+                  fit: BoxFit.fill)),
+        );
       case MessageEnum.pdf:
         return ListTile(
           tileColor: Theme.of(context).cardColor,
-          // leading: Container(
-          //   decoration: BoxDecoration(
-          //       shape: BoxShape.circle, border: Border.all(color: Colors.grey)),
-          //   child: IconButton(
-          //       onPressed: () async {
-          //         var dir = await getTemporaryDirectory();
-          //         var path = '${dir.path}/documents.pdf';
-          //         downloadFile(message, path)
-          //             .then((value) => print(path))
-          //             .catchError(
-          //                 (e) => print('Error Occurred ${e.toString()}'));
-          //       },
-          //       icon: const Icon(Icons.download)),
-          // ),
           title: Column(
             children: [
               Text(
                 caption,
-                style: Theme.of(context).textTheme.titleMedium,
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium!
+                    .copyWith(color: Colors.white),
               ),
             ],
           ),

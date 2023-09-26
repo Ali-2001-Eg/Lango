@@ -35,9 +35,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("اختر نظام التطبيق"),
         "con": MessageLookupByLibrary.simpleMessage("جهات الاتصال"),
         "contacts": MessageLookupByLibrary.simpleMessage("جهات الاتصال"),
+        "copy_snackbar": MessageLookupByLibrary.simpleMessage("تم النسخ بنجاح"),
         "create_group": MessageLookupByLibrary.simpleMessage("إنشاء مجموعه"),
         "delete_account": MessageLookupByLibrary.simpleMessage("إزاله الحساب"),
+        "description": MessageLookupByLibrary.simpleMessage("الوصف"),
         "doc": MessageLookupByLibrary.simpleMessage("ملف"),
+        "edit_profile": MessageLookupByLibrary.simpleMessage("تعديل الحساب"),
         "enter_description":
             MessageLookupByLibrary.simpleMessage("ادخل الوصف الخاص بك"),
         "enter_group_name":
@@ -46,9 +49,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "enter_phone_num":
             MessageLookupByLibrary.simpleMessage("ادخل رقم التليفون"),
         "gal": MessageLookupByLibrary.simpleMessage("المعرض"),
+        "group_members": MessageLookupByLibrary.simpleMessage("أعضاء المجموعه"),
+        "group_name": MessageLookupByLibrary.simpleMessage("اسم المجموعه"),
         "groups": MessageLookupByLibrary.simpleMessage("المجموعات و القنوات"),
         "incoming_call": MessageLookupByLibrary.simpleMessage("مكالمه من"),
+        "join_group": MessageLookupByLibrary.simpleMessage("الانضمام للمجموعه"),
         "language": MessageLookupByLibrary.simpleMessage("العربيه"),
+        "leave_group": MessageLookupByLibrary.simpleMessage("مغادره المجموعه"),
         "loc": MessageLookupByLibrary.simpleMessage("الموقع"),
         "login_heading": MessageLookupByLibrary.simpleMessage(
             "Chat&Live يريد التأكد من هويتك."),
@@ -57,6 +64,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "next": MessageLookupByLibrary.simpleMessage("التالي"),
         "offline": MessageLookupByLibrary.simpleMessage("غير متصل"),
         "online": MessageLookupByLibrary.simpleMessage("متصل"),
+        "phone_nember": MessageLookupByLibrary.simpleMessage("رقم الهاتف"),
         "phone_num": MessageLookupByLibrary.simpleMessage("رقم التليفون"),
         "pick_country": MessageLookupByLibrary.simpleMessage("اختر بلدتك"),
         "read_our_privacy": MessageLookupByLibrary.simpleMessage(
@@ -71,6 +79,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "تم ارسال كود التأكد الي رقم التليفون"),
         "status": MessageLookupByLibrary.simpleMessage("الحالات"),
         "status_hint": MessageLookupByLibrary.simpleMessage("وصف الحاله"),
+        "username": MessageLookupByLibrary.simpleMessage("الاسم الشخصي"),
         "verify_num":
             MessageLookupByLibrary.simpleMessage("جاري التأكد من هويتك"),
         "welcome_landing":

@@ -28,20 +28,24 @@ class ContactRepo {
       Contact selectedContact, BuildContext context) async {
     try {
       var userCollection = await firestore.collection('users').get();
-      bool isFound = false;
+      bool isFound;
       for (var doc in userCollection.docs) {
         var userData = UserModel.fromJson(doc.data());
         String selectedPhoneNum =
-            '${selectedContact.phones[0].number.replaceAll(' ', '')}';
+            selectedContact.phones[0].number.replaceAll(' ', '');
+        if (!selectedPhoneNum.startsWith('+2')) {
+          selectedPhoneNum = '+2$selectedPhoneNum';
+        }
         if (kDebugMode) {
           print(selectedPhoneNum);
         }
-        if (kDebugMode) {
+        /*  if (kDebugMode) {
           print(userData.phoneNumber);
-        }
+        } */
         if (selectedPhoneNum == userData.phoneNumber) {
           isFound = true;
-          navigatorKey.currentState!.pushNamed(
+          Navigator.pushNamed(
+            context,
             ChatScreen.routeName,
             arguments: {
               'name': userData.name,
@@ -55,8 +59,7 @@ class ContactRepo {
               'token': userData.token,
             },
           );
-        }
-        if (!isFound) {
+        } else {
           customSnackBar('This Number does not exist in the app.', context);
         }
       }

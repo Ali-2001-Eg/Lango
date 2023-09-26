@@ -23,6 +23,15 @@ final TextEditingController _controller = TextEditingController();
 
 class _CreateGroupScreenState extends ConsumerState<CreateGroupScreen> {
   @override
+  void dispose() {
+    _image = null;
+    //ref.read(selectGroupContacts.state).update((state) => []);
+    _controller.clear();
+
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -45,6 +54,7 @@ class _CreateGroupScreenState extends ConsumerState<CreateGroupScreen> {
           setState(() {
             _controller.clear();
             _image = null;
+            ref.read(selectGroupContacts.state).update((state) => []);
           });
           return true;
         },
@@ -58,7 +68,7 @@ class _CreateGroupScreenState extends ConsumerState<CreateGroupScreen> {
                 child: TextField(
                     controller: _controller,
                     decoration: InputDecoration(
-                      hintText: 'Enter Group Name',
+                      hintText: S.of(context).enter_group_name,
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15),
                           borderSide: BorderSide(
@@ -77,7 +87,9 @@ class _CreateGroupScreenState extends ConsumerState<CreateGroupScreen> {
                         ? Container(
                             padding: const EdgeInsets.all(10),
                             decoration: BoxDecoration(
-                                color: getTheme(context).cardColor,
+                                color: getTheme(context)
+                                    .appBarTheme
+                                    .backgroundColor,
                                 borderRadius: BorderRadius.circular(15)),
                             child: const CircleAvatar(
                               radius: 64,
@@ -113,9 +125,9 @@ class _CreateGroupScreenState extends ConsumerState<CreateGroupScreen> {
                 height: 10,
               ),
               Text(
-                'Select Contacts',
-                style: getTextTheme(context)!
-                    .copyWith(color: getTheme(context).cardColor),
+                S.of(context).select_contact,
+                style: getTextTheme(context)!.copyWith(
+                    color: getTheme(context).appBarTheme.backgroundColor),
               ),
               const SizedBox(
                 height: 30,
@@ -147,7 +159,7 @@ class _CreateGroupScreenState extends ConsumerState<CreateGroupScreen> {
         () => Navigator.of(context).pop(),
       );
     } else {
-      customSnackBar('Please Enter Group Image And Name', context);
+      //customSnackBar('Please Enter Group Image And Name', context);
     }
   }
 }

@@ -10,7 +10,7 @@ import 'package:whatsapp_clone/screens/chat/chat_screen.dart';
 import 'package:whatsapp_clone/screens/home_screen.dart';
 import 'package:whatsapp_clone/screens/select_contact/select_contact_screen.dart';
 import 'package:whatsapp_clone/screens/settings/settings_screen.dart';
-import 'package:whatsapp_clone/screens/status/confirm_file_screen.dart';
+import 'package:whatsapp_clone/screens/status/confirm_file_status_screen.dart';
 import 'package:whatsapp_clone/screens/status/status_screen.dart';
 import 'package:whatsapp_clone/shared/enums/message_enum.dart';
 import 'package:whatsapp_clone/shared/utils/base/error_screen.dart';

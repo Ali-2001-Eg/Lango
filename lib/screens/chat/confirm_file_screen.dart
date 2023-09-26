@@ -75,7 +75,6 @@ class _ConfirmFileScreenState extends ConsumerState<ConfirmFileScreen> {
                           messageType: widget.messageType,
                           confirmScreen: true,
                           receiverUid: widget.receiverUid,
-                          messageId: '',
                           file: widget.message),
                     ),
                   ),
@@ -94,7 +93,9 @@ class _ConfirmFileScreenState extends ConsumerState<ConfirmFileScreen> {
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  icon: Icon(Icons.close, color: Theme.of(context).cardColor)),
+                  icon: const Icon(
+                    Icons.close,
+                  )),
             ),
           ),
           Positioned(
@@ -135,9 +136,8 @@ class _ConfirmFileScreenState extends ConsumerState<ConfirmFileScreen> {
                         _sendFileMessage(widget.message, widget.messageType,
                             _captionController.text.trim());
                       },
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.send,
-                        color: Theme.of(context).cardColor,
                       )),
                 )
               ],
@@ -197,7 +197,7 @@ class _ConfirmFileScreenState extends ConsumerState<ConfirmFileScreen> {
             widget.receiverUid,
             messageEnum,
             messageEnum == MessageEnum.pdf
-                ? '${widget.filename} $captionText'
+                ? '${widget.filename}**** $captionText'
                 : captionText,
             widget.isGroupChat,
           );

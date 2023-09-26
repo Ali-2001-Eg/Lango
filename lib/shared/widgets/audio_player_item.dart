@@ -19,13 +19,12 @@ class _AudioPlayerItemState extends State<AudioPlayerItem> {
   @override
   void initState() {
     audioPlayer = AudioPlayer();
-    if(mounted) {
+    if (mounted) {
       audioPlayer.onPlayerStateChanged.listen((event) {
-
-      setState(() {
-        isPlaying = event == PlayerState.playing;
+        setState(() {
+          isPlaying = event == PlayerState.playing;
+        });
       });
-    });
     }
     audioPlayer.onDurationChanged.listen((event) {
       setState(() {
@@ -67,7 +66,7 @@ class _AudioPlayerItemState extends State<AudioPlayerItem> {
           children: [
             CircleAvatar(
               radius: 30,
-              backgroundColor: getTheme(context).inputDecorationTheme.iconColor,
+              backgroundColor: getTheme(context).hoverColor,
               child: IconButton(
                 //iconSize: 20,
                 //style: getTheme(context).iconButtonTheme.style,
@@ -85,13 +84,13 @@ class _AudioPlayerItemState extends State<AudioPlayerItem> {
               ),
             ),
             SliderTheme(
-              data: SliderThemeData(),
+              data: const SliderThemeData(),
               child: Slider(
                 min: 0,
                 max: duration.inSeconds.toDouble(),
                 value: position.inSeconds.toDouble(),
-                activeColor: getTheme(context).appBarTheme.backgroundColor,
-                //inactiveColor: getTheme(context).splashColor,
+                activeColor: getTheme(context).hoverColor,
+                inactiveColor: getTheme(context).splashColor,
                 onChanged: (value) async {
                   final position = Duration(seconds: value.toInt());
                   await audioPlayer.seek(position);
@@ -101,19 +100,22 @@ class _AudioPlayerItemState extends State<AudioPlayerItem> {
             ),
           ],
         ),
+        const SizedBox(height: 5),
         Row(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Text(
               formattedTime(position.inSeconds),
-              style: getTextTheme(context)!.copyWith(height: 0, fontSize: 16),
+              style: getTextTheme(context)!
+                  .copyWith(height: 0, fontSize: 16, color: Colors.white),
             ),
             SizedBox(width: size(context).width / 3),
             //remaining time
             Text(
               '- ${formattedTime((duration - position).inSeconds)}',
-              style: getTextTheme(context)!.copyWith(height: 0, fontSize: 16),
+              style: getTextTheme(context)!
+                  .copyWith(height: 0, fontSize: 16, color: Colors.white),
             ),
           ],
         ),

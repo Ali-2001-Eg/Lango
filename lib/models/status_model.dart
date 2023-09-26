@@ -26,7 +26,7 @@ class StatusModel {
       uid: json["uid"],
       username: json["username"],
       phoneNumber: json["phoneNumber"],
-      status:json["fileUrl"],
+      status: json["fileUrl"],
       createdAt: DateTime.fromMillisecondsSinceEpoch(json["createdAt"]),
       profilePic: json["profilePic"],
       statusId: json["statusId"],

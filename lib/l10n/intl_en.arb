@@ -39,5 +39,15 @@
     "delete_account":"Delete Account",
     "app_lang":"App Language:",
     "contacts":"Your Contacts",
-    "groups":"Groups and Channels"
+    "groups":"Groups and Channels",
+    "group_name":"Group Name",
+    "username":"Username",
+    "description":"Description",
+    "group_members":"Group Members",
+    "copy_snackbar":"Copied Succesfully",
+    "phone_nember":"PhoneNumber",
+    "leave_group":"Leave Group",
+    "join_group":"Join Group",
+    "edit_profile":"Edit Profile"
+   
 }

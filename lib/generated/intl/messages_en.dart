@@ -37,10 +37,14 @@ class MessageLookup extends MessageLookupByLibrary {
             "Choose Your Favourite App Theme"),
         "con": MessageLookupByLibrary.simpleMessage("Contacts"),
         "contacts": MessageLookupByLibrary.simpleMessage("Your Contacts"),
+        "copy_snackbar":
+            MessageLookupByLibrary.simpleMessage("Copied Succesfully"),
         "create_group": MessageLookupByLibrary.simpleMessage("Create Group"),
         "delete_account":
             MessageLookupByLibrary.simpleMessage("Delete Account"),
+        "description": MessageLookupByLibrary.simpleMessage("Description"),
         "doc": MessageLookupByLibrary.simpleMessage("Document"),
+        "edit_profile": MessageLookupByLibrary.simpleMessage("Edit Profile"),
         "enter_description":
             MessageLookupByLibrary.simpleMessage("Enter Your Description"),
         "enter_group_name":
@@ -49,9 +53,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "enter_phone_num":
             MessageLookupByLibrary.simpleMessage("Enter your phone number"),
         "gal": MessageLookupByLibrary.simpleMessage("Gallery"),
+        "group_members": MessageLookupByLibrary.simpleMessage("Group Members"),
+        "group_name": MessageLookupByLibrary.simpleMessage("Group Name"),
         "groups": MessageLookupByLibrary.simpleMessage("Groups and Channels"),
         "incoming_call": MessageLookupByLibrary.simpleMessage("Incoming Call"),
+        "join_group": MessageLookupByLibrary.simpleMessage("Join Group"),
         "language": MessageLookupByLibrary.simpleMessage("English"),
+        "leave_group": MessageLookupByLibrary.simpleMessage("Leave Group"),
         "loc": MessageLookupByLibrary.simpleMessage("Location"),
         "login_heading": MessageLookupByLibrary.simpleMessage(
             "Chat&Live needs to verify your phone number."),
@@ -60,6 +68,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "next": MessageLookupByLibrary.simpleMessage("Next"),
         "offline": MessageLookupByLibrary.simpleMessage("Offline"),
         "online": MessageLookupByLibrary.simpleMessage("Online"),
+        "phone_nember": MessageLookupByLibrary.simpleMessage("PhoneNumber"),
         "phone_num": MessageLookupByLibrary.simpleMessage("Phone number"),
         "pick_country": MessageLookupByLibrary.simpleMessage("Pick Country"),
         "read_our_privacy": MessageLookupByLibrary.simpleMessage(
@@ -74,6 +83,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "We have sent an SMS with a code."),
         "status": MessageLookupByLibrary.simpleMessage("STATUS"),
         "status_hint": MessageLookupByLibrary.simpleMessage("Type a status..."),
+        "username": MessageLookupByLibrary.simpleMessage("Username"),
         "verify_num":
             MessageLookupByLibrary.simpleMessage("Verifying your number"),
         "welcome_landing":

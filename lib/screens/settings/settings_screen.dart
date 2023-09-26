@@ -83,20 +83,14 @@ class SettingsScreen extends ConsumerWidget {
                                   : 'ar',
                               child: Text(
                                 localeNotifier.selectedLocale,
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 15,
-                                    color: Colors.grey),
                               ),
                             ),
-                            const DropdownMenuItem(
+                            DropdownMenuItem(
                               value: 'اللغه العربيه',
                               child: Text(
-                                'اللغه العربيه',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 15,
-                                    color: Colors.grey),
+                                localeNotifier.selectedLocale != 'en'
+                                    ? 'en'
+                                    : 'ar',
                               ),
                             ),
                           ],

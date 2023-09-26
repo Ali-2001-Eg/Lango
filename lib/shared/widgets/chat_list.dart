@@ -58,6 +58,7 @@ class _ChatListState extends ConsumerState<ChatList> {
             return ListView.builder(
               controller: _scrollController,
               itemCount: snapshot.data!.length,
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
               physics: const BouncingScrollPhysics(),
               itemBuilder: (context, index) {
                 final message = snapshot.data![index];

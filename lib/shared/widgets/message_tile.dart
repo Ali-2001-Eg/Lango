@@ -68,18 +68,25 @@ class MessageTile extends ConsumerWidget {
                     topRight: Radius.circular(20),
                     bottomRight: Radius.circular(20),
                   ),
-            color: getTheme(context).cardColor,
+            color: messageType == MessageEnum.gif ||
+                    messageType == MessageEnum.image ||
+                    messageType == MessageEnum.video
+                ? null
+                : isMe
+                    ? getTheme(context).cardColor
+                    : const Color(0xff1e293b),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
+              customPopupMenuButton(ref, context),
               Column(
                 children: [
                   if (isReplying) ...[
                     Container(
                       width: double.maxFinite,
                       decoration: BoxDecoration(
-                        color: getTheme(context).inputDecorationTheme.fillColor,
+                        color: getTheme(context).hoverColor,
                         borderRadius: BorderRadius.circular(25),
                       ),
                       padding: const EdgeInsets.all(5),
@@ -90,7 +97,7 @@ class MessageTile extends ConsumerWidget {
                             onTap: () {},
                             child: Text(
                               isMe ? '~you ' : username,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -100,7 +107,6 @@ class MessageTile extends ConsumerWidget {
                             message: messageReply,
                             textColor: Colors.grey[900]!,
                             receiverUid: receiverUid,
-                            messageId: '',
                           ),
                         ],
                       ),
@@ -116,54 +122,46 @@ class MessageTile extends ConsumerWidget {
                         message: message,
                         caption: caption,
                         receiverUid: receiverUid,
-                        messageId: '',
                       ),
                     ],
                   ),
                 ],
               ),
-              Row(
-                //mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  customPopupMenuButton(ref, context),
-                  Container(
-                    decoration: BoxDecoration(
-                        color: Colors.grey,
-                        borderRadius: BorderRadius.circular(5),
-                        boxShadow: const [
-                          BoxShadow(
-                              color: Colors.black38,
-                              offset: Offset(0, 5),
-                              spreadRadius: 3,
-                              blurRadius: 1,
-                              blurStyle: BlurStyle.inner)
-                        ]),
-                    child: Padding(
-                      padding: const EdgeInsets.all(3),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            DateFormat('h:mm a').format(DateTime.parse(date)),
-                            style: const TextStyle(
-                                color: Colors.black, fontSize: 12),
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          Icon(
-                            Icons.done_all,
-                            size: 20,
-                            color: isSeen && !isMe
-                                ? CupertinoColors.systemBlue
-                                : Colors.black45,
-                          ),
-                        ],
+              Container(
+                decoration: BoxDecoration(
+                    color: Colors.grey,
+                    borderRadius: BorderRadius.circular(5),
+                    boxShadow: const [
+                      BoxShadow(
+                          color: Colors.black38,
+                          offset: Offset(0, 5),
+                          spreadRadius: 3,
+                          blurRadius: 1,
+                          blurStyle: BlurStyle.inner)
+                    ]),
+                child: Padding(
+                  padding: const EdgeInsets.all(3),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        DateFormat('h:mm a').format(DateTime.parse(date)),
+                        style:
+                            const TextStyle(color: Colors.black, fontSize: 12),
                       ),
-                    ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Icon(
+                        Icons.done_all,
+                        size: 20,
+                        color: isSeen && !isMe
+                            ? CupertinoColors.systemBlue
+                            : Colors.black45,
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ],
           ),

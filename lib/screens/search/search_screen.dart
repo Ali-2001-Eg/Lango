@@ -4,10 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_clone/screens/chat/chat_screen.dart';
 import 'package:whatsapp_clone/shared/utils/base/error_screen.dart';
+import 'package:whatsapp_clone/shared/utils/colors.dart';
 import 'package:whatsapp_clone/shared/utils/functions.dart';
+import 'package:whatsapp_clone/shared/widgets/custom_indicator.dart';
 
 import '../../controllers/chat_controller.dart';
 import '../../controllers/group_controller.dart';
+import '../../generated/l10n.dart';
 import '../../models/group_model.dart';
 
 class SearchScreen extends ConsumerStatefulWidget {
@@ -20,7 +23,9 @@ class SearchScreen extends ConsumerStatefulWidget {
 
 class _HomePage extends ConsumerState<SearchScreen> {
   final _searchController = TextEditingController();
-  bool _isJoined = false;
+  final FocusNode _focusNode = FocusNode();
+  List<GroupModel> filteredList = [];
+  List<GroupModel> allGroups = [];
   @override
   void dispose() {
     _searchController.dispose();
@@ -28,102 +33,133 @@ class _HomePage extends ConsumerState<SearchScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    filteredList = allGroups;
+  }
+
+  @override
   Widget build(BuildContext context) {
+    //_focusNode.requestFocus();
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
-        title: TextFormField(
-          decoration: const InputDecoration(
-              filled: false,
-              hintText: 'Search',
-              hintStyle: TextStyle(fontSize: 20, color: Colors.white)),
-          onChanged: (value) {
-            print(value);
-            ref.read(groupControllerProvider).searchByName(value.trim());
-          },
+        title: TextField(
+          controller: _searchController,
+          focusNode: _focusNode,
+          textAlign: TextAlign.center,
+          onChanged: (value) => _filterGroups(_searchController.text.trim()),
+          decoration: InputDecoration.collapsed(
+            filled: false,
+            hintStyle: getTextTheme(context)!.copyWith(
+                fontSize: 16, color: Colors.grey, fontWeight: FontWeight.w300),
+            hintText: 'Search for a group',
+          ),
         ),
       ),
-      body: StreamBuilder<List<GroupModel>>(
-        stream: ref
-            .read(groupControllerProvider)
-            .searchByName(_searchController.text.trim()),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return const Center(
-              child: Text(
-                'No Groups with this name',
-              ),
-            );
-          }
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          return ListView.builder(
-            itemCount: snapshot.data!.length,
-            itemBuilder: (_, i) {
-              GroupModel group = snapshot.data![i];
-              return _groupTile(group, _);
-            },
-          );
-        },
+      body: SingleChildScrollView(
+        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+        physics: const BouncingScrollPhysics(),
+        child: StreamBuilder<List<GroupModel>>(
+          stream: ref.read(groupControllerProvider).groups,
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return const Center(
+                child: Text(
+                  'No Groups with this name',
+                ),
+              );
+            }
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            } else {
+              return ListView.builder(
+                keyboardDismissBehavior:
+                    ScrollViewKeyboardDismissBehavior.onDrag,
+                itemCount: _searchController.text.isEmpty
+                    ? snapshot.data!.length
+                    : filteredList.length,
+                physics: const BouncingScrollPhysics(),
+                shrinkWrap: true,
+                itemBuilder: (_, i) {
+                  if (_searchController.text.isEmpty) {
+                    allGroups = snapshot.data!;
+                    print('filtered groups $filteredList\n');
+                    GroupModel group = snapshot.data![i];
+                    return _groupTile(group, context);
+                  } else {
+                    //for searched groups
+                    return _groupTile(filteredList[i], context);
+                  }
+                },
+              );
+            }
+          },
+        ),
       ),
     );
   }
 
-  Future<bool> _isUserJoined(String groupId) async {
-    return await ref
-        .read(groupControllerProvider)
-        .isUserJoined(groupId)
-        .then((value) {
-      _isJoined = value;
-      return value;
+  Stream<bool> _isUserJoined(String groupId) {
+    return ref.read(groupControllerProvider).isUserJoined(groupId);
+  }
+
+  void _filterGroups(String query) {
+    List<GroupModel> tempList = [];
+    tempList.addAll(allGroups);
+
+    tempList.retainWhere(
+        (element) => element.name.toLowerCase().contains(query.toLowerCase()));
+
+    setState(() {
+      filteredList = tempList;
     });
   }
 
   Padding _groupTile(GroupModel group, BuildContext context) {
-    _isUserJoined(group.groupId);
     return Padding(
-      padding: const EdgeInsets.all(15),
-      child: ListTile(
-        title: Text(
-          group.name,
-          style: const TextStyle(fontSize: 20),
-        ),
-        leading: CircleAvatar(
-          radius: 30,
-          backgroundImage: CachedNetworkImageProvider(group.groupPic),
-        ),
-        trailing: ElevatedButton(
-          onPressed: () {
-            ref.read(groupControllerProvider).toggleGroupJoin(group.groupId);
-          },
-          style: ButtonStyle(
-              backgroundColor: MaterialStatePropertyAll<Color>(
-                getTheme(context).cardColor,
-              ),
-              padding: const MaterialStatePropertyAll<EdgeInsets>(
-                  EdgeInsets.all(10))),
-          child: Text(
-            _isJoined ? 'Leave Group' : 'Join Group',
+        padding: const EdgeInsets.all(15),
+        child: ListTile(
+          title: Text(
+            group.name,
+            style: const TextStyle(fontSize: 20),
           ),
-        ),
-        onTap: () async {
-          !_isJoined
-              ? Navigator.pushNamed(context, ChatScreen.routeName, arguments: {
-                  'name': group.name,
-                  'uid': group.groupId,
-                  'profilePic': group.groupPic,
-                  'groupId': <String>[],
-                  'description': '',
-                  'isOnline': false,
-                  'phoneNumber': '',
-                  'isGroupChat': true,
-                  'token': ref.watch(chatControllerProvider).user?.token,
-                })
-              : null;
-        },
-      ),
-    );
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '${group.membersUid.length} subscribers',
+                style: getTextTheme(context)!.copyWith(
+                    fontSize: 13, color: getTheme(context).hoverColor),
+              ),
+              const Divider(
+                thickness: 2,
+              )
+            ],
+          ),
+          leading: CircleAvatar(
+            radius: 30,
+            backgroundImage: CachedNetworkImageProvider(group.groupPic),
+          ),
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              ChatScreen.routeName,
+              arguments: {
+                'name': group.name,
+                'uid': group.groupId,
+                'profilePic': group.groupPic,
+                'groupId': null,
+                'description': '',
+                'isOnline': false,
+                'phoneNumber': '',
+                'isGroupChat': true,
+                'token': ref.watch(chatControllerProvider).user?.token,
+              },
+            );
+          },
+        ));
   }
 }

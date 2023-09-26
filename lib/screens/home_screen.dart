@@ -7,6 +7,7 @@ import 'package:whatsapp_clone/screens/profile/edit_profile_screen.dart';
 import 'package:whatsapp_clone/screens/search/search_screen.dart';
 import 'package:whatsapp_clone/screens/settings/settings_screen.dart';
 import 'package:whatsapp_clone/screens/status/status_contacts_screen.dart';
+import 'package:whatsapp_clone/shared/notifiers/theme_notifier.dart';
 import 'package:whatsapp_clone/shared/utils/colors.dart';
 import 'package:whatsapp_clone/shared/utils/functions.dart';
 import 'package:whatsapp_clone/generated/l10n.dart';
@@ -66,6 +67,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
 
   @override
   Widget build(BuildContext context) {
+    final themeNotifier = ref.read(appThemeProvider);
+
     return DefaultTabController(
       length: 3,
       child: Scaffold(
@@ -92,6 +95,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
               },
             ),
             PopupMenuButton(
+              //color: Colors.white,
               icon: const Icon(
                 Icons.more_vert,
                 // color: Colors.grey,
@@ -100,14 +104,16 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                 PopupMenuItem(
                     child: Text(
                       S.of(context).create_group,
-                      style: getTextTheme(context)!.copyWith(fontSize: 18),
+                      style: getTextTheme(context)!
+                          .copyWith(fontSize: 18, color: Colors.white),
                     ),
                     onTap: () => Future(() => Navigator.of(context)
                         .pushNamed(CreateGroupScreen.routeName))),
                 PopupMenuItem(
                     child: Text(
                       S.of(context).settings,
-                      style: getTextTheme(context)!.copyWith(fontSize: 18),
+                      style: getTextTheme(context)!
+                          .copyWith(fontSize: 18, color: Colors.white),
                     ),
                     onTap: () {
                       Future(
@@ -115,8 +121,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                     }),
                 PopupMenuItem(
                     child: Text(
-                      'Edit Profile',
-                      style: getTextTheme(context)!.copyWith(fontSize: 18),
+                      S.of(context).edit_profile,
+                      style: getTextTheme(context)!
+                          .copyWith(fontSize: 18, color: Colors.white),
                     ),
                     onTap: () {
                       Future(() =>
@@ -130,9 +137,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
               value = tabBarController.index;
             }),
             controller: tabBarController,
-            indicatorColor: Theme.of(context).indicatorColor,
+            indicatorColor: getTheme(context).indicatorColor,
             indicatorWeight: 4,
-            labelColor: Theme.of(context).indicatorColor,
+            labelColor: getTheme(context).indicatorColor,
             unselectedLabelColor: Colors.white,
             labelStyle: const TextStyle(
               fontWeight: FontWeight.bold,

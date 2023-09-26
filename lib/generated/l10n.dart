@@ -459,6 +459,96 @@ class S {
       args: [],
     );
   }
+
+  /// `Group Name`
+  String get group_name {
+    return Intl.message(
+      'Group Name',
+      name: 'group_name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Username`
+  String get username {
+    return Intl.message(
+      'Username',
+      name: 'username',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Description`
+  String get description {
+    return Intl.message(
+      'Description',
+      name: 'description',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Group Members`
+  String get group_members {
+    return Intl.message(
+      'Group Members',
+      name: 'group_members',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Copied Succesfully`
+  String get copy_snackbar {
+    return Intl.message(
+      'Copied Succesfully',
+      name: 'copy_snackbar',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `PhoneNumber`
+  String get phone_nember {
+    return Intl.message(
+      'PhoneNumber',
+      name: 'phone_nember',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Leave Group`
+  String get leave_group {
+    return Intl.message(
+      'Leave Group',
+      name: 'leave_group',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Join Group`
+  String get join_group {
+    return Intl.message(
+      'Join Group',
+      name: 'join_group',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit Profile`
+  String get edit_profile {
+    return Intl.message(
+      'Edit Profile',
+      name: 'edit_profile',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

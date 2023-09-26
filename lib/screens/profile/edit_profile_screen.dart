@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_clone/shared/utils/functions.dart';
 
 import '../../controllers/profile_controller.dart';
+import '../../generated/l10n.dart';
 import '../../models/user_model.dart';
 
 class EditProfileScreen extends ConsumerStatefulWidget {
@@ -48,11 +49,12 @@ class _HomePage extends ConsumerState<EditProfileScreen> {
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
         title: Text(
-          'Edit Profile',
+          S.of(context).edit_profile,
           style: getTextTheme(context),
         ),
       ),
       body: SingleChildScrollView(
+        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         physics: const BouncingScrollPhysics(),
         child: Form(
           key: _formKey,
@@ -116,7 +118,7 @@ class _HomePage extends ConsumerState<EditProfileScreen> {
               ),
               _buildProfileTile(
                 context,
-                'Username',
+                S.of(context).username,
                 user?.name ?? '',
                 _newNameController,
                 () {
@@ -128,7 +130,7 @@ class _HomePage extends ConsumerState<EditProfileScreen> {
               ),
               _buildProfileTile(
                 context,
-                'Description',
+                S.of(context).description,
                 user?.description ?? '',
                 _newDescriptionController,
                 () {
@@ -141,7 +143,7 @@ class _HomePage extends ConsumerState<EditProfileScreen> {
               ),
               _buildProfileTile(
                 context,
-                'Phone Number',
+                S.of(context).phone_nember,
                 user?.phoneNumber ?? '',
                 _newPhoneNumberController,
                 textInputType: TextInputType.phone,
@@ -160,7 +162,7 @@ class _HomePage extends ConsumerState<EditProfileScreen> {
     );
   }
 
-  _buildProfileTile(
+  Column _buildProfileTile(
     BuildContext context,
     String label,
     String hint,
@@ -176,6 +178,7 @@ class _HomePage extends ConsumerState<EditProfileScreen> {
           child: Text(
             label,
             style: getTextTheme(context),
+            textDirection: TextDirection.ltr,
           ),
         ),
         Row(
@@ -186,11 +189,13 @@ class _HomePage extends ConsumerState<EditProfileScreen> {
                 margin: const EdgeInsets.all(20),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  border: Border.all(color: Colors.white),
+                  border: Border.all(
+                      color: getTheme(context).appBarTheme.backgroundColor!),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: TextFormField(
                   textAlign: TextAlign.center,
+                  textDirection: TextDirection.ltr,
                   controller: controller,
                   keyboardType: textInputType,
                   onChanged: (value) => setState(() {}),
@@ -207,10 +212,15 @@ class _HomePage extends ConsumerState<EditProfileScreen> {
                   child: Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
-                        border: Border.all(color: getTheme(context).cardColor)),
+                        border: Border.all(
+                            color: getTheme(context)
+                                .appBarTheme
+                                .backgroundColor!)),
                     child: IconButton(
                       onPressed: onPressed,
-                      icon: const Icon(Icons.done, color: Colors.white),
+                      icon: Icon(Icons.done,
+                          color:
+                              getTheme(context).appBarTheme.backgroundColor!),
                     ),
                   ),
                 )),

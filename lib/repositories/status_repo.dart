@@ -60,7 +60,7 @@ class StatusRepo {
         if (userData.docs.isNotEmpty) {
           var userModel = UserModel.fromJson(userData.docs[0].data());
           audience.add(userModel.uid);
-          var statusModel = StatusModel(
+          /* var statusModel = StatusModel(
             uid: uid,
             username: username,
             phoneNumber: phoneNumber,
@@ -76,7 +76,7 @@ class StatusRepo {
               .doc(userModel.uid)
               .collection('status')
               .doc(statusId)
-              .set(statusModel.toJson());
+              .set(statusModel.toJson()); */
         }
       }
 
@@ -105,10 +105,7 @@ class StatusRepo {
   }
 
   //get status
-  Future<List<StatusModel>> getStatus() async {
-    List<StatusModel> statusData = [];
-    try {
-      var snapshot = await firestore
+  Stream<List<StatusModel>> getStatus() => firestore
           .collection('users')
           .doc(auth.currentUser!.uid)
           .collection('status')
@@ -118,17 +115,16 @@ class StatusRepo {
                 .subtract(const Duration(days: 1))
                 .millisecondsSinceEpoch,
           )
-          .get();
-      for (var query in snapshot.docs) {
-        StatusModel status = StatusModel.fromJson(query.data());
-        statusData.add(status);
-      }
-      return statusData;
-    } catch (e) {
-      print('Error while $e');
-      return statusData;
-    }
-  }
+          .snapshots()
+          .map((event) {
+        List<StatusModel> statusData = [];
+        for (var doc in event.docs) {
+          StatusModel status = StatusModel.fromJson(doc.data());
+          statusData.add(status);
+        }
+
+        return statusData;
+      });
 }
 
 final statusRepoProvider = Provider((ref) =>

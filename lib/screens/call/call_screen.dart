@@ -58,11 +58,7 @@ class _CallScreenState extends ConsumerState<CallScreen> {
                   AgoraVideoViewer(client: client!),
                   AgoraVideoButtons(
                     client: client!,
-                    addScreenSharing: true,
-                    screenSharingButtonWidget: IconButton(
-                      icon: const Icon(Icons.computer),
-                      onPressed: () {},
-                    ),
+                    addScreenSharing: false,
                     disconnectButtonChild: InkWell(
                         highlightColor: Colors.grey,
                         splashColor: Colors.transparent,

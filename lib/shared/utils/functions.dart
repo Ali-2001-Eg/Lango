@@ -107,7 +107,7 @@ Future<String?> pickFile() async {
   try {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
-      allowedExtensions: ['pdf', 'doc', 'docx'],
+      allowedExtensions: ['pdf'],
     );
 
     if (result != null) {
@@ -129,11 +129,12 @@ void navTo(context, screen) => Navigator.of(context).push(MaterialPageRoute(
 void navToNamed(context, routeName) =>
     Navigator.of(context).pushNamed(routeName);
 
-ThemeData get lightMode => ThemeData.light().copyWith(
+ThemeData lightMode(context) => ThemeData.light().copyWith(
       scaffoldBackgroundColor: lightScaffold,
       iconTheme: const IconThemeData(
         color: lightButton,
       ),
+      hoverColor: lightReplyColor,
       iconButtonTheme: const IconButtonThemeData(
         style: ButtonStyle(
           elevation: MaterialStatePropertyAll<double>(0),
@@ -142,9 +143,9 @@ ThemeData get lightMode => ThemeData.light().copyWith(
       ),
       cardColor: lightMessage,
       indicatorColor: lightBar,
-      appBarTheme: const AppBarTheme(
+      appBarTheme: AppBarTheme(
         color: lightAppBar,
-        titleTextStyle: TextStyle(color: Colors.white),
+        titleTextStyle: getTextTheme(context)!.copyWith(color: Colors.white),
         elevation: 0,
       ),
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
@@ -161,7 +162,8 @@ ThemeData get lightMode => ThemeData.light().copyWith(
       inputDecorationTheme: const InputDecorationTheme(
           fillColor: lightChatBox, iconColor: lightText),
     );
-ThemeData get darkMode => ThemeData.dark().copyWith(
+ThemeData darkMode(context) => ThemeData.dark().copyWith(
+      hoverColor: darkReplyColor,
       textTheme: const TextTheme(
         titleMedium: TextStyle(
           color: textColor,

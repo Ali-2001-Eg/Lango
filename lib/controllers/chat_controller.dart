@@ -19,8 +19,8 @@ class ChatController {
 
   ChatController(this.chatRepo, this.ref);
 
-  void sendTextMessage(BuildContext context, String messageText,
-      String receiverUid, bool isGroupChat) {
+  Future<void> sendTextMessage(BuildContext context, String messageText,
+      String receiverUid, bool isGroupChat) async {
     //to handel errors
     ref.read(userDataProvider).whenData((value) async =>
         chatRepo.sendTextMessage(

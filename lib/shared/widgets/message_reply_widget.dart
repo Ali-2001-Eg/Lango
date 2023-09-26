@@ -7,14 +7,11 @@ import 'package:whatsapp_clone/shared/widgets/message_widget.dart';
 import '../../controllers/message_reply_controller.dart';
 
 class MessageReplyWidget extends ConsumerWidget {
-  final bool fromStatusScreen;
   final String receiverUid;
-  final String messageId;
+
   const MessageReplyWidget({
     super.key,
-    required this.fromStatusScreen,
     required this.receiverUid,
-    required this.messageId,
   });
 
   @override
@@ -22,11 +19,10 @@ class MessageReplyWidget extends ConsumerWidget {
     final messageReply = ref.watch(messageReplyProvider);
 
     return Container(
-      width: 300,
-      decoration: const BoxDecoration(
-        color: Colors.transparent,
-        borderRadius: BorderRadius.only(
-            topRight: Radius.circular(10), topLeft: Radius.circular(10)),
+      width: size(context).width / 1.3,
+      decoration: BoxDecoration(
+        color: getTheme(context).appBarTheme.backgroundColor,
+        borderRadius: const BorderRadius.all(Radius.circular(20)),
       ),
       padding: const EdgeInsets.all(10),
       child: Column(
@@ -54,23 +50,11 @@ class MessageReplyWidget extends ConsumerWidget {
           const SizedBox(
             height: 8,
           ),
-          (fromStatusScreen)
-              ? ConstrainedBox(
-                  constraints:
-                      BoxConstraints(maxHeight: size(context).height / 10),
-                  child: MessageWidget(
-                    message: messageReply.message,
-                    messageType: messageReply.messageType,
-                    receiverUid: receiverUid,
-                    messageId: messageId,
-                  ),
-                )
-              : MessageWidget(
-                  message: messageReply.message,
-                  messageType: messageReply.messageType,
-                  receiverUid: receiverUid,
-                  messageId: messageId,
-                )
+          MessageWidget(
+            message: messageReply.message,
+            messageType: messageReply.messageType,
+            receiverUid: receiverUid,
+          )
         ],
       ),
     );

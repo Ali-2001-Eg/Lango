@@ -39,5 +39,15 @@
     "delete_account":"إزاله الحساب",
     "app_lang":"لغه التطبيق",
     "contacts":"جهات الاتصال",
-    "groups":"المجموعات و القنوات"
+    "groups":"المجموعات و القنوات",
+    "group_name":"اسم المجموعه",
+    "username":"الاسم الشخصي",
+    "description":"الوصف",
+    "group_members":"أعضاء المجموعه",
+    "copy_snackbar":"تم النسخ بنجاح",
+    "phone_nember":"رقم الهاتف",
+    "leave_group":"مغادره المجموعه",
+    "join_group":"الانضمام للمجموعه",
+    "edit_profile":"تعديل الحساب"
+
 }

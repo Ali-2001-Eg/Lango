@@ -28,7 +28,7 @@ class StatusController {
         statusText: statusText));
   }
 
-  Future<List<StatusModel>> get getStatus => statusRepo.getStatus();
+  Stream<List<StatusModel>> get getStatus => statusRepo.getStatus();
 }
 
 final statusControllerProvider = Provider((ref) {

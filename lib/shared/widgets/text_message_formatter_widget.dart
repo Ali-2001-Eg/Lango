@@ -28,7 +28,7 @@ class MessageTextFormatterWidget extends StatelessWidget {
           }
         },
         text: text,
-        style: getTextTheme(context),
+        style: getTextTheme(context)!.copyWith(color: Colors.white),
         linkStyle: getTextTheme(context)!.copyWith(
           fontSize: 13,
           fontWeight: FontWeight.w700,

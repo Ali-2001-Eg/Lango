@@ -25,17 +25,13 @@ import '../../controllers/message_reply_controller.dart';
 class BottomChatFieldWidget extends ConsumerStatefulWidget {
   final String receiverUid;
   final bool isGroupChat;
-  final bool isStatusReply;
-  final String? status;
+
   FocusNode? focusNode = FocusNode();
-  BottomChatFieldWidget(
-      {Key? key,
-      required this.receiverUid,
-      required this.isGroupChat,
-      required this.isStatusReply,
-      this.status,
-      this.focusNode})
-      : super(key: key);
+  BottomChatFieldWidget({
+    Key? key,
+    required this.receiverUid,
+    required this.isGroupChat,
+  }) : super(key: key);
 
   @override
   ConsumerState<BottomChatFieldWidget> createState() =>
@@ -79,8 +75,6 @@ class _BottomChatFieldWidgetState extends ConsumerState<BottomChatFieldWidget> {
           children: [
             isShowMessageReply
                 ? MessageReplyWidget(
-                    fromStatusScreen: widget.isStatusReply,
-                    messageId: '',
                     receiverUid: widget.receiverUid,
                   )
                 : const SizedBox(),
@@ -119,7 +113,10 @@ class _BottomChatFieldWidgetState extends ConsumerState<BottomChatFieldWidget> {
                             child: Row(
                               children: [
                                 InkWell(
-                                  onTap: _selectKeyboardDisplayed,
+                                  onTap: () {
+                                    print('tapped');
+                                    _selectKeyboardDisplayed();
+                                  },
                                   child: Icon(
                                     Icons.emoji_emotions,
                                     color: getTheme(context)
@@ -145,7 +142,7 @@ class _BottomChatFieldWidgetState extends ConsumerState<BottomChatFieldWidget> {
                         ),
                         suffixIcon: !isTyping
                             ? SizedBox(
-                                width: 100,
+                                width: size(context).width / 6,
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
@@ -168,18 +165,6 @@ class _BottomChatFieldWidgetState extends ConsumerState<BottomChatFieldWidget> {
                                         },
                                         child: Icon(
                                           Icons.attach_file_outlined,
-                                          color: getTheme(context)
-                                              .inputDecorationTheme
-                                              .iconColor,
-                                        )),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    InkWell(
-                                        onTap: () =>
-                                            _selectImage(ImageSource.gallery),
-                                        child: Icon(
-                                          Icons.photo_camera_back,
                                           color: getTheme(context)
                                               .inputDecorationTheme
                                               .iconColor,
@@ -270,10 +255,6 @@ class _BottomChatFieldWidgetState extends ConsumerState<BottomChatFieldWidget> {
       setState(() {
         isRecording = !isRecording;
       });
-      if (widget.isStatusReply) {
-        Navigator.pop(context);
-        widget.focusNode!.unfocus();
-      }
     }
   }
 
@@ -368,6 +349,7 @@ class _BottomChatFieldWidgetState extends ConsumerState<BottomChatFieldWidget> {
         maxHeight: size(context).height / 2.5,
       ),
       useSafeArea: true,
+      //backgroundColor: getTheme(context).appBarTheme.backgroundColor,
       builder: (context) => Container(
         decoration: const BoxDecoration(
           color: backgroundColor,
@@ -385,10 +367,10 @@ class _BottomChatFieldWidgetState extends ConsumerState<BottomChatFieldWidget> {
                     onPress: () => _selectDoc(),
                     icon: Icons.book),
                 ModalBottomSheetItem(
-                    text: S.of(context).cam,
+                    text: 'video',
                     backgroundColor: Colors.red,
                     onPress: () => _selectVideo(ImageSource.gallery),
-                    icon: Icons.camera_alt_rounded),
+                    icon: Icons.video_camera_back_outlined),
                 ModalBottomSheetItem(
                     text: S.of(context).gal,
                     backgroundColor: Colors.orangeAccent,
@@ -412,10 +394,12 @@ class _BottomChatFieldWidgetState extends ConsumerState<BottomChatFieldWidget> {
                     },
                     icon: Icons.location_on),
                 ModalBottomSheetItem(
-                    text: S.of(context).con,
+                    text: 'video',
                     backgroundColor: Colors.blueAccent,
-                    onPress: () {},
-                    icon: Icons.person),
+                    onPress: () {
+                      _selectVideo(ImageSource.camera);
+                    },
+                    icon: Icons.video_call),
               ],
             ),
           ],

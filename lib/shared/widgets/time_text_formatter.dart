@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:whatsapp_clone/shared/utils/functions.dart';
 
 class TimeTextFormatter extends StatelessWidget {
   final DateTime time;
@@ -25,10 +26,7 @@ class TimeTextFormatter extends StatelessWidget {
     }
     return Text(
       timeText,
-      style: const TextStyle(
-        color: Colors.grey,
-        fontSize: 13,
-      ),
+      style: getTextTheme(context)!.copyWith(fontSize: 13),
     );
   }
 }

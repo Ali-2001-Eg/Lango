@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:story_view/story_view.dart';
+import 'package:whatsapp_clone/controllers/chat_controller.dart';
 import 'package:whatsapp_clone/generated/l10n.dart';
 import 'package:whatsapp_clone/shared/utils/colors.dart';
 import 'package:whatsapp_clone/shared/utils/functions.dart';
@@ -44,97 +46,123 @@ class _StatusScreenState extends ConsumerState<StatusScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.status);
+    print(_currentIndex);
     return Directionality(
       textDirection: TextDirection.ltr,
       child: Scaffold(
         resizeToAvoidBottomInset: true,
-        body: StoryView(
-          storyItems: storyItems,
-          controller: _controller,
-          onVerticalSwipeComplete: (direction) {
-            if (direction == Direction.down) {
-              Navigator.pop(context);
-            }
-          },
-          onStoryShow: (storyItem) async {
-            //to wait until first build
-            if (mounted) {
-              print('current index is ${_currentIndex}');
-              setState(() async {
-                _currentIndex = storyItems.indexOf(storyItem);
-              });
-              if (_currentIndex > widget.status.length) {
-                setState(() {
-                  _currentIndex = widget.status.length - 1;
-                });
-              }
-            }
-          },
-          indicatorColor: messageColor,
-          indicatorForegroundColor: tabColor,
-          onComplete: () => Navigator.pop(context),
+        body: Stack(
+          children: [
+            StoryView(
+              storyItems: storyItems,
+              controller: _controller,
+              onVerticalSwipeComplete: (direction) {
+                if (direction == Direction.down) {
+                  Navigator.pop(context);
+                }
+              },
+              onStoryShow: (storyItem) async {
+                //to wait until first build
+                if (mounted) {
+                  print('current index is ${_currentIndex}');
+                  setState(() async {
+                    _currentIndex = storyItems.indexOf(storyItem);
+                  });
+                }
+              },
+              indicatorForegroundColor: getTheme(context).cardColor,
+              indicatorColor: getTheme(context).hoverColor,
+              onComplete: () => Navigator.pop(context),
+            ),
+            (widget.receiverUid !=
+                    ref.read(authRepositoryProvider).auth.currentUser!.uid)
+                ? Positioned(
+                    right: 10,
+                    bottom: 10,
+                    child: Column(
+                      children: [
+                        _customReply(
+                            context: context,
+                            child: const Icon(
+                              Icons.favorite,
+                              size: 35,
+                            ),
+                            messageReply: '❤'),
+                        _customReply(
+                            context: context,
+                            child: const Icon(
+                              CupertinoIcons.flame_fill,
+                              size: 35,
+                            ),
+                            messageReply: '🔥'),
+                        _customReply(
+                            context: context,
+                            child: const Icon(
+                              Icons.sentiment_dissatisfied_rounded,
+                              size: 35,
+                            ),
+                            messageReply: '😤'),
+                        _customReply(
+                            context: context,
+                            child: const Text(
+                              '🙏',
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            messageReply: '🙏'),
+                      ],
+                    ))
+                : const SizedBox(),
+          ],
         ),
-        floatingActionButton: (widget.receiverUid !=
-                ref.read(authRepositoryProvider).auth.currentUser!.uid)
-            ? Align(
-                alignment: Alignment.bottomCenter,
-                child: FloatingActionButton(
-                  onPressed: () {
-                    _controller.pause();
-                    focusNode.requestFocus();
-                    showModalBottomSheet(
-                      context: context,
-                      elevation: 0,
-                      backgroundColor: backgroundColor,
-                      constraints: BoxConstraints(
-                          maxHeight: (size(context).height / 1.5)),
-                      builder: (context) {
-                        _onStatusReply();
-                        return BottomChatFieldWidget(
-                          receiverUid: widget.receiverUid,
-                          isGroupChat: false,
-                          isStatusReply: true,
-                          focusNode: focusNode,
-                          status: widget.status[_currentIndex].status,
-                        );
-                      },
-                    ).then((value) {
-                      _controller.play();
-                    });
-                  },
-                  backgroundColor: messageColor,
-                  elevation: 0,
-                  heroTag: 'btn5',
-                  child: Column(
-                    children: [
-                      const Icon(
-                        Icons.keyboard_arrow_up,
-                        color: Colors.white,
-                        size: 16,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        S.of(context).reply,
-                        style:
-                            const TextStyle(color: Colors.white, fontSize: 16),
-                      )
-                    ],
-                  ),
-                ))
-            : null,
       ),
     );
   }
 
-  void _onStatusReply() {
-    Future(() => (ref.read(messageReplyProvider.state).update((state) =>
-        MessageReply(
-            message: widget.status[_currentIndex].status,
-            messageType: widget.status[_currentIndex].type,
-            isMe: true))));
+  InkWell _customReply({
+    required BuildContext context,
+    required Widget child,
+    required String messageReply,
+  }) {
+    return InkWell(
+      onTap: () {
+        sendReplyMessage(messageText: messageReply);
+      },
+      child: Column(
+        children: [
+          Container(
+              padding: const EdgeInsets.all(10),
+              margin: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: getTheme(context).hoverColor,
+                shape: BoxShape.circle,
+              ),
+              child: child),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _onStatusReply() async {
+    ref.read(messageReplyProvider.state).update((state) => MessageReply(
+          message: widget.status[_currentIndex].status,
+          messageType: widget.status[_currentIndex].type,
+          isMe: true,
+        ));
+  }
+
+  void sendReplyMessage({required String messageText}) {
+    _onStatusReply().then((value) => ref
+            .read(chatControllerProvider)
+            .sendTextMessage(context, messageText, widget.receiverUid, false)
+            .then((value) {
+          _cancelReply();
+          customSnackBar('Replied successfully', context);
+          Navigator.pop(context);
+        }));
+  }
+
+  void _cancelReply() {
+    ref.read(messageReplyProvider.state).update((state) => null);
   }
 
   void _displayStatusItems() {
@@ -143,14 +171,12 @@ class _StatusScreenState extends ConsumerState<StatusScreen> {
       if (widget.status[i].type == MessageEnum.text) {
         storyItems.add(StoryItem.text(
             title: widget.status[i].status, backgroundColor: backgroundColor));
-      }
-      if (widget.status[i].type == MessageEnum.image) {
+      } else if (widget.status[i].type == MessageEnum.image) {
         storyItems.add(StoryItem.pageImage(
           url: widget.status[i].status,
           controller: _controller,
         ));
-      }
-      if (widget.status[i].type == MessageEnum.video) {
+      } else {
         storyItems.add(StoryItem.pageVideo(widget.status[i].status,
             controller: _controller));
       }
