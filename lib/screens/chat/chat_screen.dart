@@ -4,13 +4,11 @@ import 'package:whatsapp_clone/controllers/call_controller.dart';
 import 'package:whatsapp_clone/controllers/chat_controller.dart';
 import 'package:whatsapp_clone/controllers/group_controller.dart';
 import 'package:whatsapp_clone/controllers/message_reply_controller.dart';
-import 'package:whatsapp_clone/controllers/profile_controller.dart';
 import 'package:whatsapp_clone/generated/l10n.dart';
 import 'package:whatsapp_clone/models/user_model.dart';
 import 'package:whatsapp_clone/screens/call/call_pickup_screen.dart';
 import 'package:whatsapp_clone/screens/decription/description_screen.dart';
 import 'package:whatsapp_clone/screens/home_screen.dart';
-import 'package:whatsapp_clone/shared/enums/app_theme.dart';
 import 'package:whatsapp_clone/shared/notifiers/theme_notifier.dart';
 import 'package:whatsapp_clone/shared/utils/colors.dart';
 import 'package:whatsapp_clone/shared/utils/functions.dart';
@@ -19,8 +17,6 @@ import 'package:whatsapp_clone/shared/widgets/custom_button.dart';
 import 'package:whatsapp_clone/shared/widgets/custom_indicator.dart';
 
 import '../../controllers/auth_controller.dart';
-import '../../models/call_model.dart';
-import '../../repositories/firebase_notification_repo.dart';
 import '../../shared/widgets/chat_list.dart';
 
 class ChatScreen extends ConsumerWidget {
