@@ -79,7 +79,7 @@ class ChatScreen extends ConsumerWidget {
               leading: IconButton(
                 icon: const Icon(Icons.arrow_back_sharp),
                 onPressed: () =>
-                    Navigator.pushNamed(context, HomeScreen.routeName),
+                    Navigator.pushNamedAndRemoveUntil(context, HomeScreen.routeName,(route) => false),
               ),
               title: isGroupChat
                   ? Text(
