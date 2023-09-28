@@ -7,13 +7,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:whatsapp_clone/controllers/group_controller.dart';
 import 'package:whatsapp_clone/generated/l10n.dart';
+import 'package:whatsapp_clone/screens/call/call_pickup_screen.dart';
 import 'package:whatsapp_clone/screens/chat/chat_screen.dart';
 import 'package:whatsapp_clone/screens/home_screen.dart';
 import 'package:whatsapp_clone/shared/utils/base/error_screen.dart';
 import 'package:whatsapp_clone/shared/widgets/custom_button.dart';
 import 'package:whatsapp_clone/shared/widgets/custom_indicator.dart';
 
+import '../../controllers/call_controller.dart';
+import '../../controllers/chat_controller.dart';
+import '../../controllers/profile_controller.dart';
 import '../../models/user_model.dart';
+import '../../repositories/auth_repo.dart';
 import '../../shared/notifiers/theme_notifier.dart';
 import '../../shared/utils/colors.dart';
 import '../../shared/utils/functions.dart';
@@ -25,7 +30,7 @@ class DescriptionScreen extends ConsumerWidget {
   final String pic;
   final String description;
   final String id;
-  const DescriptionScreen({
+  DescriptionScreen({
     super.key,
     required this.isGroupChat,
     required this.name,
@@ -34,38 +39,40 @@ class DescriptionScreen extends ConsumerWidget {
     required this.description,
     required this.id,
   });
-
+  List<UserModel> modifiedList = [];
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final appTheme = ref.watch(appThemeProvider.notifier);
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          name,
-          style: getTextTheme(context)!.copyWith(
-              color: appTheme.selectedTheme == 'light'
-                  ? lightScaffold
-                  : Colors.white),
+    return CallPickupScreen(
+      scaffold: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            name,
+            style: getTextTheme(context)!.copyWith(
+                color: appTheme.selectedTheme == 'light'
+                    ? lightScaffold
+                    : Colors.white),
+          ),
+          actions: [
+            isGroupChat
+                ? Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: IconButton(
+                        onPressed: () {
+                          _leaveGroup(ref, context);
+                        },
+                        icon: const Icon(
+                          Icons.logout,
+                          color: Colors.red,
+                        )),
+                  )
+                : Container(),
+          ],
         ),
-        actions: [
-          isGroupChat
-              ? Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  child: IconButton(
-                      onPressed: () {
-                        _leaveGroup(ref, context);
-                      },
-                      icon: const Icon(
-                        Icons.logout,
-                        color: Colors.red,
-                      )),
-                )
-              : Container(),
-        ],
-      ),
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: _descreptionbody(context, ref, appTheme),
+        body: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: _descreptionbody(context, ref, appTheme),
+        ),
       ),
     );
   }
@@ -180,7 +187,7 @@ class DescriptionScreen extends ConsumerWidget {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (_, i) {
-                var member = snapshot.data![i];
+                var member = _setMeFirstMember(snapshot, ref)[i];
                 return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 15),
                   child: ListTile(
@@ -200,34 +207,38 @@ class DescriptionScreen extends ConsumerWidget {
                       backgroundImage:
                           CachedNetworkImageProvider(member.profilePic),
                     ),
-                    trailing:
-                        member.uid != FirebaseAuth.instance.currentUser!.uid
-                            ? IconButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (_) => ChatScreen(
-                                          name: member.name,
-                                          uid: member.uid,
-                                          description: member.description,
-                                          phoneNumber: member.phoneNumber,
-                                          isGroupChat: false,
-                                          profilePic: member.profilePic,
-                                          token: member.token,
-                                          isOnline: member.isOnline),
-                                    ),
-                                  );
-                                },
-                                icon: Icon(
-                                  Icons.message,
-                                  color: appTheme.selectedTheme == 'light'
-                                      ? getTheme(context)
-                                          .appBarTheme
-                                          .backgroundColor
-                                      : getTheme(context).cardColor,
-                                ))
-                            : null,
+                    trailing: member.uid !=
+                            ref
+                                .read(authRepositoryProvider)
+                                .auth
+                                .currentUser!
+                                .uid
+                        ? IconButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => ChatScreen(
+                                      name: member.name,
+                                      uid: member.uid,
+                                      description: member.description,
+                                      phoneNumber: member.phoneNumber,
+                                      isGroupChat: false,
+                                      profilePic: member.profilePic,
+                                      token: member.token,
+                                      isOnline: member.isOnline),
+                                ),
+                              );
+                            },
+                            icon: Icon(
+                              Icons.message,
+                              color: appTheme.selectedTheme == 'light'
+                                  ? getTheme(context)
+                                      .appBarTheme
+                                      .backgroundColor
+                                  : getTheme(context).cardColor,
+                            ))
+                        : null,
                   ),
                 );
               });
@@ -281,5 +292,17 @@ class DescriptionScreen extends ConsumerWidget {
 
   Stream _isUserJoined(String groupId, ref) {
     return ref.read(groupControllerProvider).isUserJoined(groupId);
+  }
+
+  List<UserModel> _setMeFirstMember(
+      AsyncSnapshot<List<UserModel>> snapshot, WidgetRef ref) {
+    int myIndex = snapshot.data!.indexWhere((element) =>
+        element.uid == ref.read(authRepositoryProvider).auth.currentUser!.uid);
+    if (myIndex != -1) {
+      UserModel myObject = snapshot.data!.removeAt(myIndex);
+      modifiedList.add(myObject);
+    }
+    modifiedList.addAll(snapshot.data!);
+    return modifiedList;
   }
 }

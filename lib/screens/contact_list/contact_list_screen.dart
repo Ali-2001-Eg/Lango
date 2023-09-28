@@ -57,6 +57,17 @@ class ContactListScreen extends ConsumerWidget {
                           return Center(
                               child: Column(
                             children: [
+                              SizedBox(
+                                  width: 200,
+                                  child: Lottie.asset(
+                                      'assets/json/empty_chat.json')),
+                            ],
+                          ));
+                        }
+                        if (snapshot.data!.isEmpty) {
+                          return Center(
+                              child: Column(
+                            children: [
                               const Text('Chat with your first contact'),
                               SizedBox(
                                   width: 200,
@@ -174,7 +185,6 @@ class ContactListScreen extends ConsumerWidget {
                         return Center(
                             child: Column(
                           children: [
-                            const Text('Search & Join Groups ...'),
                             SizedBox(
                                 width: 200,
                                 child: Lottie.asset(

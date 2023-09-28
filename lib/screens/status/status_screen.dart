@@ -63,7 +63,7 @@ class _StatusScreenState extends ConsumerState<StatusScreen> {
               },
               onStoryShow: (storyItem) async {
                 //to wait until first build
-                if (mounted) {
+                if (!context.mounted) {
                   print('current index is ${_currentIndex}');
                   setState(() async {
                     _currentIndex = storyItems.indexOf(storyItem);
@@ -133,7 +133,7 @@ class _StatusScreenState extends ConsumerState<StatusScreen> {
               padding: const EdgeInsets.all(10),
               margin: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: getTheme(context).hoverColor,
+                color: getTheme(context).cardColor,
                 shape: BoxShape.circle,
               ),
               child: child),

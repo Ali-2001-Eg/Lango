@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_clone/controllers/auth_controller.dart';
+import 'package:whatsapp_clone/screens/call/call_pickup_screen.dart';
 import 'package:whatsapp_clone/screens/contact_list/contact_list_screen.dart';
 import 'package:whatsapp_clone/screens/group/create_group_screen.dart';
 import 'package:whatsapp_clone/screens/profile/edit_profile_screen.dart';
@@ -13,6 +14,7 @@ import 'package:whatsapp_clone/shared/utils/functions.dart';
 import 'package:whatsapp_clone/generated/l10n.dart';
 
 import '../controllers/group_controller.dart';
+import 'call_history/call_history_screen.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   static const routeName = '/home-screen';
@@ -71,100 +73,103 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
 
     return DefaultTabController(
       length: 3,
-      child: Scaffold(
-        key: myWidgetKey,
-        appBar: AppBar(
-          elevation: 0,
-          // backgroundColor: appBarColor,
-          centerTitle: false,
-          title: const Text(
-            'Chat & Live',
-            style: TextStyle(
-              fontSize: 20,
-              // color: Colors.grey,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          actions: [
-            IconButton(
-              icon: const Icon(
-                Icons.search,
-              ),
-              onPressed: () {
-                Navigator.pushNamed(context, SearchScreen.routeName);
-              },
-            ),
-            PopupMenuButton(
-              //color: Colors.white,
-              icon: const Icon(
-                Icons.more_vert,
+      child: CallPickupScreen(
+        scaffold: Scaffold(
+          key: myWidgetKey,
+          appBar: AppBar(
+            elevation: 0,
+            automaticallyImplyLeading: false,
+            // backgroundColor: appBarColor,
+            centerTitle: false,
+            title: const Text(
+              'Chat & Live',
+              style: TextStyle(
+                fontSize: 20,
                 // color: Colors.grey,
+                fontWeight: FontWeight.bold,
               ),
-              itemBuilder: (context) => [
-                PopupMenuItem(
-                    child: Text(
-                      S.of(context).create_group,
-                      style: getTextTheme(context)!
-                          .copyWith(fontSize: 18, color: Colors.white),
-                    ),
-                    onTap: () => Future(() => Navigator.of(context)
-                        .pushNamed(CreateGroupScreen.routeName))),
-                PopupMenuItem(
-                    child: Text(
-                      S.of(context).settings,
-                      style: getTextTheme(context)!
-                          .copyWith(fontSize: 18, color: Colors.white),
-                    ),
-                    onTap: () {
-                      Future(
-                          () => navToNamed(context, SettingsScreen.routeName));
-                    }),
-                PopupMenuItem(
-                    child: Text(
-                      S.of(context).edit_profile,
-                      style: getTextTheme(context)!
-                          .copyWith(fontSize: 18, color: Colors.white),
-                    ),
-                    onTap: () {
-                      Future(() =>
-                          navToNamed(context, EditProfileScreen.routeName));
-                    }),
-              ],
             ),
-          ],
-          bottom: TabBar(
-            onTap: (value) => setState(() {
-              value = tabBarController.index;
-            }),
-            controller: tabBarController,
-            indicatorColor: getTheme(context).indicatorColor,
-            indicatorWeight: 4,
-            labelColor: getTheme(context).indicatorColor,
-            unselectedLabelColor: Colors.white,
-            labelStyle: const TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
-            tabs: [
-              Tab(
-                text: S.of(context).chat,
+            actions: [
+              IconButton(
+                icon: const Icon(
+                  Icons.search,
+                ),
+                onPressed: () {
+                  Navigator.pushNamed(context, SearchScreen.routeName);
+                },
               ),
-              Tab(
-                text: S.of(context).status,
-              ),
-              Tab(
-                text: S.of(context).calls,
+              PopupMenuButton(
+                //color: Colors.white,
+                icon: const Icon(
+                  Icons.more_vert,
+                  // color: Colors.grey,
+                ),
+                itemBuilder: (context) => [
+                  PopupMenuItem(
+                      child: Text(
+                        S.of(context).create_group,
+                        style: getTextTheme(context)!
+                            .copyWith(fontSize: 18, color: Colors.white),
+                      ),
+                      onTap: () => Future(() => Navigator.of(context)
+                          .pushNamed(CreateGroupScreen.routeName))),
+                  PopupMenuItem(
+                      child: Text(
+                        S.of(context).settings,
+                        style: getTextTheme(context)!
+                            .copyWith(fontSize: 18, color: Colors.white),
+                      ),
+                      onTap: () {
+                        Future(() =>
+                            navToNamed(context, SettingsScreen.routeName));
+                      }),
+                  PopupMenuItem(
+                      child: Text(
+                        S.of(context).edit_profile,
+                        style: getTextTheme(context)!
+                            .copyWith(fontSize: 18, color: Colors.white),
+                      ),
+                      onTap: () {
+                        Future(() =>
+                            navToNamed(context, EditProfileScreen.routeName));
+                      }),
+                ],
               ),
             ],
+            bottom: TabBar(
+              onTap: (value) => setState(() {
+                value = tabBarController.index;
+              }),
+              controller: tabBarController,
+              indicatorColor: getTheme(context).indicatorColor,
+              indicatorWeight: 4,
+              labelColor: getTheme(context).indicatorColor,
+              unselectedLabelColor: Colors.white,
+              labelStyle: const TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+              tabs: [
+                Tab(
+                  text: S.of(context).chat,
+                ),
+                Tab(
+                  text: S.of(context).status,
+                ),
+                Tab(
+                  text: S.of(context).calls,
+                ),
+              ],
+            ),
           ),
-        ),
-        body: TabBarView(
-          physics: const BouncingScrollPhysics(),
-          controller: tabBarController,
-          children: [
-            const ContactListScreen(),
-            StatusContactsScreen(),
-            const Center(child: Text('Calls')),
-          ],
+          body: TabBarView(
+            physics: const BouncingScrollPhysics(),
+            controller: tabBarController,
+            children: [
+              const ContactListScreen(),
+              StatusContactsScreen(),
+              const CallHistoryScreen(),
+            ],
+          ),
         ),
       ),
     );

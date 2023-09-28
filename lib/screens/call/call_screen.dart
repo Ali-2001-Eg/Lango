@@ -68,6 +68,7 @@ class _CallScreenState extends ConsumerState<CallScreen> {
                           ref.read(callControllerProvider).endCall(
                               callerId: widget.callData.callerId,
                               receiverId: widget.callData.receiverId,
+                              call: widget.callData,
                               context: context,
                               isGroupChat: widget.isGroupChat);
                           Navigator.pop(context);
@@ -79,7 +80,7 @@ class _CallScreenState extends ConsumerState<CallScreen> {
                           child: const Icon(
                             Icons.call_end,
                             size: 23,
-                            color: Colors.redAccent,
+                            color: Colors.red,
                           ),
                         )),
                   ),

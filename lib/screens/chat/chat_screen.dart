@@ -4,6 +4,7 @@ import 'package:whatsapp_clone/controllers/call_controller.dart';
 import 'package:whatsapp_clone/controllers/chat_controller.dart';
 import 'package:whatsapp_clone/controllers/group_controller.dart';
 import 'package:whatsapp_clone/controllers/message_reply_controller.dart';
+import 'package:whatsapp_clone/controllers/profile_controller.dart';
 import 'package:whatsapp_clone/generated/l10n.dart';
 import 'package:whatsapp_clone/models/user_model.dart';
 import 'package:whatsapp_clone/screens/call/call_pickup_screen.dart';
@@ -49,20 +50,27 @@ class ChatScreen extends ConsumerWidget {
   void makeCall(WidgetRef ref, BuildContext context) {
     ref
         .read(callControllerProvider)
-        .call(name, profilePic, isGroupChat, uid, context, token);
+        .call(name, profilePic, isGroupChat, uid, context, token)
+        .then((value) => ref.read(chatControllerProvider).notifyReceiver(
+              body: 'Accept or Decline the call',
+              receiverUid: uid,
+              token: token,
+              title: 'starts a call with you',
+              isGroupChat: isGroupChat,
+            ));
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final appTheme = ref.watch(appThemeProvider);
-    return Directionality(
-      textDirection: TextDirection.ltr,
+    return WillPopScope(
+      onWillPop: () async {
+        ref.read(messageReplyProvider.state).update((state) => null);
+        return true;
+      },
       child: CallPickupScreen(
-        scaffold: WillPopScope(
-          onWillPop: () async {
-            ref.read(messageReplyProvider.state).update((state) => null);
-            return true;
-          },
+        scaffold: Directionality(
+          textDirection: TextDirection.ltr,
           child: Scaffold(
             resizeToAvoidBottomInset: true,
             appBar: AppBar(

@@ -1,4 +1,5 @@
 // import 'dart:developer';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -14,7 +15,7 @@ import 'package:whatsapp_clone/shared/repos/firebase_storage_repo.dart';
 
 import '../shared/utils/functions.dart';
 
-class StatusRepo {
+class StatusRepo extends ChangeNotifier {
   final FirebaseFirestore firestore;
   final FirebaseAuth auth;
   final ProviderRef ref;
@@ -31,6 +32,8 @@ class StatusRepo {
     String? statusText,
   }) async {
     try {
+      ref.read(loadingCreateStatus.state).update((state) => true);
+
       String statusId = const Uuid().v1();
       String uid = auth.currentUser!.uid;
       String status;
@@ -46,37 +49,30 @@ class StatusRepo {
       if (await FlutterContacts.requestPermission()) {
         contacts = await FlutterContacts.getContacts(withProperties: true);
       }
-      List<String> audience = [];
-      for (int i = 0; i < contacts.length; i++) {
-        //we will get all contacts data
-        // log(contacts[i].name.first);
-        var userData = await firestore
-            .collection('users')
-            .where(
-              'phoneNumber',
-              isEqualTo: contacts[i].phones[0].number.replaceAll(' ', ''),
-            )
-            .get();
+      Set<String> audience = {uid};
+
+      //we will get all contacts data
+      for (int i = 0; i < contacts.length - 1; i++) {
+        if (contacts[i].phones.isEmpty) {
+          //for any problem in contact list
+          break;
+        }
+        //print(contacts[i].phones);
+        var userData = await firestore.collection('users').get();
         if (userData.docs.isNotEmpty) {
-          var userModel = UserModel.fromJson(userData.docs[0].data());
-          audience.add(userModel.uid);
-          /* var statusModel = StatusModel(
-            uid: uid,
-            username: username,
-            phoneNumber: phoneNumber,
-            status: status,
-            createdAt: DateTime.now(),
-            profilePic: profilePic,
-            statusId: statusId,
-            audience: audience,
-            type: type,
-          );
-          await firestore
-              .collection('users')
-              .doc(userModel.uid)
-              .collection('status')
-              .doc(statusId)
-              .set(statusModel.toJson()); */
+          UserModel userModel;
+          userData.docs.forEach((element) {
+            userModel = UserModel.fromJson(element.data());
+            //print('phone number ${userModel.phoneNumber}');
+            if (contacts[i]
+                .phones[0]
+                .number
+                .replaceAll(' ', '')
+                .contains(userModel.phoneNumber)) {
+              audience.add(userModel.uid);
+              //print('audience $audience');
+            }
+          });
         }
       }
 
@@ -88,27 +84,29 @@ class StatusRepo {
         createdAt: DateTime.now(),
         profilePic: profilePic,
         statusId: statusId,
-        audience: audience,
+        audience: audience.toList(),
         type: type,
       );
       await firestore
-          .collection('users')
-          .doc(uid)
           .collection('status')
           .doc(statusId)
           .set(statusModel.toJson());
-      // print(statusModel.statusId);
+      //print('status is  ${statusModel.toString()}');
+      ref.read(loadingCreateStatus.state).update((state) => false);
+      notifyListeners();
     } catch (e) {
-      print('Error while \${e.toString()}');
+      ref.read(loadingCreateStatus.state).update((state) => false);
+      notifyListeners();
+      print('error while ${e.toString()}');
       // customSnackBar(e.toString(), context);
     }
   }
 
   //get status
-  Stream<List<StatusModel>> getStatus() => firestore
-          .collection('users')
-          .doc(auth.currentUser!.uid)
+  Stream<List<List<StatusModel>>> getStatus() => firestore
+          //must enable index for that query
           .collection('status')
+          .where('audience', arrayContains: auth.currentUser!.uid)
           .where(
             'createdAt',
             isGreaterThan: DateTime.now()
@@ -116,16 +114,31 @@ class StatusRepo {
                 .millisecondsSinceEpoch,
           )
           .snapshots()
-          .map((event) {
-        List<StatusModel> statusData = [];
-        for (var doc in event.docs) {
-          StatusModel status = StatusModel.fromJson(doc.data());
-          statusData.add(status);
+          .map((query) {
+        List<StatusModel> status = [];
+        Map<String, List<StatusModel>> groupedStatuses = {};
+        List<List<StatusModel>> groupedStatusList = [];
+        for (var element in query.docs) {
+          status.add(StatusModel.fromJson(element.data()));
         }
+        for (var object in status) {
+          var key = object.username;
+          //print('uid: ' + key);
+          if (groupedStatuses.containsKey(key)) {
+            groupedStatuses[key]!.add(object);
+          } else {
+            groupedStatuses[key] = [object];
+          }
+        }
+        groupedStatusList = groupedStatuses.values.toList();
 
-        return statusData;
+        //print(  'grouped list is ${groupedStatusList.map((e) => e.map((e) => e.statusId).toList())}');
+        //print('status list length ${groupedStatusList.length}');
+        return groupedStatusList;
       });
 }
 
 final statusRepoProvider = Provider((ref) =>
     StatusRepo(FirebaseFirestore.instance, FirebaseAuth.instance, ref));
+
+final loadingCreateStatus = StateProvider<bool>((ref) => false);

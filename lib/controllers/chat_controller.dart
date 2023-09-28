@@ -88,6 +88,7 @@ class ChatController {
 
   void notifyReceiver(
           {required String body,
+          required String title,
           required String token,
           required String receiverUid,
           required bool isGroupChat}) =>
@@ -95,6 +96,7 @@ class ChatController {
           body: body,
           sender: value!,
           token: token,
+          title: title,
           receiverUid: receiverUid,
           isGroupChat: isGroupChat));
   void deleteMessage(

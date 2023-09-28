@@ -115,8 +115,8 @@ class GroupRepo {
   }
 
   Stream<bool> isUserJoined(String groupId) =>
-      firestore.collection('groups').doc(groupId).snapshots().map((event) =>
-          event.data()!['membersUid'].contains(auth.currentUser!.uid));
+      firestore.collection('groups').doc(groupId).snapshots().map((query) =>
+          query.data()!['membersUid'].contains(auth.currentUser!.uid));
 
   Stream searchByName(String searchText) {
     return firestore
@@ -145,8 +145,8 @@ class GroupRepo {
 
   Stream<List<GroupModel>> getAllGroups() {
     List<GroupModel> groups = [];
-    return firestore.collection('groups').snapshots().map((event) {
-      for (var element in event.docs) {
+    return firestore.collection('groups').snapshots().map((query) {
+      for (var element in query.docs) {
         groups.add(GroupModel.fromJson(element.data()));
       }
       return groups;

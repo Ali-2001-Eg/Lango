@@ -19,24 +19,29 @@ class _AudioPlayerItemState extends State<AudioPlayerItem> {
   @override
   void initState() {
     audioPlayer = AudioPlayer();
-    if (mounted) {
-      audioPlayer.onPlayerStateChanged.listen((event) {
+    _initAudio();
+    super.initState();
+  }
+
+  void _initAudio() async {
+    if (!context.mounted) {
+      audioPlayer.onPlayerStateChanged.listen((query) {
         setState(() {
-          isPlaying = event == PlayerState.playing;
+          isPlaying = query == PlayerState.playing;
+        });
+      });
+
+      audioPlayer.onDurationChanged.listen((query) {
+        setState(() {
+          duration = query;
+        });
+      });
+      audioPlayer.onPositionChanged.listen((query) {
+        setState(() {
+          position = query;
         });
       });
     }
-    audioPlayer.onDurationChanged.listen((event) {
-      setState(() {
-        duration = event;
-      });
-    });
-    audioPlayer.onPositionChanged.listen((event) {
-      setState(() {
-        position = event;
-      });
-    });
-    super.initState();
   }
 
   @override

@@ -23,12 +23,12 @@ class FirebaseMessagingRepo extends ChangeNotifier {
   Future<void> init() async {
     firebaseMessaging.requestPermission();
 
-    FirebaseMessaging.onMessage.listen(((event) {
-      print(event.data.toString());
+    FirebaseMessaging.onMessage.listen(((query) {
+      print(query.data.toString());
       print('on message');
     }));
-    FirebaseMessaging.onMessageOpenedApp.listen((event) {
-      print(event.data.toString());
+    FirebaseMessaging.onMessageOpenedApp.listen((query) {
+      print(query.data.toString());
       print('on message opened app');
     });
 
@@ -132,10 +132,10 @@ Future<void> callingBackgroundHandler(RemoteMessage message) async {
       ),
     ],
   );
-  AwesomeNotifications().actionStream.listen((event) {
-    if (event.buttonKeyPressed == 'ACCEPT') {
+  AwesomeNotifications().actionStream.listen((query) {
+    if (query.buttonKeyPressed == 'ACCEPT') {
       print('call Accepted');
-    } else if (event.buttonKeyPressed == 'DECLINE') {
+    } else if (query.buttonKeyPressed == 'DECLINE') {
       print('call Declined');
     } else {
       print('Clicked on notification');

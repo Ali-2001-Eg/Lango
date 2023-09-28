@@ -22,14 +22,14 @@ class CallController {
     required this.callRepo,
     required this.auth,
   });
-  void call(
+  Future<void> call(
     String receiverName,
     String receiverProfilePic,
     bool isGroupChat,
     String receiverUid,
     BuildContext context,
     String receiverToken,
-  ) {
+  ) async {
     ref.read(userDataProvider).whenData((value) {
       var callId = const Uuid().v1();
       CallModel callerData = CallModel(
@@ -57,7 +57,7 @@ class CallController {
       //using callabale class
       isGroupChat
           ? callRepo.makeGroupCall(callerData, context, receiverData)
-          : callRepo(callerData, receiverData, context);
+          : callRepo(callerData, receiverData, context, value.token);
     });
   }
 
@@ -67,20 +67,12 @@ class CallController {
     required String receiverId,
     required BuildContext context,
     required bool isGroupChat,
+    required CallModel call,
   }) =>
       isGroupChat
-          ? callRepo.endGroupCall(callerId, receiverId, context)
-          : callRepo.endCall(callerId, receiverId, context);
-  /* void notifyReciever(CallModel callData, bool isGroupChat) {
-    print('calling notification');
-    callRepo.notifyReceiver(
-      callData,
-      'incoming call from ${callData.callerName}',
-      {
-        'channelId': callData.callId,
-        'callData': callData,
-        'isGroupChat': isGroupChat,
-      },
-    );
-  } */
+          ? callRepo.endGroupCall(callerId, receiverId, call, context)
+          : callRepo.endCall(callerId, receiverId, context, call);
+
+  Stream<List<Map<String, dynamic>>> get callHistory =>
+      callRepo.getCallHistory();
 }

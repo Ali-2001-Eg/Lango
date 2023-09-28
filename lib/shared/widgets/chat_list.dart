@@ -77,7 +77,10 @@ class _ChatListState extends ConsumerState<ChatList> {
                 }
                 if (!message.isSeen) {
                   ref.read(chatControllerProvider).notifyReceiver(
-                        body: message.messageText,
+                        title: 'sent you a message',
+                        body: message.messageType == MessageEnum.text
+                            ? message.messageText
+                            : message.messageType.type,
                         receiverUid: widget.receiverUid,
                         token: widget.token,
                         isGroupChat: widget.isGroupChat,
@@ -88,8 +91,15 @@ class _ChatListState extends ConsumerState<ChatList> {
                 return MessageTile(
                   message: message.messageText,
                   date: message.timeSent.toString(),
-                  isMe: message.receiverUid !=
-                      ref.read(authRepositoryProvider).auth.currentUser!.uid,
+                  isMe: widget.isGroupChat
+                      ? message.senderUid ==
+                          ref.read(authRepositoryProvider).auth.currentUser!.uid
+                      : message.receiverUid !=
+                          ref
+                              .read(authRepositoryProvider)
+                              .auth
+                              .currentUser!
+                              .uid,
                   messageType: message.messageType,
                   messageReply: message.messageReply,
                   username: message.repliedTo,
@@ -101,11 +111,12 @@ class _ChatListState extends ConsumerState<ChatList> {
                         ref.watch(chatControllerProvider).user?.uid,
                     message.messageType,
                   ),
+                  isGroupchat: widget.isGroupChat,
                   receiverUid: message.receiverUid,
                   messageId: message.id,
                   isSeen: message.receiverUid != message.senderUid
                       ? message.isSeen
-                      : false,
+                      : true,
                 );
               },
             );

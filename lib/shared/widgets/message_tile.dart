@@ -27,6 +27,7 @@ class MessageTile extends ConsumerWidget {
   final String caption;
   final MessageEnum messageReplyType;
   final bool isSeen;
+  final bool isGroupchat;
   const MessageTile({
     Key? key,
     required this.message,
@@ -39,6 +40,7 @@ class MessageTile extends ConsumerWidget {
     required this.messageId,
     required this.receiverUid,
     this.caption = '',
+    required this.isGroupchat,
     required this.messageReplyType,
     required this.isSeen,
   }) : super(key: key);
@@ -52,9 +54,10 @@ class MessageTile extends ConsumerWidget {
         alignment: isMe ? Alignment.centerRight : Alignment.centerLeft,
         child: Container(
           constraints: BoxConstraints(
-              maxWidth: size(context).width / 1.5,
-              minHeight: 40,
-              minWidth: size(context).width / 4),
+            maxWidth: size(context).width / 1.5,
+            minHeight: 40,
+            minWidth: size(context).width / 2,
+          ),
           margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
           decoration: BoxDecoration(
             borderRadius: isMe
@@ -70,7 +73,8 @@ class MessageTile extends ConsumerWidget {
                   ),
             color: messageType == MessageEnum.gif ||
                     messageType == MessageEnum.image ||
-                    messageType == MessageEnum.video
+                    messageType == MessageEnum.video ||
+                    messageType == MessageEnum.audio
                 ? null
                 : isMe
                     ? getTheme(context).cardColor
@@ -80,52 +84,42 @@ class MessageTile extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               customPopupMenuButton(ref, context),
-              Column(
-                children: [
-                  if (isReplying) ...[
-                    Container(
-                      width: double.maxFinite,
-                      decoration: BoxDecoration(
-                        color: getTheme(context).hoverColor,
-                        borderRadius: BorderRadius.circular(25),
-                      ),
-                      padding: const EdgeInsets.all(5),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          InkWell(
-                            onTap: () {},
-                            child: Text(
-                              isMe ? '~you ' : username,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          MessageWidget(
-                            messageType: messageReplyType,
-                            message: messageReply,
-                            textColor: Colors.grey[900]!,
-                            receiverUid: receiverUid,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                  Column(
+              if (isReplying) ...[
+                Container(
+                  width: double.maxFinite,
+                  decoration: BoxDecoration(
+                    color: getTheme(context).hoverColor,
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                  padding: const EdgeInsets.all(5),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      if (!isMe) ...[
-                        Center(child: Text(username)),
-                      ],
+                      InkWell(
+                        onTap: () {},
+                        child: Text(
+                          isMe ? '~you ' : '$username replied for you',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
                       MessageWidget(
-                        messageType: messageType,
-                        message: message,
-                        caption: caption,
+                        messageType: messageReplyType,
+                        message: messageReply,
+                        textColor: Colors.grey[900]!,
                         receiverUid: receiverUid,
                       ),
                     ],
                   ),
-                ],
+                ),
+              ],
+              //if (isGroupchat) ...[Text('~$username')],
+              MessageWidget(
+                messageType: messageType,
+                message: message,
+                caption: caption,
+                receiverUid: receiverUid,
               ),
               Container(
                 decoration: BoxDecoration(
@@ -188,7 +182,8 @@ class MessageTile extends ConsumerWidget {
               onTap: () =>
                   ref.read(chatControllerProvider).copyToClipboard(message)),
         if (receiverUid !=
-            ref.read(authRepositoryProvider).auth.currentUser!.uid)
+                ref.read(authRepositoryProvider).auth.currentUser!.uid &&
+            !isGroupchat)
           PopupMenuItem(
               child: const Icon(
                 Icons.delete,

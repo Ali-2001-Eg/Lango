@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:whatsapp_clone/screens/call/call_pickup_screen.dart';
 import 'package:whatsapp_clone/screens/chat/chat_screen.dart';
 import 'package:whatsapp_clone/shared/utils/base/error_screen.dart';
 import 'package:whatsapp_clone/shared/utils/colors.dart';
@@ -41,62 +42,66 @@ class _HomePage extends ConsumerState<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     //_focusNode.requestFocus();
-    return Scaffold(
-      resizeToAvoidBottomInset: true,
-      appBar: AppBar(
-        title: TextField(
-          controller: _searchController,
-          focusNode: _focusNode,
-          textAlign: TextAlign.center,
-          onChanged: (value) => _filterGroups(_searchController.text.trim()),
-          decoration: InputDecoration.collapsed(
-            filled: false,
-            hintStyle: getTextTheme(context)!.copyWith(
-                fontSize: 16, color: Colors.grey, fontWeight: FontWeight.w300),
-            hintText: 'Search for a group',
+    return CallPickupScreen(
+      scaffold: Scaffold(
+        resizeToAvoidBottomInset: true,
+        appBar: AppBar(
+          title: TextField(
+            controller: _searchController,
+            focusNode: _focusNode,
+            textAlign: TextAlign.center,
+            onChanged: (value) => _filterGroups(_searchController.text.trim()),
+            decoration: InputDecoration.collapsed(
+              filled: false,
+              hintStyle: getTextTheme(context)!.copyWith(
+                  fontSize: 16,
+                  color: Colors.grey,
+                  fontWeight: FontWeight.w300),
+              hintText: 'Search for a group',
+            ),
           ),
         ),
-      ),
-      body: SingleChildScrollView(
-        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-        physics: const BouncingScrollPhysics(),
-        child: StreamBuilder<List<GroupModel>>(
-          stream: ref.read(groupControllerProvider).groups,
-          builder: (context, snapshot) {
-            if (snapshot.hasError) {
-              return const Center(
-                child: Text(
-                  'No Groups with this name',
-                ),
-              );
-            }
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            } else {
-              return ListView.builder(
-                keyboardDismissBehavior:
-                    ScrollViewKeyboardDismissBehavior.onDrag,
-                itemCount: _searchController.text.isEmpty
-                    ? snapshot.data!.length
-                    : filteredList.length,
-                physics: const BouncingScrollPhysics(),
-                shrinkWrap: true,
-                itemBuilder: (_, i) {
-                  if (_searchController.text.isEmpty) {
-                    allGroups = snapshot.data!;
-                    print('filtered groups $filteredList\n');
-                    GroupModel group = snapshot.data![i];
-                    return _groupTile(group, context);
-                  } else {
-                    //for searched groups
-                    return _groupTile(filteredList[i], context);
-                  }
-                },
-              );
-            }
-          },
+        body: SingleChildScrollView(
+          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+          physics: const BouncingScrollPhysics(),
+          child: StreamBuilder<List<GroupModel>>(
+            stream: ref.read(groupControllerProvider).groups,
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return const Center(
+                  child: Text(
+                    'No Groups with this name',
+                  ),
+                );
+              }
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else {
+                return ListView.builder(
+                  keyboardDismissBehavior:
+                      ScrollViewKeyboardDismissBehavior.onDrag,
+                  itemCount: _searchController.text.isEmpty
+                      ? snapshot.data!.length
+                      : filteredList.length,
+                  physics: const BouncingScrollPhysics(),
+                  shrinkWrap: true,
+                  itemBuilder: (_, i) {
+                    if (_searchController.text.isEmpty) {
+                      allGroups = snapshot.data!;
+                      print('filtered groups $filteredList\n');
+                      GroupModel group = snapshot.data![i];
+                      return _groupTile(group, context);
+                    } else {
+                      //for searched groups
+                      return _groupTile(filteredList[i], context);
+                    }
+                  },
+                );
+              }
+            },
+          ),
         ),
       ),
     );

@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lottie/lottie.dart';
 import 'package:whatsapp_clone/controllers/status_controller.dart';
 import 'package:whatsapp_clone/repositories/auth_repo.dart';
 import 'package:whatsapp_clone/screens/status/confirm_text_status.dart';
@@ -13,70 +14,111 @@ import 'package:whatsapp_clone/shared/utils/colors.dart';
 import 'package:whatsapp_clone/shared/widgets/custom_indicator.dart';
 
 import '../../models/status_model.dart';
+import '../../repositories/status_repo.dart';
 import '../../shared/enums/message_enum.dart';
 import '../../shared/utils/functions.dart';
 import 'confirm_file_status_screen.dart';
 
 class StatusContactsScreen extends ConsumerWidget {
-  final List<String> orderedList = [];
-
   StatusContactsScreen({super.key});
+  final List<StatusModel> orderedList = [];
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final loading = ref.watch(loadingCreateStatus);
+
     return Scaffold(
-      body: StreamBuilder<List<StatusModel>>(
-        stream: ref.read(statusControllerProvider).getStatus,
+      body: StreamBuilder<List<List<StatusModel>>>(
+        stream: ref.read(statusControllerProvider).status,
         builder: (context, snapshot) {
-          _removeRedundantName(snapshot);
+          //print('snapshot: ${snapshot.data!.length}');
+
           if (snapshot.hasError) {
-            customSnackBar(snapshot.error.toString(), context);
+            // customSnackBar(snapshot.error.toString(), context);
             return ErrorScreen(
               error: snapshot.error.toString(),
             );
           }
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const CustomIndicator();
+          }
+          if (snapshot.data!.isEmpty) {
+            return Center(
+              child: Column(
+                children: [
+                  SizedBox(
+                      height: 200,
+                      child: Lottie.asset('assets/json/empty_list.json')),
+                  Text(
+                    'Your contacts didn\'t  post any status ',
+                    style: getTextTheme(context)!.copyWith(fontSize: 16),
+                  ),
+                  Text(
+                    'Be the first one who post his daily status',
+                    style: getTextTheme(context)!.copyWith(fontSize: 16),
+                  ),
+                ],
+              ),
+            );
           } else {
-            return ListView.builder(
-              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-              itemCount: orderedList.length,
-              padding: const EdgeInsets.only(top: 20),
-              itemBuilder: (context, index) {
-                var status = _setMyStatusFirst(snapshot, ref)[index];
-                return Column(
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        print(status.status);
-                        Navigator.pushNamed(
-                          context,
-                          StatusScreen.routeName,
-                          arguments: {
-                            'status': snapshot.data,
-                            'uid': snapshot.data![index].uid,
-                            'index': index,
-                          },
-                        );
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.only(bottom: 8),
-                        child: ListTile(
-                          title: Text(
-                            status.username,
-                          ),
-                          leading: CircleAvatar(
-                            backgroundImage: CachedNetworkImageProvider(
-                              status.profilePic,
-                            ),
-                            radius: 30,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const Divider(color: dividerColor, indent: 85),
+            _removeRedundantName(snapshot.data!);
+            return SingleChildScrollView(
+              child: Column(
+                children: [
+                  if (loading) ...[
+                    Column(
+                      children: [
+                        LinearProgressIndicator(
+                            color: getTheme(context).cardColor),
+                        Text(
+                          'Uploading Status ...',
+                          style: getTextTheme(context),
+                        )
+                      ],
+                    )
                   ],
-                );
-              },
+                  ListView.builder(
+                      itemCount: orderedList.length,
+                      physics: const BouncingScrollPhysics(),
+                      shrinkWrap: true,
+                      itemBuilder: (context, i) {
+                        var status = orderedList[i];
+                        return Column(
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                //print(status.audience);
+                                Navigator.pushNamed(
+                                  context,
+                                  StatusScreen.routeName,
+                                  arguments: {
+                                    'status': snapshot.data![i],
+                                    'uid': status.uid,
+                                    'index': i,
+                                  },
+                                );
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.only(bottom: 3)
+                                    .add(const EdgeInsets.all(15)),
+                                child: ListTile(
+                                  title: Text(
+                                    status.username,
+                                  ),
+                                  leading: CircleAvatar(
+                                    backgroundImage: CachedNetworkImageProvider(
+                                      status.profilePic,
+                                    ),
+                                    radius: 30,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const Divider(color: dividerColor, indent: 85),
+                          ],
+                        );
+                      }),
+                ],
+              ),
             );
           }
         },
@@ -101,7 +143,7 @@ class StatusContactsScreen extends ConsumerWidget {
             heroTag: 'btn2',
             onPressed: () async {
               File? pickedVideo = await pickVideoFromGallery(context);
-              if (pickedVideo != null) {
+              if (pickedVideo != null && context.mounted) {
                 navTo(
                     context,
                     ConfirmFileStatus(
@@ -120,7 +162,7 @@ class StatusContactsScreen extends ConsumerWidget {
             heroTag: 'btn3',
             onPressed: () async {
               File? pickedImage = await pickImageFromGallery(context);
-              if (pickedImage != null) {
+              if (pickedImage != null && context.mounted) {
                 navTo(
                     context,
                     ConfirmFileStatus(
@@ -139,35 +181,32 @@ class StatusContactsScreen extends ConsumerWidget {
     );
   }
 
-  List<StatusModel> _setMyStatusFirst(
-      AsyncSnapshot<List<StatusModel>> snapshot, WidgetRef ref) {
-    List<StatusModel> modifiedList = [];
-    List<int> myIndices = [];
-    for (int i = 0; i < snapshot.data!.length; i++) {
-      if (snapshot.data![i].uid ==
-          ref.read(authRepositoryProvider).auth.currentUser!.uid) {
-        myIndices.add(i);
+  List<List<StatusModel>> _setMyStatusFirst(
+      AsyncSnapshot<List<List<StatusModel>>> snaphot, WidgetRef ref) {
+    List<StatusModel> myStatus = [];
+    List<List<StatusModel>> remainingStatuses = [];
+    for (var innerList in snaphot.data!) {
+      if (innerList.any((status) =>
+          status.uid ==
+          ref.read(authRepositoryProvider).auth.currentUser!.uid)) {
+        myStatus = innerList;
+      } else {
+        remainingStatuses.add(innerList);
       }
     }
-    for (int index in myIndices) {
-      modifiedList.add(snapshot.data![index]);
-    }
-    for (int i = 0; i < snapshot.data!.length; i++) {
-      if (!myIndices.contains(i)) {
-        modifiedList.add(snapshot.data![i]);
-      }
-    }
-    print(modifiedList.length);
-    return modifiedList;
+    List<List<StatusModel>> orderedLists = [myStatus, ...remainingStatuses];
+    return orderedLists;
   }
 
-  void _removeRedundantName(AsyncSnapshot<List<StatusModel>> snapshot) {
-    if (snapshot.connectionState == ConnectionState.waiting) {
-      return;
-    }
-    for (var element in snapshot.data!) {
-      if (!orderedList.contains(element.username)) {
-        orderedList.add(element.username);
+  void _removeRedundantName(List<List<StatusModel>> statuses) {
+    for (var innerList in statuses) {
+      for (var object in innerList) {
+        var key = object.uid;
+        if (!orderedList.any((element) => element.uid == key)) {
+          orderedList.add(object);
+          print(orderedList);
+          break;
+        }
       }
     }
   }

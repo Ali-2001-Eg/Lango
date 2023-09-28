@@ -7,7 +7,8 @@ import 'package:whatsapp_clone/controllers/call_controller.dart';
 import 'package:whatsapp_clone/generated/l10n.dart';
 import 'package:whatsapp_clone/shared/utils/base/error_screen.dart';
 import 'package:whatsapp_clone/shared/widgets/custom_indicator.dart';
-
+import 'package:whatsapp_clone/shared/utils/functions.dart';
+import '../../controllers/chat_controller.dart';
 import '../../models/call_model.dart';
 import 'call_screen.dart';
 
@@ -30,8 +31,7 @@ class CallPickupScreen extends ConsumerWidget {
             CallModel callData = CallModel.fromJson(
                 snapshot.data!.data() as Map<String, dynamic>);
 
-            /*  ref.read(callControllerProvider).notifyReciever(callData, false); */
-
+            // print('call token is ${callData.token}');
             if (!callData.hasDialled) {
               return Scaffold(
                 body: Container(
@@ -42,10 +42,8 @@ class CallPickupScreen extends ConsumerWidget {
                     children: [
                       Text(
                         S.of(context).incoming_call,
-                        style: const TextStyle(
-                          fontSize: 30,
-                          color: Colors.white,
-                        ),
+                        style: getTextTheme(context)!.copyWith(
+                            fontSize: 25, color: getTheme(context).hoverColor),
                       ),
                       const SizedBox(
                         height: 50,
@@ -59,10 +57,8 @@ class CallPickupScreen extends ConsumerWidget {
                       ),
                       Text(
                         callData.callerName,
-                        style: const TextStyle(
-                            fontSize: 25,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold),
+                        style: getTextTheme(context)!.copyWith(
+                            fontSize: 30, color: getTheme(context).hoverColor),
                       ),
                       const SizedBox(
                         height: 50,
@@ -83,11 +79,10 @@ class CallPickupScreen extends ConsumerWidget {
                                   padding: const EdgeInsets.all(15),
                                   decoration: const BoxDecoration(
                                       shape: BoxShape.circle,
-                                      color: Colors.white10),
+                                      color: Colors.redAccent),
                                   child: const Icon(
                                     Icons.call_end,
                                     size: 35,
-                                    color: Colors.redAccent,
                                   ),
                                 )),
                             InkWell(
@@ -107,13 +102,12 @@ class CallPickupScreen extends ConsumerWidget {
                                 },
                                 child: Container(
                                   padding: const EdgeInsets.all(15),
-                                  decoration: const BoxDecoration(
+                                  decoration: BoxDecoration(
                                       shape: BoxShape.circle,
-                                      color: Colors.white10),
+                                      color: Colors.green[600]),
                                   child: const Icon(
                                     Icons.call,
                                     size: 35,
-                                    color: Colors.greenAccent,
                                   ),
                                 )),
                           ],

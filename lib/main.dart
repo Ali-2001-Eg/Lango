@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_clone/controllers/auth_controller.dart';
+import 'package:whatsapp_clone/screens/call/call_pickup_screen.dart';
 import 'package:whatsapp_clone/screens/home_screen.dart';
 import 'package:whatsapp_clone/screens/landing/landing_screen.dart';
 import 'package:whatsapp_clone/shared/enums/app_theme.dart';
@@ -81,7 +82,9 @@ class MyApp extends ConsumerWidget {
               if (user == null) {
                 return const LandingScreen();
               }
-              return const HomeScreen();
+              return CallPickupScreen(
+                scaffold: const HomeScreen(),
+              );
             },
             error: (error, stackTrace) {
               return const Scaffold(

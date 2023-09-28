@@ -36,7 +36,7 @@ class ConfirmTextScreen extends ConsumerWidget {
                     //keyboardType: TextInputType.text,
                     textAlign: TextAlign.center,
                     style:
-                        const TextStyle(fontSize: 20, decorationThickness: 0),
+                        const TextStyle(fontSize: 35, decorationThickness: 0),
                     decoration: InputDecoration.collapsed(
                       hintText: S.of(context).status_hint,
                     ),

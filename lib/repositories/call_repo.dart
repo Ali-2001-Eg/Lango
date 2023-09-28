@@ -33,6 +33,7 @@ class CallRepo {
     CallModel callerData,
     CallModel receiverData,
     BuildContext context,
+    String callerToken,
   ) async {
     try {
       await firestore
@@ -50,6 +51,7 @@ class CallRepo {
             callData: callerData,
             isGroupChat: false,
           ));
+      _saveCallHistory(receiverData, callerToken);
     } catch (e) {
       if (kDebugMode) {
         print(e.toString());
@@ -65,10 +67,12 @@ class CallRepo {
     String callerId,
     String receiverId,
     BuildContext context,
+    CallModel call,
   ) async {
     try {
       await firestore.collection('calls').doc(callerId).delete();
       await firestore.collection('calls').doc(receiverId).delete();
+      //_saveCallHistory(call);
     } catch (e) {
       if (kDebugMode) {
         print(e.toString());
@@ -121,6 +125,7 @@ class CallRepo {
   void endGroupCall(
     String callerId,
     String receiverId,
+    CallModel call,
     BuildContext context,
   ) async {
     try {
@@ -131,6 +136,7 @@ class CallRepo {
       for (var id in group.membersUid) {
         await firestore.collection('calls').doc(id).delete();
       }
+      //_saveCallHistory(call);
     } catch (e) {
       if (kDebugMode) {
         print(e.toString());
@@ -147,4 +153,58 @@ class CallRepo {
         receiver: callData.receiverName,
         token: callData.token);
   }
+
+  void _saveCallHistory(CallModel call, String callerToken) async {
+    //for caller
+    await firestore
+        .collection('users')
+        .doc(call.callerId)
+        .collection('callHistory')
+        .doc(call.callId)
+        .set({
+      'callerName': call.callerName,
+      'receiverName': call.receiverName,
+      'callerPic': call.callerPic,
+      'recieverPic': call.receiverPic,
+      'hasDialled': call.hasDialled,
+      'callerUid': call.callerId,
+      'receiverUid': call.receiverId,
+      'callerToken': callerToken,
+      'recieverToken': call.token,
+      'timeSent': DateTime.now().microsecondsSinceEpoch,
+    });
+    //for reciever
+    await firestore
+        .collection('users')
+        .doc(call.receiverId)
+        .collection('callHistory')
+        .doc(call.callId)
+        .set({
+      'callerName': call.callerName,
+      'receiverName': call.receiverName,
+      'callerPic': call.callerPic,
+      'recieverPic': call.receiverPic,
+      'hasDialled': call.hasDialled,
+      'callerUid': call.callerId,
+      'receiverUid': call.receiverId,
+      'callerToken': callerToken,
+      'recieverToken': call.token,
+      'timeSent': DateTime.now().microsecondsSinceEpoch,
+    });
+  }
+
+  Stream<List<Map<String, dynamic>>> getCallHistory() => firestore
+          .collection('users')
+          .doc(auth.currentUser!.uid)
+          .collection('callHistory')
+          .snapshots()
+          .map((query) {
+        List<Map<String, dynamic>> callHistory = [];
+        query.docs.forEach((element) {
+          if (element.data().isNotEmpty) {
+            callHistory.add(element.data());
+          }
+        });
+        return callHistory;
+      });
 }

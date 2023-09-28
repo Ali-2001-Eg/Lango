@@ -63,11 +63,13 @@ class ChatRepo {
     required UserModel sender,
     required String receiverUid,
     required String token,
+    required String title,
     required bool isGroupChat,
   }) async {
     ref.read(notificationControllerProvider).postMessageNotification(
       body: body,
       token: token,
+      title: title,
       data: {
         'name': sender.name,
         'uid': sender.uid,
@@ -148,6 +150,7 @@ class ChatRepo {
         'timeSent': DateTime.now().millisecondsSinceEpoch,
         'lastMessageType': type,
       });
+      return;
     }
     var receiverChatContact = ChatContactModel(
         name: senderData.name,
@@ -221,6 +224,7 @@ class ChatRepo {
           .collection('chats')
           .doc(messageId)
           .set(message.toJson());
+      return;
     } else {
       await firestore
           .collection('users')
@@ -296,7 +300,7 @@ class ChatRepo {
           .collection('chats')
           .doc(receiverUid)
           .collection('messages')
-          .orderBy('timeSent')
+          .orderBy('timeSent', descending: false)
           .snapshots()
           .asyncMap((query) {
         List<MessageModel> messages = [];
@@ -310,7 +314,7 @@ class ChatRepo {
           .collection('groups')
           .doc(groupId)
           .collection('chats')
-          .orderBy('timeSent')
+          .orderBy('timeSent', descending: false)
           .snapshots()
           .map((query) {
         List<MessageModel> messages = [];

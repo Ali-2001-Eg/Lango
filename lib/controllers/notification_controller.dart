@@ -9,13 +9,14 @@ class NotificationController {
 
   Future<void> postMessageNotification(
       {required String body,
+      required String title,
       required Map<String, dynamic> data,
       required String token}) async {
     ref.read(userDataProvider).whenData(
           (value) async => repo.postNotification(
               body: body,
               data: data,
-              title: '${value!.name} Sent You a message',
+              title: '${value!.name} $title',
               token: token),
         );
   }
