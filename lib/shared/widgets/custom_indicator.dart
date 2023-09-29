@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:whatsapp_clone/shared/utils/colors.dart';
+import 'package:whatsapp_clone/shared/utils/functions.dart';
 
 class CustomIndicator extends StatelessWidget {
   final double height;
@@ -15,7 +16,7 @@ class CustomIndicator extends StatelessWidget {
         width: height,
         padding: const EdgeInsets.all(10),
         child: CircularProgressIndicator(
-          color: tabColor,
+          color: getTheme(context).cardColor,
           strokeWidth: 5,
           value: value,
         ),

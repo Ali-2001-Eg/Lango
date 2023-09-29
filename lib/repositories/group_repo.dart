@@ -48,7 +48,7 @@ class GroupRepo {
         }
         log(uids.toString());
       }
-      //to have non redaundant values
+      //to have non redandunt values
       var distinctUids = uids.toSet().toList();
       var groupId = const Uuid().v1();
       String pic = await ref

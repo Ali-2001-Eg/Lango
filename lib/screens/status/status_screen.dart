@@ -46,7 +46,6 @@ class _StatusScreenState extends ConsumerState<StatusScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print(_currentIndex);
     return Directionality(
       textDirection: TextDirection.ltr,
       child: Scaffold(
@@ -64,7 +63,6 @@ class _StatusScreenState extends ConsumerState<StatusScreen> {
               onStoryShow: (storyItem) async {
                 //to wait until first build
                 if (!context.mounted) {
-                  print('current index is ${_currentIndex}');
                   setState(() async {
                     _currentIndex = storyItems.indexOf(storyItem);
                   });
@@ -156,7 +154,7 @@ class _StatusScreenState extends ConsumerState<StatusScreen> {
             .sendTextMessage(context, messageText, widget.receiverUid, false)
             .then((value) {
           _cancelReply();
-          customSnackBar('Replied successfully', context);
+          customSnackBar(S.of(context).reply_snackbar, context,color: Colors.green);
           Navigator.pop(context);
         }));
   }

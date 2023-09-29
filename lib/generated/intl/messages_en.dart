@@ -26,6 +26,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "agree_continue":
             MessageLookupByLibrary.simpleMessage("AGREE AND CONTINUE"),
         "app_lang": MessageLookupByLibrary.simpleMessage("App Language:"),
+        "call_notification_body":
+            MessageLookupByLibrary.simpleMessage("Accept or Decline the call"),
+        "call_notification_title":
+            MessageLookupByLibrary.simpleMessage("starts a call with you"),
         "calls": MessageLookupByLibrary.simpleMessage("CALLS"),
         "cam": MessageLookupByLibrary.simpleMessage("Camera"),
         "chat": MessageLookupByLibrary.simpleMessage("CHATS"),
@@ -42,9 +46,19 @@ class MessageLookup extends MessageLookupByLibrary {
         "create_group": MessageLookupByLibrary.simpleMessage("Create Group"),
         "delete_account":
             MessageLookupByLibrary.simpleMessage("Delete Account"),
+        "delete_snackbar": MessageLookupByLibrary.simpleMessage(
+            "message deleted Successfully"),
         "description": MessageLookupByLibrary.simpleMessage("Description"),
         "doc": MessageLookupByLibrary.simpleMessage("Document"),
         "edit_profile": MessageLookupByLibrary.simpleMessage("Edit Profile"),
+        "empty_group": MessageLookupByLibrary.simpleMessage(
+            "there are No members in this group"),
+        "empty_status_list": MessageLookupByLibrary.simpleMessage(
+            "Your contacts didn\'t post any status"),
+        "empty_status_list_sub_title": MessageLookupByLibrary.simpleMessage(
+            "Be the first one who post his daily status"),
+        "empty_text_status_snackbar":
+            MessageLookupByLibrary.simpleMessage("Status cannot be empty"),
         "enter_description":
             MessageLookupByLibrary.simpleMessage("Enter Your Description"),
         "enter_group_name":
@@ -65,7 +79,16 @@ class MessageLookup extends MessageLookupByLibrary {
             "Chat&Live needs to verify your phone number."),
         "login_snackbar_error":
             MessageLookupByLibrary.simpleMessage("Fill out all the fields"),
+        "message_notification_title":
+            MessageLookupByLibrary.simpleMessage("sent you a message"),
+        "mic_permission_snackbar":
+            MessageLookupByLibrary.simpleMessage("Mic Permission not allowed"),
+        "missed__info_field":
+            MessageLookupByLibrary.simpleMessage("Please Fill All Fields"),
+        "new_video": MessageLookupByLibrary.simpleMessage("New video"),
         "next": MessageLookupByLibrary.simpleMessage("Next"),
+        "non_register_user": MessageLookupByLibrary.simpleMessage(
+            "This Number does not exist in the app."),
         "offline": MessageLookupByLibrary.simpleMessage("Offline"),
         "online": MessageLookupByLibrary.simpleMessage("Online"),
         "phone_nember": MessageLookupByLibrary.simpleMessage("PhoneNumber"),
@@ -74,7 +97,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "read_our_privacy": MessageLookupByLibrary.simpleMessage(
             "Read our Privacy Policy. Tap \"Agree and continue to accept the Terms of Services\""),
         "reply": MessageLookupByLibrary.simpleMessage("Reply"),
+        "reply_snackbar":
+            MessageLookupByLibrary.simpleMessage("Replied successfully"),
         "save": MessageLookupByLibrary.simpleMessage("Save"),
+        "search_hint":
+            MessageLookupByLibrary.simpleMessage("Search for a group"),
         "select_contact":
             MessageLookupByLibrary.simpleMessage("Select Contact"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
@@ -83,10 +110,15 @@ class MessageLookup extends MessageLookupByLibrary {
             "We have sent an SMS with a code."),
         "status": MessageLookupByLibrary.simpleMessage("STATUS"),
         "status_hint": MessageLookupByLibrary.simpleMessage("Type a status..."),
+        "uploading_status":
+            MessageLookupByLibrary.simpleMessage("Uploading Status ..."),
         "username": MessageLookupByLibrary.simpleMessage("Username"),
         "verify_num":
             MessageLookupByLibrary.simpleMessage("Verifying your number"),
+        "voice_message":
+            MessageLookupByLibrary.simpleMessage("🎵 Voice Message"),
         "welcome_landing":
-            MessageLookupByLibrary.simpleMessage("Welcome To Chat & Live")
+            MessageLookupByLibrary.simpleMessage("Welcome To Chat & Live"),
+        "yesterday": MessageLookupByLibrary.simpleMessage("Yesterday")
       };
 }

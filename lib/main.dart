@@ -60,8 +60,8 @@ class MyApp extends ConsumerWidget {
       },
       child: MaterialApp(
         title: 'Chat & Live',
-        themeAnimationCurve: Curves.easeInToLinear,
-        themeAnimationDuration: const Duration(milliseconds: 100),
+        themeAnimationCurve: Curves.easeInOutQuad,
+        themeAnimationDuration: const Duration(seconds: 1),
         locale: locale.selectedLocale == 'en'
             ? const Locale('en')
             : const Locale('ar'),

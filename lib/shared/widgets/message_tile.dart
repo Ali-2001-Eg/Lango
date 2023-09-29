@@ -106,7 +106,11 @@ class MessageTile extends ConsumerWidget {
                       InkWell(
                         onTap: () {},
                         child: Text(
-                          isMe ? '~you ' : '$username replied for you',
+                          isMe
+                              ? '~you '
+                              : isArabic
+                                  ? '$username قام بالرد عليك'
+                                  : '$username replied for you',
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
@@ -186,8 +190,9 @@ class MessageTile extends ConsumerWidget {
                 Icons.copy,
                 color: Colors.green,
               ),
-              onTap: () =>
-                  ref.read(chatControllerProvider).copyToClipboard(message)),
+              onTap: () => ref
+                  .read(chatControllerProvider)
+                  .copyToClipboard(message, context)),
         if (receiverUid !=
                 ref.read(authRepositoryProvider).auth.currentUser!.uid &&
             !isGroupchat)

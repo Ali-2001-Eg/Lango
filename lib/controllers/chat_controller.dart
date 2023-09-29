@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_clone/controllers/auth_controller.dart';
 import 'package:whatsapp_clone/controllers/message_reply_controller.dart';
+import 'package:whatsapp_clone/generated/l10n.dart';
 import 'package:whatsapp_clone/models/chat_contacts_model.dart';
 import 'package:whatsapp_clone/models/group_model.dart';
 import 'package:whatsapp_clone/repositories/chat_repo.dart';
@@ -105,11 +106,11 @@ class ChatController {
     String receiverUid,
   ) {
     chatRepo.deleteMessage(messageId, context, receiverUid).then(
-        (value) => customSnackBar('message deleted Successfully', context));
+        (value) => customSnackBar(S.of(context).delete_snackbar, context));
   }
 
-  void copyToClipboard(String message) {
-    chatRepo.copyMessageToClipboard(message);
+  void copyToClipboard(String message, context) {
+    chatRepo.copyMessageToClipboard(message, context);
   }
 }
 

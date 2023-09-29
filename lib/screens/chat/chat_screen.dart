@@ -50,10 +50,10 @@ class ChatScreen extends ConsumerWidget {
         .read(callControllerProvider)
         .call(name, profilePic, isGroupChat, uid, context, token)
         .then((value) => ref.read(chatControllerProvider).notifyReceiver(
-              body: 'Accept or Decline the call',
+              body: S.of(context).call_notification_body,
               receiverUid: uid,
               token: token,
-              title: 'starts a call with you',
+              title: S.of(context).call_notification_title,
               isGroupChat: isGroupChat,
             ));
   }
@@ -64,6 +64,7 @@ class ChatScreen extends ConsumerWidget {
     return WillPopScope(
       onWillPop: () async {
         ref.read(messageReplyProvider.state).update((state) => null);
+        Navigator.pushNamed(context, HomeScreen.routeName);
         return true;
       },
       child: CallPickupScreen(
@@ -138,12 +139,30 @@ class ChatScreen extends ConsumerWidget {
                       Icons.info,
                       size: 20,
                     )),
-                IconButton(
-                    onPressed: () => makeCall(ref, context),
-                    icon: const Icon(
-                      Icons.call,
-                      size: 30,
-                    )),
+                isGroupChat
+                    ? StreamBuilder<bool>(
+                        stream:
+                            ref.read(groupControllerProvider).isUserJoined(uid),
+                        builder: (context, snapshot) {
+                          return IconButton(
+                              onPressed: () => snapshot.data!
+                                  ? makeCall(ref, context)
+                                  : customSnackBar(
+                                      !isArabic
+                                          ? 'You must join $name first to make call.'
+                                          : '$name لاتمام المكالمات انضم ل مجموعه',
+                                      context),
+                              icon: const Icon(
+                                Icons.call,
+                                size: 30,
+                              ));
+                        })
+                    : IconButton(
+                        onPressed: () => makeCall(ref, context),
+                        icon: const Icon(
+                          Icons.call,
+                          size: 30,
+                        )),
               ],
             ),
             body: Container(
@@ -182,8 +201,11 @@ class ChatScreen extends ConsumerWidget {
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
                                     Text(
-                                      'You must join $name first to make messages.',
-                                      style: const TextStyle(fontSize: 18),
+                                      !isArabic
+                                          ? 'You must join $name first to make messages.'
+                                          : '$name لاتمام المحادثات انضم ل مجموعه',
+                                      style: const TextStyle(
+                                          fontSize: 18, color: Colors.white70),
                                     ),
                                     CustomButton(
                                       text: S.of(context).join_group,

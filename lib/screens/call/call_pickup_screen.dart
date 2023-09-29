@@ -78,10 +78,10 @@ class CallPickupScreen extends ConsumerWidget {
                                   padding: const EdgeInsets.all(15),
                                   decoration: const BoxDecoration(
                                       shape: BoxShape.circle,
-                                      color: Colors.redAccent),
+                                      color: Color.fromARGB(255, 179, 44, 44)),
                                   child: const Icon(
                                     Icons.call_end,
-                                    size: 35,
+                                    size: 35,color: Colors.white,
                                   ),
                                 )),
                             InkWell(
@@ -101,12 +101,12 @@ class CallPickupScreen extends ConsumerWidget {
                                 },
                                 child: Container(
                                   padding: const EdgeInsets.all(15),
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                       shape: BoxShape.circle,
-                                      color: Colors.green[600]),
+                                      color: Color.fromARGB(255, 8, 133, 14)),
                                   child: const Icon(
                                     Icons.call,
-                                    size: 35,
+                                    size: 35,color: Colors.white,
                                   ),
                                 )),
                           ],

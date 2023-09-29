@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
+import 'package:whatsapp_clone/generated/l10n.dart';
 import 'package:whatsapp_clone/models/chat_contacts_model.dart';
 import 'package:whatsapp_clone/models/group_model.dart';
 import 'package:whatsapp_clone/models/message_model.dart';
@@ -488,9 +489,11 @@ class ChatRepo {
     }
   }
 
-  void copyMessageToClipboard(String message) {
+  void copyMessageToClipboard(String message, context) {
     try {
-      Clipboard.setData(ClipboardData(text: message));
+      Clipboard.setData(ClipboardData(text: message)).then((value) =>
+          customSnackBar(S.of(context).copy_snackbar, context,
+              color: getTheme(context).cardColor));
     } catch (e) {}
   }
 }

@@ -160,8 +160,10 @@ class DescriptionScreen extends ConsumerWidget {
         .read(groupControllerProvider)
         .leaveGroup(id)
         .then((value) => Navigator.pushNamed(context, HomeScreen.routeName))
-        .then(
-            (value) => customSnackBar('You left $name successfully!', context));
+        .then((value) => customSnackBar(
+            !isArabic ? 'You left $name successfully!' : '$name تم مغادره ',
+            context,
+            color: Colors.green));
   }
 
   void _joinGroup(WidgetRef ref, BuildContext context) {
@@ -182,8 +184,8 @@ class DescriptionScreen extends ConsumerWidget {
             return ErrorScreen(
               error: snapshot.error.toString(),
             );
-          } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-            const Text('there is no members in this group');
+          } else if (snapshot.hasData && snapshot.data!.isEmpty) {
+            return Center(child: Text(S.of(context).empty_group));
           }
 
           return ListView.builder(

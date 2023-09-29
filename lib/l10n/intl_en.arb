@@ -48,6 +48,23 @@
     "phone_nember":"PhoneNumber",
     "leave_group":"Leave Group",
     "join_group":"Join Group",
-    "edit_profile":"Edit Profile"
+    "edit_profile":"Edit Profile",
    
+    "delete_snackbar":"message deleted Successfully",
+   "non_register_user":"This Number does not exist in the app.",
+   "missed__info_field":"Please Fill All Fields",
+   "call_notification_body":"Accept or Decline the call",
+   "call_notification_title":"starts a call with you",
+   "empty_group":"there are No members in this group",
+   "empty_text_status_snackbar":"Status cannot be empty",
+   "empty_status_list":"Your contacts didn't post any status",
+   "empty_status_list_sub_title":"Be the first one who post his daily status",
+   "uploading_status":"Uploading Status ...",
+   "reply_snackbar":"Replied successfully",
+   "voice_message":"🎵 Voice Message" ,
+   "new_video":"New video",
+   "mic_permission_snackbar":"Mic Permission not allowed",
+   "message_notification_title":"sent you a message",
+   "yesterday":"Yesterday",
+   "search_hint":"Search for a group"
 }

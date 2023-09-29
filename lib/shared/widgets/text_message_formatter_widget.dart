@@ -8,7 +8,9 @@ import '../utils/functions.dart';
 
 class MessageTextFormatterWidget extends ConsumerWidget {
   final String text;
-  const MessageTextFormatterWidget({Key? key, required this.text})
+  final bool isReply;
+  const MessageTextFormatterWidget(
+      {Key? key, required this.text, this.isReply = false})
       : super(key: key);
 
   @override
@@ -16,12 +18,13 @@ class MessageTextFormatterWidget extends ConsumerWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Linkify(
+        maxLines: 1,
         onOpen: (link) async {
-          print('url is ${link.url}');
+          // print('url is ${link.url}');
 
           try {
             if (await canLaunchUrlString(link.url)) {
-              await launchUrlString('${link.url}');
+              //  await launchUrlString('${link.url}');
             }
           } catch (e) {
             //print(e.toString());
@@ -29,9 +32,12 @@ class MessageTextFormatterWidget extends ConsumerWidget {
           }
         },
         text: text,
-        style: getTextTheme(context, ref).copyWith(color: Colors.white),
+        style: getTextTheme(context, ref).copyWith(
+            color: Colors.white,
+            fontSize: isReply ? 10 : 20,
+            overflow: TextOverflow.ellipsis),
         linkStyle: getTextTheme(context, ref).copyWith(
-          fontSize: 13,
+          fontSize: isReply ? 10 : 10,
           fontWeight: FontWeight.w700,
           color: Colors.blue,
           decoration: TextDecoration.underline,

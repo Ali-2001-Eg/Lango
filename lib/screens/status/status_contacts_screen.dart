@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lottie/lottie.dart';
 import 'package:whatsapp_clone/controllers/status_controller.dart';
+import 'package:whatsapp_clone/generated/l10n.dart';
 import 'package:whatsapp_clone/repositories/auth_repo.dart';
 import 'package:whatsapp_clone/screens/status/confirm_text_status.dart';
 import 'package:whatsapp_clone/screens/status/status_screen.dart';
@@ -49,11 +50,11 @@ class StatusContactsScreen extends ConsumerWidget {
                       height: 200,
                       child: Lottie.asset('assets/json/empty_list.json')),
                   Text(
-                    'Your contacts didn\'t  post any status ',
+                    S.of(context).empty_status_list,
                     style: getTextTheme(context, ref).copyWith(fontSize: 16),
                   ),
                   Text(
-                    'Be the first one who post his daily status',
+                    S.of(context).empty_status_list_sub_title,
                     style: getTextTheme(context, ref).copyWith(fontSize: 16),
                   ),
                 ],
@@ -70,7 +71,7 @@ class StatusContactsScreen extends ConsumerWidget {
                         LinearProgressIndicator(
                             color: getTheme(context).cardColor),
                         Text(
-                          'Uploading Status ...',
+                          S.of(context).uploading_status, 
                           style: getTextTheme(context, ref),
                         )
                       ],

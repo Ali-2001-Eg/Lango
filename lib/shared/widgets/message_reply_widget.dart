@@ -50,10 +50,14 @@ class MessageReplyWidget extends ConsumerWidget {
           const SizedBox(
             height: 8,
           ),
-          MessageWidget(
-            message: messageReply.message,
-            messageType: messageReply.messageType,
-            receiverUid: receiverUid,
+          Align(
+            alignment: Alignment.bottomRight,
+            child: MessageWidget(
+              message: messageReply.message,
+              messageType: messageReply.messageType,
+              receiverUid: receiverUid,
+              isReply: true,
+            ),
           )
         ],
       ),

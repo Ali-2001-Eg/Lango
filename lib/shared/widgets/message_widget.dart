@@ -25,12 +25,13 @@ class MessageWidget extends StatelessWidget {
   final File? file;
   final String caption;
   final String receiverUid;
-
+  final bool isReply;
   const MessageWidget(
       {Key? key,
       required this.message,
       required this.messageType,
       required this.receiverUid,
+      this.isReply = false,
       this.confirmScreen = false,
       this.file,
       this.caption = '',
@@ -48,12 +49,19 @@ class MessageWidget extends StatelessWidget {
       case MessageEnum.audio:
         return AudioPlayerItem(
           url: message,
+          isReply: isReply,
         );
       case MessageEnum.image:
         return Container(
             constraints: BoxConstraints(
-              maxHeight: size(context).height / 2.5,
-              minHeight: size(context).height / 6,
+              maxHeight: isReply
+                  ? size(context).height / 15
+                  : size(context).height / 2.5,
+              minWidth:
+                  isReply ? size(context).width / 10 : size(context).width / 3,
+              minHeight: isReply
+                  ? size(context).height / 15
+                  : size(context).height / 6,
             ),
             child: confirmScreen
                 ? Image.file(
@@ -64,17 +72,28 @@ class MessageWidget extends StatelessWidget {
                     clipBehavior: Clip.antiAlias,
                     children: [
                       GestureDetector(
-                        onTap: () => Navigator.pushNamed(
-                            context, ExpandedViewScreen.routeName,
-                            arguments: {'file': message, 'type': messageType}),
+                        onTap: () => isReply
+                            ? null
+                            : Navigator.pushNamed(
+                                context,
+                                ExpandedViewScreen.routeName,
+                                arguments: {
+                                  'file': message,
+                                  'type': messageType,
+                                  'caption': caption,
+                                },
+                              ),
                         child: Container(
                           decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: getTheme(context).cardColor),
+                              border: !isReply
+                                  ? Border.all(
+                                      color: getTheme(context).cardColor,
+                                      width: 2)
+                                  : null,
                               borderRadius: BorderRadius.circular(20),
                               image: DecorationImage(
                                 image: CachedNetworkImageProvider(message),
-                                fit: BoxFit.fill,
+                                fit: isReply ? null : BoxFit.fill,
                               )),
                         ),
                       ),
@@ -115,9 +134,13 @@ class MessageWidget extends StatelessWidget {
                                   context, ExpandedViewScreen.routeName,
                                   arguments: {
                                     'file': message,
-                                    'type': messageType
+                                    'type': messageType,
+                                    'caption': caption,
                                   }),
-                          child: VideoPlayerItem(url: message))),
+                          child: VideoPlayerItem(
+                            url: message,
+                            isReply: isReply,
+                          ))),
                   if (caption != '')
                     Positioned(
                       bottom: 0,

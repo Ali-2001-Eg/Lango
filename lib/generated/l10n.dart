@@ -549,6 +549,176 @@ class S {
       args: [],
     );
   }
+
+  /// `message deleted Successfully`
+  String get delete_snackbar {
+    return Intl.message(
+      'message deleted Successfully',
+      name: 'delete_snackbar',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This Number does not exist in the app.`
+  String get non_register_user {
+    return Intl.message(
+      'This Number does not exist in the app.',
+      name: 'non_register_user',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please Fill All Fields`
+  String get missed__info_field {
+    return Intl.message(
+      'Please Fill All Fields',
+      name: 'missed__info_field',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Accept or Decline the call`
+  String get call_notification_body {
+    return Intl.message(
+      'Accept or Decline the call',
+      name: 'call_notification_body',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `starts a call with you`
+  String get call_notification_title {
+    return Intl.message(
+      'starts a call with you',
+      name: 'call_notification_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `there are No members in this group`
+  String get empty_group {
+    return Intl.message(
+      'there are No members in this group',
+      name: 'empty_group',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Status cannot be empty`
+  String get empty_text_status_snackbar {
+    return Intl.message(
+      'Status cannot be empty',
+      name: 'empty_text_status_snackbar',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your contacts didn't post any status`
+  String get empty_status_list {
+    return Intl.message(
+      'Your contacts didn\'t post any status',
+      name: 'empty_status_list',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Be the first one who post his daily status`
+  String get empty_status_list_sub_title {
+    return Intl.message(
+      'Be the first one who post his daily status',
+      name: 'empty_status_list_sub_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Uploading Status ...`
+  String get uploading_status {
+    return Intl.message(
+      'Uploading Status ...',
+      name: 'uploading_status',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Replied successfully`
+  String get reply_snackbar {
+    return Intl.message(
+      'Replied successfully',
+      name: 'reply_snackbar',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `🎵 Voice Message`
+  String get voice_message {
+    return Intl.message(
+      '🎵 Voice Message',
+      name: 'voice_message',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `New video`
+  String get new_video {
+    return Intl.message(
+      'New video',
+      name: 'new_video',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Mic Permission not allowed`
+  String get mic_permission_snackbar {
+    return Intl.message(
+      'Mic Permission not allowed',
+      name: 'mic_permission_snackbar',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `sent you a message`
+  String get message_notification_title {
+    return Intl.message(
+      'sent you a message',
+      name: 'message_notification_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Yesterday`
+  String get yesterday {
+    return Intl.message(
+      'Yesterday',
+      name: 'yesterday',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search for a group`
+  String get search_hint {
+    return Intl.message(
+      'Search for a group',
+      name: 'search_hint',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

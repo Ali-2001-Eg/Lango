@@ -18,7 +18,9 @@ class SettingsScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(S.of(context).settings, style: getTextTheme(context, ref)),
+        title: Text(
+          S.of(context).settings,
+        ),
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -44,7 +46,7 @@ class SettingsScreen extends ConsumerWidget {
                       children: [
                         Icon(
                           Icons.language,
-                          color: Theme.of(context).primaryColor,
+                          color: getTheme(context).cardColor,
                         ),
                         const SizedBox(
                           width: 5,
@@ -63,7 +65,9 @@ class SettingsScreen extends ConsumerWidget {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         border: Border.all(
-                            color: const Color(0xffFEA633), width: 2),
+                            color:
+                                getTheme(context).appBarTheme.backgroundColor!,
+                            width: 2),
                       ),
                       child: DropdownButtonHideUnderline(
                         child: DropdownButton<String>(

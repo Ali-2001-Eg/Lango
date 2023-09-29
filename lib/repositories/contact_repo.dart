@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:whatsapp_clone/generated/l10n.dart';
 import 'package:whatsapp_clone/models/user_model.dart';
 import 'package:whatsapp_clone/screens/chat/chat_screen.dart';
 import 'package:whatsapp_clone/shared/utils/functions.dart';
@@ -58,7 +59,7 @@ class ContactRepo {
             },
           );
         } else {
-          customSnackBar('This Number does not exist in the app.', context);
+          customSnackBar(S.of(context).non_register_user, context);
         }
       }
     } catch (e) {

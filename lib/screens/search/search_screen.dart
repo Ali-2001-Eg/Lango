@@ -49,15 +49,22 @@ class _HomePage extends ConsumerState<SearchScreen> {
           title: TextField(
             controller: _searchController,
             focusNode: _focusNode,
-            textAlign: TextAlign.center,
+            style: const TextStyle(decorationThickness: 0, color: Colors.white),
+            textDirection: isArabic ? TextDirection.rtl : TextDirection.ltr,
+            //textAlign: TextAlign.center,
             onChanged: (value) => _filterGroups(_searchController.text.trim()),
-            decoration: InputDecoration.collapsed(
+            decoration: InputDecoration(
               filled: false,
+              isCollapsed: true,
+              suffixIcon: const Icon(
+                Icons.search,
+                color: Colors.white,
+              ),
               hintStyle: getTextTheme(context, ref).copyWith(
                   fontSize: 16,
                   color: Colors.grey,
                   fontWeight: FontWeight.w300),
-              hintText: 'Search for a group',
+              hintText: S.of(context).search_hint,
             ),
           ),
         ),
@@ -90,7 +97,7 @@ class _HomePage extends ConsumerState<SearchScreen> {
                   itemBuilder: (_, i) {
                     if (_searchController.text.isEmpty) {
                       allGroups = snapshot.data!;
-                      print('filtered groups $filteredList\n');
+                      //print('filtered groups $filteredList\n');
                       GroupModel group = snapshot.data![i];
                       return _groupTile(group, context);
                     } else {
@@ -105,10 +112,6 @@ class _HomePage extends ConsumerState<SearchScreen> {
         ),
       ),
     );
-  }
-
-  Stream<bool> _isUserJoined(String groupId) {
-    return ref.read(groupControllerProvider).isUserJoined(groupId);
   }
 
   void _filterGroups(String query) {
@@ -135,7 +138,9 @@ class _HomePage extends ConsumerState<SearchScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                '${group.membersUid.length} subscribers',
+                !isArabic
+                    ? '${group.membersUid.length} subscribers'
+                    : '${group.membersUid.length} مشتركين',
                 style: getTextTheme(context, ref).copyWith(
                     fontSize: 13, color: getTheme(context).hoverColor),
               ),

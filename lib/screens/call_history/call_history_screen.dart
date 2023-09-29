@@ -6,6 +6,7 @@ import 'package:whatsapp_clone/shared/utils/functions.dart';
 import 'package:whatsapp_clone/shared/widgets/custom_indicator.dart';
 
 import '../../controllers/call_controller.dart';
+import '../../generated/l10n.dart';
 import '../../shared/utils/colors.dart';
 import '../../shared/widgets/time_text_formatter.dart';
 
@@ -41,9 +42,15 @@ class CallHistoryScreen extends ConsumerWidget {
                   child: Column(
                     children: [
                       ListTile(
-                        title: Text(didICall
-                            ? 'You called  ${item['receiverName']}'
-                            : 'You recieved a call from ${item['callerName']}'),
+                        title: Text(
+                          didICall
+                              ? isArabic
+                                  ? (' لقد قمت بعمل مكالمه مع ${item['receiverName']}')
+                                  : ('You called  ${item['receiverName']}')
+                              : !isArabic
+                                  ? 'You recieved a call from ${item['callerName']}'
+                                  : 'تم استقبال مكالمه من ${item['callerName']}',
+                        ),
                         leading: CircleAvatar(
                           radius: 30,
                           backgroundImage: CachedNetworkImageProvider(didICall

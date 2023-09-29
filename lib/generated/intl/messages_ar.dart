@@ -25,6 +25,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "add_caption": MessageLookupByLibrary.simpleMessage("اضف عنوان"),
         "agree_continue": MessageLookupByLibrary.simpleMessage("أكمل"),
         "app_lang": MessageLookupByLibrary.simpleMessage("لغه التطبيق"),
+        "call_notification_body":
+            MessageLookupByLibrary.simpleMessage("يمكنك قبول أو رفض المكالمه"),
+        "call_notification_title":
+            MessageLookupByLibrary.simpleMessage("يحاول لاتصال بك"),
         "calls": MessageLookupByLibrary.simpleMessage("المكالمات"),
         "cam": MessageLookupByLibrary.simpleMessage("كاميرا"),
         "chat": MessageLookupByLibrary.simpleMessage("المحادثات"),
@@ -38,9 +42,19 @@ class MessageLookup extends MessageLookupByLibrary {
         "copy_snackbar": MessageLookupByLibrary.simpleMessage("تم النسخ بنجاح"),
         "create_group": MessageLookupByLibrary.simpleMessage("إنشاء مجموعه"),
         "delete_account": MessageLookupByLibrary.simpleMessage("إزاله الحساب"),
+        "delete_snackbar":
+            MessageLookupByLibrary.simpleMessage("تم حذف الرساله بنجاح"),
         "description": MessageLookupByLibrary.simpleMessage("الوصف"),
         "doc": MessageLookupByLibrary.simpleMessage("ملف"),
         "edit_profile": MessageLookupByLibrary.simpleMessage("تعديل الحساب"),
+        "empty_group": MessageLookupByLibrary.simpleMessage(
+            "هذه القناه لا تحتوي علي اي مشتركين"),
+        "empty_status_list": MessageLookupByLibrary.simpleMessage(
+            "جميع جهات الاتصال الخاصه بك لم تقم باضافه حالات حديثا"),
+        "empty_status_list_sub_title":
+            MessageLookupByLibrary.simpleMessage("كن صاحب اول حاله اليوم"),
+        "empty_text_status_snackbar": MessageLookupByLibrary.simpleMessage(
+            "وصف الحاله لا يمكن ان يكون فارغا"),
         "enter_description":
             MessageLookupByLibrary.simpleMessage("ادخل الوصف الخاص بك"),
         "enter_group_name":
@@ -61,7 +75,16 @@ class MessageLookup extends MessageLookupByLibrary {
             "Chat&Live يريد التأكد من هويتك."),
         "login_snackbar_error":
             MessageLookupByLibrary.simpleMessage("اكمل كل البيانات"),
+        "message_notification_title":
+            MessageLookupByLibrary.simpleMessage("أرسل لك رساله"),
+        "mic_permission_snackbar":
+            MessageLookupByLibrary.simpleMessage("يتعذر الوصول للميكروفون"),
+        "missed__info_field":
+            MessageLookupByLibrary.simpleMessage("املأ كل البيانات الخاصه بك"),
+        "new_video": MessageLookupByLibrary.simpleMessage("فيديو جديد"),
         "next": MessageLookupByLibrary.simpleMessage("التالي"),
+        "non_register_user": MessageLookupByLibrary.simpleMessage(
+            "هذا الرقم لا يمتلك حساب على البرنامج"),
         "offline": MessageLookupByLibrary.simpleMessage("غير متصل"),
         "online": MessageLookupByLibrary.simpleMessage("متصل"),
         "phone_nember": MessageLookupByLibrary.simpleMessage("رقم الهاتف"),
@@ -70,7 +93,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "read_our_privacy": MessageLookupByLibrary.simpleMessage(
             "بتسجيلك للدخول تصبح كل الحقوق محفوظه"),
         "reply": MessageLookupByLibrary.simpleMessage("رد"),
+        "reply_snackbar": MessageLookupByLibrary.simpleMessage("تم الرد بنجاح"),
         "save": MessageLookupByLibrary.simpleMessage("حفظ"),
+        "search_hint": MessageLookupByLibrary.simpleMessage("ابحث عن القناه"),
         "select_contact":
             MessageLookupByLibrary.simpleMessage("اختر جهات الاتصال"),
         "settings": MessageLookupByLibrary.simpleMessage("الاعدادات"),
@@ -79,10 +104,14 @@ class MessageLookup extends MessageLookupByLibrary {
             "تم ارسال كود التأكد الي رقم التليفون"),
         "status": MessageLookupByLibrary.simpleMessage("الحالات"),
         "status_hint": MessageLookupByLibrary.simpleMessage("وصف الحاله"),
+        "uploading_status":
+            MessageLookupByLibrary.simpleMessage("جاري رفع الحاله ..."),
         "username": MessageLookupByLibrary.simpleMessage("الاسم الشخصي"),
         "verify_num":
             MessageLookupByLibrary.simpleMessage("جاري التأكد من هويتك"),
+        "voice_message": MessageLookupByLibrary.simpleMessage("🎵 رساله صوتيه"),
         "welcome_landing":
-            MessageLookupByLibrary.simpleMessage("أهلا بك Chat & Live")
+            MessageLookupByLibrary.simpleMessage("أهلا بك Chat & Live"),
+        "yesterday": MessageLookupByLibrary.simpleMessage("البارحه")
       };
 }

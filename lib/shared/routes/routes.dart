@@ -81,9 +81,12 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case ExpandedViewScreen.routeName:
       return MaterialPageRoute(
         builder: (context) {
-          final file = settings.arguments as String;
-          final type = settings.arguments as MessageEnum;
-          return ExpandedViewScreen(fileUrl: file, fileType: type);
+          final args = settings.arguments as Map<String, dynamic>;
+          final file = args['file'];
+          final type = args['type'];
+          final caption = args['caption'];
+          return ExpandedViewScreen(
+              fileUrl: file, fileType: type, caption: caption);
         },
       );
     case StatusScreen.routeName:

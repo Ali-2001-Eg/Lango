@@ -109,12 +109,11 @@ class _BottomChatFieldWidgetState extends ConsumerState<BottomChatFieldWidget> {
                         prefixIcon: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: SizedBox(
-                            width: 60,
+                            width: size(context).width/4,
                             child: Row(
                               children: [
                                 InkWell(
                                   onTap: () {
-                                    print('tapped');
                                     _selectKeyboardDisplayed();
                                   },
                                   child: Icon(
@@ -286,7 +285,7 @@ class _BottomChatFieldWidgetState extends ConsumerState<BottomChatFieldWidget> {
 
   Future<void> _selectGif() async {
     GiphyGif? gif = await pickGif(context);
-    if (gif != null) {
+    if (gif != null && context.mounted) {
       ref.read(chatControllerProvider).sendGifMessage(
           context, gif.url, widget.receiverUid, widget.isGroupChat);
     }
@@ -298,8 +297,6 @@ class _BottomChatFieldWidgetState extends ConsumerState<BottomChatFieldWidget> {
       int filenameIndex = filePath.lastIndexOf('/') + 1;
       String filename = filePath.substring(filenameIndex);
 
-      print('file path is $filePath');
-      print('file name is $filename');
       _navToConfirmFile(
           File(filePath), MessageEnum.pdf, filename, widget.isGroupChat);
     }
@@ -329,9 +326,9 @@ class _BottomChatFieldWidgetState extends ConsumerState<BottomChatFieldWidget> {
 
   _openAudio() async {
     final PermissionStatus status = await Permission.microphone.request();
-    if (!status.isGranted) {
-      customSnackBar('Mic Permission not allowed', context);
-      throw RecordingPermissionException('Mic Permission not allowed');
+    if (!status.isGranted && context.mounted) {
+      customSnackBar(S.of(context).mic_permission_snackbar, context);
+      throw RecordingPermissionException(S.of(context).mic_permission_snackbar);
     }
     //permission has been granted so,
     await _soundRecorder!.openRecorder();
@@ -385,7 +382,6 @@ class _BottomChatFieldWidgetState extends ConsumerState<BottomChatFieldWidget> {
                     text: S.of(context).loc,
                     backgroundColor: Colors.green,
                     onPress: () {
-                      print('tapped');
                       Future(() => navTo(
                           context,
                           MapsScreen(
@@ -394,7 +390,7 @@ class _BottomChatFieldWidgetState extends ConsumerState<BottomChatFieldWidget> {
                     },
                     icon: Icons.location_on),
                 ModalBottomSheetItem(
-                    text: 'video',
+                    text: S.of(context).new_video,
                     backgroundColor: Colors.blueAccent,
                     onPress: () {
                       _selectVideo(ImageSource.camera);

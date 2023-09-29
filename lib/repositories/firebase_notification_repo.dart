@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print, unused_local_variable
-
 import 'dart:convert';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -21,14 +19,8 @@ class FirebaseMessagingRepo extends ChangeNotifier {
   Future<void> init() async {
     firebaseMessaging.requestPermission();
 
-    FirebaseMessaging.onMessage.listen(((query) {
-      print(query.data.toString());
-      print('on message');
-    }));
-    FirebaseMessaging.onMessageOpenedApp.listen((query) {
-      print(query.data.toString());
-      print('on message opened app');
-    });
+    FirebaseMessaging.onMessage.listen(((query) {}));
+    FirebaseMessaging.onMessageOpenedApp.listen((query) {});
 
     FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
   }
@@ -60,11 +52,7 @@ class FirebaseMessagingRepo extends ChangeNotifier {
     );
 
     if (response.statusCode == 200) {
-      print('POST request successful');
-      print(response.body);
-    } else {
-      print('POST request failed with status: ${response.statusCode}');
-    }
+    } else {}
   }
 
   postCallingNotification({
@@ -93,8 +81,6 @@ class FirebaseMessagingRepo extends ChangeNotifier {
 }
 
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  print('on background message');
-  print(message.data.toString.toString());
   navigatorKey.currentState!.pushNamed(ChatScreen.routeName,
       arguments: message.data.toString.toString());
 }
@@ -104,12 +90,8 @@ Future<void> callingBackgroundHandler(RemoteMessage message) async {
   String? body = message.notification!.body;
   AwesomeNotifications().actionStream.listen((query) {
     if (query.buttonKeyPressed == 'ACCEPT') {
-      print('call Accepted');
     } else if (query.buttonKeyPressed == 'DECLINE') {
-      print('call Declined');
-    } else {
-      print('Clicked on notification');
-    }
+    } else {}
   });
   /* navigatorKey.currentState!.pushNamed(CallScreen.routeName,
       arguments: message.data.toString.toString()); */

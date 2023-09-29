@@ -4,6 +4,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_clone/controllers/auth_controller.dart';
 import 'package:whatsapp_clone/controllers/chat_controller.dart';
+import 'package:whatsapp_clone/generated/l10n.dart';
 import 'package:whatsapp_clone/models/message_model.dart';
 import 'package:whatsapp_clone/repositories/auth_repo.dart';
 import 'package:whatsapp_clone/shared/enums/message_enum.dart';
@@ -58,11 +59,11 @@ class _ChatListState extends ConsumerState<ChatList> {
             return ListView.builder(
               controller: _scrollController,
               itemCount: snapshot.data!.length,
-              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.manual,
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
               physics: const BouncingScrollPhysics(),
               itemBuilder: (context, index) {
                 final message = snapshot.data![index];
-                print('chat list token is  ${widget.token}');
+                //print('chat list token is  ${widget.token}');
                 // print(message.isSeen);
                 // print('current uuid is ${FirebaseAuth.instance.currentUser!.uid}');
                 // print('length is ${snapshot.data!.length}');
@@ -77,7 +78,7 @@ class _ChatListState extends ConsumerState<ChatList> {
                 }
                 if (!message.isSeen) {
                   ref.read(chatControllerProvider).notifyReceiver(
-                        title: 'sent you a message',
+                        title: S.of(context).message_notification_title,
                         body: message.messageType == MessageEnum.text
                             ? message.messageText
                             : message.messageType.type,

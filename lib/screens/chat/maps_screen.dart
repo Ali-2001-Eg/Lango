@@ -26,7 +26,7 @@ class MapsScreen extends ConsumerStatefulWidget {
 
 class _HomePageState extends ConsumerState<MapsScreen> {
   //get map controller to access map
-  Completer<GoogleMapController> _googleMapController = Completer();
+  final Completer<GoogleMapController> _googleMapController = Completer();
   CameraPosition? _cameraPosition;
   late LatLng _defaultLatLng;
   late LatLng _draggedLatlng;
@@ -183,7 +183,6 @@ class _HomePageState extends ConsumerState<MapsScreen> {
     bool isLocationServiceEnabled = await Geolocator.isLocationServiceEnabled();
     //check if user enable service for location permission
     if (!isLocationServiceEnabled) {
-      print("user don't enable location permission");
     }
 
     locationPermission = await Geolocator.checkPermission();
@@ -192,13 +191,11 @@ class _HomePageState extends ConsumerState<MapsScreen> {
     if (locationPermission == LocationPermission.denied) {
       locationPermission = await Geolocator.requestPermission();
       if (locationPermission == LocationPermission.denied) {
-        print("user denied location permission");
       }
     }
 
     //check if user denied permission forever
     if (locationPermission == LocationPermission.deniedForever) {
-      print("user denied permission forever");
     }
 
     return await Geolocator.getCurrentPosition(

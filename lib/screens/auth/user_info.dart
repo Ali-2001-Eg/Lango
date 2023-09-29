@@ -115,7 +115,7 @@ class _UserInfoScreenState extends ConsumerState<UserInfoScreen> {
           .saveUserDataToFireStore(context, name, image, description);
     } else {
       // print('error');
-      customSnackBar('Please Enter your data', context);
+      customSnackBar(S.of(context).missed__info_field, context);
     }
   }
 }

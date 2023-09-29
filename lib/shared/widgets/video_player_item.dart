@@ -1,9 +1,12 @@
 import 'package:cached_video_player/cached_video_player.dart';
 import 'package:flutter/material.dart';
+import 'package:whatsapp_clone/shared/utils/functions.dart';
 
 class VideoPlayerItem extends StatefulWidget {
   final String url;
-  const VideoPlayerItem({Key? key, required this.url}) : super(key: key);
+  final bool isReply;
+  const VideoPlayerItem({Key? key, required this.url, this.isReply = false})
+      : super(key: key);
 
   @override
   State<VideoPlayerItem> createState() => _VideoPlayerItemState();
@@ -32,26 +35,33 @@ class _VideoPlayerItemState extends State<VideoPlayerItem> {
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
-      aspectRatio: 9/9,
+      aspectRatio: widget.isReply ? 3 / 3 : 9 / 9,
       child: Stack(
         children: [
           CachedVideoPlayer(videoPlayerController),
           Align(
             alignment: Alignment.center,
-            child: IconButton(
-              onPressed: () {
-                if (isPlay) {
-                  videoPlayerController.pause();
-                } else {
-                  videoPlayerController.play();
-                }
+            child: Container(
+              decoration: BoxDecoration(
+                color: getTheme(context).hoverColor,
+                shape: BoxShape.circle,
+              ),
+              child: IconButton(
+                onPressed: () {
+                  if (isPlay) {
+                    videoPlayerController.pause();
+                  } else {
+                    videoPlayerController.play();
+                  }
 
-                setState(() {
-                  isPlay = !isPlay;
-                });
-              },
-              icon: Icon(
-                isPlay ? Icons.pause_circle : Icons.play_circle,
+                  setState(() {
+                    isPlay = !isPlay;
+                  });
+                },
+                icon: Icon(
+                  isPlay ? Icons.pause : Icons.play_arrow,
+                  color: Colors.white,
+                ),
               ),
             ),
           ),

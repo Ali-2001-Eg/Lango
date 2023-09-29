@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_clone/screens/auth/login_screen.dart';
 import 'package:whatsapp_clone/shared/utils/colors.dart';
 import 'package:whatsapp_clone/shared/utils/functions.dart';
 import 'package:whatsapp_clone/shared/widgets/custom_button.dart';
 import 'package:whatsapp_clone/generated/l10n.dart';
 
-class LandingScreen extends StatelessWidget {
+class LandingScreen extends ConsumerWidget {
   const LandingScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -20,7 +21,7 @@ class LandingScreen extends StatelessWidget {
             ),
             Text(
               S.of(context).welcome_landing,
-              style: TextStyle(fontSize: 33, fontWeight: FontWeight.w600),
+              style: getTextTheme(context, ref),
             ),
             SizedBox(height: size(context).height / 6),
             Image.asset(
@@ -35,7 +36,10 @@ class LandingScreen extends StatelessWidget {
               child: Text(
                 S.of(context).read_our_privacy,
                 textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.grey, fontSize: 15),
+                style: getTextTheme(context, ref).copyWith(
+                  fontSize: 13,
+                  color: Colors.grey[800],
+                ),
               ),
             ),
             const SizedBox(

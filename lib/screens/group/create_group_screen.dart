@@ -37,7 +37,7 @@ class _CreateGroupScreenState extends ConsumerState<CreateGroupScreen> {
       appBar: AppBar(
         title: Text(
           S.of(context).create_group,
-          style: getTextTheme(context, ref),
+          //style: getTextTheme(context, ref),
         ),
         actions: [
           IconButton(

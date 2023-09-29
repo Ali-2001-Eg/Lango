@@ -56,7 +56,8 @@ class ConfirmTextScreen extends ConsumerWidget {
                   onPressed: () => _controller.text.isNotEmpty
                       ? shareTextStatus(ref, context, _controller.text.trim())
                           .then((value) => Navigator.of(context).pop())
-                      : customSnackBar('Status cannot be empty', context),
+                      : customSnackBar(
+                          S.of(context).empty_text_status_snackbar, context),
                   icon: const Icon(Icons.send))),
         ],
       ),

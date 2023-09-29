@@ -52,17 +52,17 @@ class _ConfirmFileScreenState extends ConsumerState<ConfirmFileScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Icon(
+                        Icon(
                           Icons.picture_as_pdf,
-                          color: tabColor,
+                          color: getTheme(context).cardColor,
                           size: 150,
                         ),
                         const SizedBox(
                           height: 10,
                         ),
                         Text(widget.filename!,
-                            style: const TextStyle(
-                                color: tabColor,
+                            style: TextStyle(
+                                color: getTheme(context).cardColor,
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold)),
                       ],
@@ -96,6 +96,7 @@ class _ConfirmFileScreenState extends ConsumerState<ConfirmFileScreen> {
                   },
                   icon: const Icon(
                     Icons.close,
+                    color: Colors.white,
                   )),
             ),
           ),
@@ -139,6 +140,7 @@ class _ConfirmFileScreenState extends ConsumerState<ConfirmFileScreen> {
                       },
                       icon: const Icon(
                         Icons.send,
+                        color: Colors.white,
                       )),
                 )
               ],

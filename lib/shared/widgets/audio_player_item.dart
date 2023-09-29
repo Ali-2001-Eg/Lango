@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_clone/shared/utils/functions.dart';
 
+import '../../generated/l10n.dart';
+
 class AudioPlayerItem extends ConsumerStatefulWidget {
   final String url;
-
-  const AudioPlayerItem({super.key, required this.url});
+  final bool isReply;
+  const AudioPlayerItem({super.key, required this.url, this.isReply = false});
 
   @override
   ConsumerState<AudioPlayerItem> createState() => _AudioPlayerItemState();
@@ -24,8 +26,8 @@ class _AudioPlayerItemState extends ConsumerState<AudioPlayerItem> {
     super.initState();
   }
 
-  void _initAudio() async {
-    if (!context.mounted) {
+  void _initAudio() {
+    if (context.mounted) {
       audioPlayer.onPlayerStateChanged.listen((query) {
         setState(() {
           isPlaying = query == PlayerState.playing;
@@ -60,7 +62,12 @@ class _AudioPlayerItemState extends ConsumerState<AudioPlayerItem> {
             color: getTheme(context).cardColor,
             borderRadius: BorderRadius.circular(15)),
         padding: const EdgeInsets.all(8),
-        child: audioPlayerBody(context, formattedTime, ref));
+        child: widget.isReply
+            ?  Text(
+                S.of(context).voice_message,
+                style: const TextStyle(fontSize: 10, color: Colors.white),
+              )
+            : audioPlayerBody(context, formattedTime, ref));
   }
 
   Column audioPlayerBody(BuildContext context,
