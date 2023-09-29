@@ -29,7 +29,7 @@ class GroupModel {
         senderId: json["senderId"],
         membersUid: List<String>.from(json["membersUid"]),
         lastMessageType: (json['lastMessageType'] as String).toEnum(),
-        timeSent: DateTime.fromMicrosecondsSinceEpoch(json['timeSent']));
+        timeSent: DateTime.fromMillisecondsSinceEpoch(json['timeSent']));
   }
 
   Map<String, dynamic> toJson() {

@@ -50,11 +50,11 @@ class StatusContactsScreen extends ConsumerWidget {
                       child: Lottie.asset('assets/json/empty_list.json')),
                   Text(
                     'Your contacts didn\'t  post any status ',
-                    style: getTextTheme(context)!.copyWith(fontSize: 16),
+                    style: getTextTheme(context, ref).copyWith(fontSize: 16),
                   ),
                   Text(
                     'Be the first one who post his daily status',
-                    style: getTextTheme(context)!.copyWith(fontSize: 16),
+                    style: getTextTheme(context, ref).copyWith(fontSize: 16),
                   ),
                 ],
               ),
@@ -71,7 +71,7 @@ class StatusContactsScreen extends ConsumerWidget {
                             color: getTheme(context).cardColor),
                         Text(
                           'Uploading Status ...',
-                          style: getTextTheme(context),
+                          style: getTextTheme(context, ref),
                         )
                       ],
                     )

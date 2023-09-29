@@ -100,7 +100,7 @@ class _BottomChatFieldWidgetState extends ConsumerState<BottomChatFieldWidget> {
                       controller: _messageController,
                       focusNode: widget.focusNode,
                       maxLines: null,
-                      style: getTextTheme(context)!
+                      style: getTextTheme(context, ref)
                           .copyWith(fontSize: 16, decorationThickness: 0),
                       decoration: InputDecoration(
                         filled: true,

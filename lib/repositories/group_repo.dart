@@ -1,11 +1,10 @@
-// ignore_for_file: unnecessary_brace_in_string_interps
+// ignore_for_file: unnecessary_brace_in_string_interps, avoid_function_literals_in_foreach_calls
 
 import 'dart:developer';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_contacts/contact.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
@@ -13,7 +12,6 @@ import 'package:whatsapp_clone/models/group_model.dart';
 import 'package:whatsapp_clone/models/user_model.dart';
 import 'package:whatsapp_clone/shared/enums/message_enum.dart';
 import 'package:whatsapp_clone/shared/repos/firebase_storage_repo.dart';
-import 'package:whatsapp_clone/shared/utils/functions.dart';
 // ignore: unused_import
 import 'package:whatsapp_clone/shared/widgets/select_contact_widget.dart';
 
@@ -75,6 +73,7 @@ class GroupRepo {
           'groupId': FieldValue.arrayUnion([groupId])
         });
       });
+      // ignore: empty_catches
     } catch (e) {}
   }
 
@@ -82,7 +81,6 @@ class GroupRepo {
     var groupDoc = await firestore.collection('groups').doc(groupId).get();
     List users = groupDoc.data()!['membersUid'];
     if (!users.contains(auth.currentUser!.uid)) {
-      print('join enters if statements');
       await firestore.collection('groups').doc(groupId).update({
         'membersUid': FieldValue.arrayUnion([auth.currentUser!.uid]),
       });
@@ -102,8 +100,6 @@ class GroupRepo {
     var groupDoc = await firestore.collection('groups').doc(groupId).get();
     List users = groupDoc.data()!['membersUid'];
     if (users.contains(auth.currentUser!.uid)) {
-      print('leave enters if statements');
-
       await firestore.collection('groups').doc(groupId).update({
         'membersUid': FieldValue.arrayRemove([auth.currentUser!.uid]),
       });

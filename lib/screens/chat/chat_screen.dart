@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use, avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_clone/controllers/call_controller.dart';
@@ -74,13 +76,13 @@ class ChatScreen extends ConsumerWidget {
               automaticallyImplyLeading: false,
               leading: IconButton(
                 icon: const Icon(Icons.arrow_back_sharp),
-                onPressed: () =>
-                    Navigator.pushNamedAndRemoveUntil(context, HomeScreen.routeName,(route) => false),
+                onPressed: () => Navigator.pushNamedAndRemoveUntil(
+                    context, HomeScreen.routeName, (route) => false),
               ),
               title: isGroupChat
                   ? Text(
                       name,
-                      style: getTextTheme(context)!.copyWith(
+                      style: getTextTheme(context, ref).copyWith(
                           color: appTheme.selectedTheme == 'light'
                               ? lightScaffold
                               : Colors.white),
@@ -90,7 +92,7 @@ class ChatScreen extends ConsumerWidget {
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
-                          return const CustomIndicator();
+                          return Container();
                         } else if (snapshot.hasError) {
                           return Text(snapshot.error.toString());
                         } else {
@@ -98,7 +100,7 @@ class ChatScreen extends ConsumerWidget {
                             children: [
                               Text(
                                 name,
-                                style: getTextTheme(context)!.copyWith(
+                                style: getTextTheme(context, ref).copyWith(
                                     color: appTheme.selectedTheme == 'light'
                                         ? lightScaffold
                                         : Colors.white),
@@ -107,7 +109,7 @@ class ChatScreen extends ConsumerWidget {
                                   snapshot.data!.isOnline
                                       ? S.of(context).online
                                       : S.of(context).offline,
-                                  style: getTextTheme(context)!.copyWith(
+                                  style: getTextTheme(context, ref).copyWith(
                                     height: 0,
                                     color: appTheme.selectedTheme == 'light'
                                         ? greyColor

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:whatsapp_clone/shared/notifiers/theme_notifier.dart';
 
 import 'colors.dart';
 
@@ -13,11 +14,14 @@ Size size(BuildContext context) => MediaQuery.of(context).size;
 
 //custom snack bar
 
-void customSnackBar(String text, BuildContext context) =>
+void customSnackBar(String text, BuildContext context,
+        {Color color = Colors.red}) =>
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      backgroundColor: Colors.red,
+      backgroundColor: color,
       elevation: 0,
-      behavior: SnackBarBehavior.fixed,
+      shape: const StadiumBorder(),
+      behavior: SnackBarBehavior.floating,
+      margin: const EdgeInsets.all(20),
       padding: const EdgeInsets.all(8),
       content: Text(text,
           textAlign: TextAlign.center,
@@ -129,7 +133,7 @@ void navTo(context, screen) => Navigator.of(context).push(MaterialPageRoute(
 void navToNamed(context, routeName) =>
     Navigator.of(context).pushNamed(routeName);
 
-ThemeData lightMode(context) => ThemeData.light().copyWith(
+ThemeData lightMode(context, ref) => ThemeData.light().copyWith(
       scaffoldBackgroundColor: lightScaffold,
       iconTheme: const IconThemeData(
         color: lightButton,
@@ -145,33 +149,19 @@ ThemeData lightMode(context) => ThemeData.light().copyWith(
       indicatorColor: lightBar,
       appBarTheme: AppBarTheme(
         color: lightAppBar,
-        titleTextStyle: getTextTheme(context)!.copyWith(color: Colors.white),
+        titleTextStyle:
+            getTextTheme(context, ref).copyWith(color: Colors.white),
         elevation: 0,
       ),
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
         elevation: 0,
         backgroundColor: lightAppBar,
       ),
-      textTheme: const TextTheme(
-          titleMedium: TextStyle(
-        color: lightText,
-        height: 2,
-        fontSize: 20,
-        fontWeight: FontWeight.w500,
-      )),
       inputDecorationTheme: const InputDecorationTheme(
           fillColor: lightChatBox, iconColor: lightText),
     );
-ThemeData darkMode(context) => ThemeData.dark().copyWith(
+ThemeData darkMode(context, ref) => ThemeData.dark().copyWith(
       hoverColor: darkReplyColor,
-      textTheme: const TextTheme(
-        titleMedium: TextStyle(
-          color: textColor,
-          fontWeight: FontWeight.w500,
-          height: 2,
-          fontSize: 20,
-        ),
-      ),
       scaffoldBackgroundColor: backgroundColor,
       indicatorColor: tabColor,
       cardColor: messageColor,
@@ -196,8 +186,22 @@ ThemeData darkMode(context) => ThemeData.dark().copyWith(
       inputDecorationTheme: const InputDecorationTheme(
           fillColor: mobileChatBoxColor, iconColor: greyColor),
     );
-TextStyle? getTextTheme(context) => Theme.of(context).textTheme.titleMedium;
-
+TextStyle get darkTextStyle => const TextStyle(
+      color: textColor,
+      fontWeight: FontWeight.w500,
+      height: 2,
+      fontSize: 20,
+    );
+TextStyle get lightTextStyle => const TextStyle(
+      color: lightText,
+      height: 2,
+      fontSize: 20,
+      fontWeight: FontWeight.w500,
+    );
+TextStyle getTextTheme(context, ref) =>
+    ref.watch(appThemeProvider).selectedTheme == 'light'
+        ? lightTextStyle
+        : darkTextStyle;
 ThemeData getTheme(context) => Theme.of(context);
 
 bool get isArabic => Intl.getCurrentLocale() == 'ar' ? true : false;

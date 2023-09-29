@@ -18,7 +18,7 @@ class SettingsScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(S.of(context).settings, style: getTextTheme(context)),
+        title: Text(S.of(context).settings, style: getTextTheme(context, ref)),
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -29,7 +29,7 @@ class SettingsScreen extends ConsumerWidget {
               ListTile(
                 title: Text(
                   S.of(context).choose_lang,
-                  style: getTextTheme(context),
+                  style: getTextTheme(context, ref),
                 ),
               ),
               const SizedBox(
@@ -110,7 +110,7 @@ class SettingsScreen extends ConsumerWidget {
               ListTile(
                 title: Text(
                   S.of(context).choose_theme,
-                  style: getTextTheme(context),
+                  style: getTextTheme(context, ref),
                 ),
                 trailing: Switch(
                   value: themeNotifier.selectedTheme == 'light' ? true : false,
@@ -126,7 +126,7 @@ class SettingsScreen extends ConsumerWidget {
               ListTile(
                 title: Text(
                   S.of(context).delete_account,
-                  style: getTextTheme(context),
+                  style: getTextTheme(context, ref),
                 ),
                 trailing: const Icon(
                   Icons.delete,

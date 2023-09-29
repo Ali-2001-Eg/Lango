@@ -1,12 +1,10 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, unused_local_variable
 
 import 'dart:convert';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:whatsapp_clone/screens/call/call_screen.dart';
 import 'package:whatsapp_clone/shared/utils/functions.dart';
 import 'package:http/http.dart' as http;
 import '../screens/chat/chat_screen.dart';
@@ -104,34 +102,6 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 Future<void> callingBackgroundHandler(RemoteMessage message) async {
   String? title = message.notification!.title;
   String? body = message.notification!.body;
-  var createNotification = AwesomeNotifications().createNotification(
-    content: NotificationContent(
-      id: 123,
-      channelKey: 'call_channel',
-      color: Colors.white,
-      body: body,
-      title: title,
-      category: NotificationCategory.Call,
-      wakeUpScreen: true,
-      fullScreenIntent: true,
-      autoDismissible: false,
-      backgroundColor: Colors.orange,
-    ),
-    actionButtons: [
-      NotificationActionButton(
-        key: 'ACCEPT',
-        label: 'ACCEPT',
-        autoDismissible: true,
-        color: Colors.greenAccent,
-      ),
-      NotificationActionButton(
-        key: 'DECLINE',
-        label: 'DECLINE',
-        autoDismissible: true,
-        color: Colors.greenAccent,
-      ),
-    ],
-  );
   AwesomeNotifications().actionStream.listen((query) {
     if (query.buttonKeyPressed == 'ACCEPT') {
       print('call Accepted');

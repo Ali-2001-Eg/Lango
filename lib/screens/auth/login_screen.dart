@@ -29,8 +29,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     // print('build');
     return Scaffold(
       appBar: AppBar(
-        title:
-            Text(S.of(context).enter_phone_num, style: getTextTheme(context)),
+        title: Text(S.of(context).enter_phone_num,
+            style: getTextTheme(context, ref)),
         backgroundColor: backgroundColor,
       ),
       body: Center(
@@ -43,7 +43,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 Column(
                   children: [
                     Text(S.of(context).login_heading,
-                        style: getTextTheme(context)),
+                        style: getTextTheme(context, ref)),
                     const SizedBox(height: 10),
                     TextButton(
                         onPressed: _pickCountry,
@@ -52,7 +52,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                               getTheme(context).cardColor),
                         ),
                         child: Text(S.of(context).pick_country,
-                            style: getTextTheme(context))),
+                            style: getTextTheme(context, ref))),
                     const SizedBox(height: 10),
                     Row(
                       children: [
@@ -105,13 +105,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   void _submitPhoneNumber() {
     String phoneNumber = _phoneController.text;
     if (country != null && phoneNumber.isNotEmpty) {
-      print('Ali');
-
       ref
           .read<AuthController>(authControllerProvider)
           .signInWithPhone(context, '+${country!.phoneCode}$phoneNumber');
     } else {
-      print('error');
       customSnackBar(S.of(context).login_snackbar_error, context);
     }
   }

@@ -40,8 +40,17 @@ class ChatRepo {
           await firestore.collection('users').doc(receiverUid).get();
       receiverUserData = UserModel.fromJson(receiverData.data()!);
     }
-    _saveContacts(sender, receiverUserData, true, messageText, timeSent,
-        receiverUid, isGroupChat, MessageEnum.text.type);
+    _saveContacts(
+      sender,
+      receiverUserData,
+      true,
+      sender.phoneNumber,
+      messageText,
+      timeSent,
+      receiverUid,
+      isGroupChat,
+      MessageEnum.text.type,
+    );
     //to generate unique identifier
     var messageId = const Uuid().v1();
     _saveMessages(
@@ -104,6 +113,7 @@ class ChatRepo {
         sender,
         receiverUserData,
         false,
+        sender.phoneNumber,
         gifUrl,
         timeSent,
         receiverUid,
@@ -135,6 +145,7 @@ class ChatRepo {
       UserModel senderData,
       UserModel? receiverData,
       bool isText,
+      String phoneNumber,
       message,
       DateTime timeSent,
       String receiverUid,
@@ -153,14 +164,16 @@ class ChatRepo {
       return;
     }
     var receiverChatContact = ChatContactModel(
-        name: senderData.name,
-        profilePic: senderData.profilePic,
-        contactId: senderData.uid,
-        token: senderData.token,
-        timeSent: timeSent,
-        isOnlyText: isText,
-        type: type,
-        lastMessage: message);
+      name: senderData.name,
+      profilePic: senderData.profilePic,
+      contactId: senderData.uid,
+      token: senderData.token,
+      timeSent: timeSent,
+      isOnlyText: isText,
+      type: type,
+      lastMessage: message,
+      phoneNumber: phoneNumber,
+    );
     await firestore
         .collection('users')
         .doc(receiverUid)
@@ -175,6 +188,7 @@ class ChatRepo {
         timeSent: timeSent,
         token: receiverData.token,
         isOnlyText: isText,
+        phoneNumber: phoneNumber,
         type: type,
         lastMessage: message);
     await firestore
@@ -204,6 +218,7 @@ class ChatRepo {
         messageText: messageText,
         messageType: messageType,
         timeSent: timeSent,
+        senderName: senderName,
         messageReply: messageReply == null ? '' : messageReply.message,
         messageReplyType:
             //default message reply type is text
@@ -265,6 +280,7 @@ class ChatRepo {
               .doc(chatContact.contactId)
               .get();
           user = UserModel.fromJson(userData.data()!);
+          //sprint(user!.name);
           contacts.add(ChatContactModel(
             name: user!.name,
             profilePic: user!.profilePic,
@@ -272,6 +288,7 @@ class ChatRepo {
             timeSent: chatContact.timeSent,
             lastMessage: chatContact.lastMessage,
             token: chatContact.token,
+            phoneNumber: user!.phoneNumber,
             isOnlyText: true,
             type: chatContact.type,
           ));
@@ -385,6 +402,7 @@ class ChatRepo {
       senderData,
       recieverUserData,
       false,
+      senderData.phoneNumber,
       downloadUrl,
       timeSent,
       receiverUid,
@@ -473,9 +491,7 @@ class ChatRepo {
   void copyMessageToClipboard(String message) {
     try {
       Clipboard.setData(ClipboardData(text: message));
-    } catch (e) {
-      print('error while copying ${e.toString}');
-    }
+    } catch (e) {}
   }
 }
 

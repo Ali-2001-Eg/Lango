@@ -58,7 +58,7 @@ class _ChatListState extends ConsumerState<ChatList> {
             return ListView.builder(
               controller: _scrollController,
               itemCount: snapshot.data!.length,
-              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.manual,
               physics: const BouncingScrollPhysics(),
               itemBuilder: (context, index) {
                 final message = snapshot.data![index];
@@ -87,10 +87,11 @@ class _ChatListState extends ConsumerState<ChatList> {
                       );
                 }
                 // print(message.receiverUid);
-                // print(message.senderUid);
+                //print(message.senderName);
                 return MessageTile(
                   message: message.messageText,
                   date: message.timeSent.toString(),
+                  senderName: message.senderName,
                   isMe: widget.isGroupChat
                       ? message.senderUid ==
                           ref.read(authRepositoryProvider).auth.currentUser!.uid

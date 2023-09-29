@@ -108,7 +108,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                   PopupMenuItem(
                       child: Text(
                         S.of(context).create_group,
-                        style: getTextTheme(context)!
+                        style: getTextTheme(context, ref)
                             .copyWith(fontSize: 18, color: Colors.white),
                       ),
                       onTap: () => Future(() => Navigator.of(context)
@@ -116,7 +116,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                   PopupMenuItem(
                       child: Text(
                         S.of(context).settings,
-                        style: getTextTheme(context)!
+                        style: getTextTheme(context, ref)
                             .copyWith(fontSize: 18, color: Colors.white),
                       ),
                       onTap: () {
@@ -126,7 +126,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                   PopupMenuItem(
                       child: Text(
                         S.of(context).edit_profile,
-                        style: getTextTheme(context)!
+                        style: getTextTheme(context, ref)
                             .copyWith(fontSize: 18, color: Colors.white),
                       ),
                       onTap: () {

@@ -38,7 +38,7 @@ class ContactListScreen extends ConsumerWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
                     S.of(context).contacts,
-                    style: getTextTheme(context),
+                    style: getTextTheme(context, ref),
                   ),
                 ),
                 //single chat
@@ -110,10 +110,7 @@ class ContactListScreen extends ConsumerWidget {
                                             .watch(chatControllerProvider)
                                             .user
                                             ?.isOnline,
-                                        'phoneNumber': ref
-                                            .watch(chatControllerProvider)
-                                            .user
-                                            ?.phoneNumber,
+                                        'phoneNumber': contacts.phoneNumber,
                                         'isGroupChat': false,
                                         'token': contacts.token,
                                       },
@@ -124,7 +121,7 @@ class ContactListScreen extends ConsumerWidget {
                                       child: ListTile(
                                           title: Text(
                                             contacts.name,
-                                            style: getTextTheme(context),
+                                            style: getTextTheme(context, ref),
                                           ),
                                           subtitle: Padding(
                                             padding:
@@ -170,7 +167,7 @@ class ContactListScreen extends ConsumerWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
                     S.of(context).groups,
-                    style: getTextTheme(context),
+                    style: getTextTheme(context, ref),
                   ),
                 ),
                 const Divider(color: greyColor),

@@ -48,7 +48,7 @@ class DescriptionScreen extends ConsumerWidget {
         appBar: AppBar(
           title: Text(
             name,
-            style: getTextTheme(context)!.copyWith(
+            style: getTextTheme(context, ref).copyWith(
                 color: appTheme.selectedTheme == 'light'
                     ? lightScaffold
                     : Colors.white),
@@ -92,10 +92,11 @@ class DescriptionScreen extends ConsumerWidget {
           _buildDescriptionTile(
               context,
               isGroupChat ? S.of(context).group_name : S.of(context).username,
-              name),
+              name,
+              ref),
           !isGroupChat
               ? _buildDescriptionTile(
-                  context, S.of(context).description, description)
+                  context, S.of(context).description, description, ref)
               : Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -103,7 +104,7 @@ class DescriptionScreen extends ConsumerWidget {
                       padding: const EdgeInsets.all(20.0),
                       child: Text(
                         S.of(context).group_members,
-                        style: getTextTheme(context),
+                        style: getTextTheme(context, ref),
                       ),
                     ),
                     const Divider(
@@ -121,8 +122,12 @@ class DescriptionScreen extends ConsumerWidget {
                       .then((value) =>
                           customSnackBar(S.of(context).copy_snackbar, context)),
                   child: _buildDescriptionTile(
-                      context, S.of(context).phone_nember, phoneNumber,
-                      isPhoneNumber: true),
+                    context,
+                    S.of(context).phone_nember,
+                    phoneNumber,
+                    ref,
+                    isPhoneNumber: true,
+                  ),
                 )
               : StreamBuilder(
                   stream: _isUserJoined(id, ref),
@@ -245,7 +250,8 @@ class DescriptionScreen extends ConsumerWidget {
         });
   }
 
-  _buildDescriptionTile(BuildContext context, String label, String description,
+  _buildDescriptionTile(
+      BuildContext context, String label, String description, ref,
       {bool isPhoneNumber = false}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -254,7 +260,7 @@ class DescriptionScreen extends ConsumerWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Text(
             label,
-            style: getTextTheme(context),
+            style: getTextTheme(context, ref),
           ),
         ),
         Container(
@@ -272,14 +278,14 @@ class DescriptionScreen extends ConsumerWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(description, style: getTextTheme(context)),
+                Text(description, style: getTextTheme(context, ref)),
                 const SizedBox(
                   width: 15,
                 ),
                 isPhoneNumber
                     ? Icon(
                         Icons.copy,
-                        color: getTheme(context).appBarTheme.backgroundColor,
+                        color: getTheme(context).cardColor,
                       )
                     : Container()
               ],

@@ -37,7 +37,7 @@ class _CreateGroupScreenState extends ConsumerState<CreateGroupScreen> {
       appBar: AppBar(
         title: Text(
           S.of(context).create_group,
-          style: getTextTheme(context),
+          style: getTextTheme(context, ref),
         ),
         actions: [
           IconButton(
@@ -126,7 +126,7 @@ class _CreateGroupScreenState extends ConsumerState<CreateGroupScreen> {
               ),
               Text(
                 S.of(context).select_contact,
-                style: getTextTheme(context)!.copyWith(
+                style: getTextTheme(context, ref).copyWith(
                     color: getTheme(context).appBarTheme.backgroundColor),
               ),
               const SizedBox(

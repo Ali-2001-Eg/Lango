@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 import '../utils/functions.dart';
 
-class MessageTextFormatterWidget extends StatelessWidget {
+class MessageTextFormatterWidget extends ConsumerWidget {
   final String text;
   const MessageTextFormatterWidget({Key? key, required this.text})
       : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Linkify(
@@ -28,8 +29,8 @@ class MessageTextFormatterWidget extends StatelessWidget {
           }
         },
         text: text,
-        style: getTextTheme(context)!.copyWith(color: Colors.white),
-        linkStyle: getTextTheme(context)!.copyWith(
+        style: getTextTheme(context, ref).copyWith(color: Colors.white),
+        linkStyle: getTextTheme(context, ref).copyWith(
           fontSize: 13,
           fontWeight: FontWeight.w700,
           color: Colors.blue,

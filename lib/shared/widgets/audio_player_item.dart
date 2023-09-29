@@ -1,17 +1,18 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_clone/shared/utils/functions.dart';
 
-class AudioPlayerItem extends StatefulWidget {
+class AudioPlayerItem extends ConsumerStatefulWidget {
   final String url;
 
   const AudioPlayerItem({super.key, required this.url});
 
   @override
-  State<AudioPlayerItem> createState() => _AudioPlayerItemState();
+  ConsumerState<AudioPlayerItem> createState() => _AudioPlayerItemState();
 }
 
-class _AudioPlayerItemState extends State<AudioPlayerItem> {
+class _AudioPlayerItemState extends ConsumerState<AudioPlayerItem> {
   late AudioPlayer audioPlayer;
   bool isPlaying = false;
   Duration duration = Duration.zero;
@@ -59,11 +60,11 @@ class _AudioPlayerItemState extends State<AudioPlayerItem> {
             color: getTheme(context).cardColor,
             borderRadius: BorderRadius.circular(15)),
         padding: const EdgeInsets.all(8),
-        child: audioPlayerBody(context, formattedTime));
+        child: audioPlayerBody(context, formattedTime, ref));
   }
 
-  Column audioPlayerBody(
-      BuildContext context, String Function(int timeSeconds) formattedTime) {
+  Column audioPlayerBody(BuildContext context,
+      String Function(int timeSeconds) formattedTime, ref) {
     return Column(
       children: [
         Row(
@@ -112,14 +113,14 @@ class _AudioPlayerItemState extends State<AudioPlayerItem> {
           children: [
             Text(
               formattedTime(position.inSeconds),
-              style: getTextTheme(context)!
+              style: getTextTheme(context, ref)
                   .copyWith(height: 0, fontSize: 16, color: Colors.white),
             ),
             SizedBox(width: size(context).width / 3),
             //remaining time
             Text(
               '- ${formattedTime((duration - position).inSeconds)}',
-              style: getTextTheme(context)!
+              style: getTextTheme(context, ref)
                   .copyWith(height: 0, fontSize: 16, color: Colors.white),
             ),
           ],

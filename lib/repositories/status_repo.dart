@@ -1,5 +1,6 @@
 // import 'dart:developer';
-import 'dart:developer';
+// ignore_for_file: deprecated_member_use
+
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -12,8 +13,6 @@ import 'package:whatsapp_clone/models/status_model.dart';
 import 'package:whatsapp_clone/models/user_model.dart';
 import 'package:whatsapp_clone/shared/enums/message_enum.dart';
 import 'package:whatsapp_clone/shared/repos/firebase_storage_repo.dart';
-
-import '../shared/utils/functions.dart';
 
 class StatusRepo extends ChangeNotifier {
   final FirebaseFirestore firestore;
@@ -61,7 +60,7 @@ class StatusRepo extends ChangeNotifier {
         var userData = await firestore.collection('users').get();
         if (userData.docs.isNotEmpty) {
           UserModel userModel;
-          userData.docs.forEach((element) {
+          for (var element in userData.docs) {
             userModel = UserModel.fromJson(element.data());
             //print('phone number ${userModel.phoneNumber}');
             if (contacts[i]
@@ -72,7 +71,7 @@ class StatusRepo extends ChangeNotifier {
               audience.add(userModel.uid);
               //print('audience $audience');
             }
-          });
+          }
         }
       }
 
@@ -97,7 +96,6 @@ class StatusRepo extends ChangeNotifier {
     } catch (e) {
       ref.read(loadingCreateStatus.state).update((state) => false);
       notifyListeners();
-      print('error while ${e.toString()}');
       // customSnackBar(e.toString(), context);
     }
   }

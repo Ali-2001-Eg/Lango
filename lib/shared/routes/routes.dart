@@ -7,6 +7,7 @@ import 'package:whatsapp_clone/screens/auth/login_screen.dart';
 import 'package:whatsapp_clone/screens/auth/otp_screen.dart';
 import 'package:whatsapp_clone/screens/auth/user_info.dart';
 import 'package:whatsapp_clone/screens/chat/chat_screen.dart';
+import 'package:whatsapp_clone/screens/chat/expanded_view_scree.dart';
 import 'package:whatsapp_clone/screens/home_screen.dart';
 import 'package:whatsapp_clone/screens/select_contact/select_contact_screen.dart';
 import 'package:whatsapp_clone/screens/settings/settings_screen.dart';
@@ -75,6 +76,14 @@ Route<dynamic> generateRoute(RouteSettings settings) {
           final file = settings.arguments as File;
           final type = settings.arguments as MessageEnum;
           return ConfirmFileStatus(file: file, type: type);
+        },
+      );
+    case ExpandedViewScreen.routeName:
+      return MaterialPageRoute(
+        builder: (context) {
+          final file = settings.arguments as String;
+          final type = settings.arguments as MessageEnum;
+          return ExpandedViewScreen(fileUrl: file, fileType: type);
         },
       );
     case StatusScreen.routeName:

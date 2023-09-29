@@ -25,7 +25,7 @@ class CallHistoryScreen extends ConsumerWidget {
             return const CustomIndicator();
           }
           if (snapshot.hasData && snapshot.data!.isEmpty) {
-            return Center(child: Text('Empty data'));
+            return const Center(child: Text('Empty data'));
           } else {
             return ListView.builder(
               shrinkWrap: true,
@@ -35,7 +35,6 @@ class CallHistoryScreen extends ConsumerWidget {
 
                 bool didICall = item['callerUid'] ==
                     ref.read(callControllerProvider).auth.currentUser!.uid;
-                print('didICall $didICall');
                 return Padding(
                   padding: const EdgeInsets.all(8.0)
                       .add(const EdgeInsets.only(top: 25)),

@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -34,7 +36,6 @@ class _ConfirmFileScreenState extends ConsumerState<ConfirmFileScreen> {
   final TextEditingController _captionController = TextEditingController();
   @override
   void dispose() {
-    // TODO: implement dispose
     _captionController.dispose();
     super.dispose();
   }

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:whatsapp_clone/screens/chat/expanded_view_scree.dart';
 import 'package:whatsapp_clone/shared/enums/message_enum.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:whatsapp_clone/shared/utils/functions.dart';
@@ -62,15 +63,20 @@ class MessageWidget extends StatelessWidget {
                 : Stack(
                     clipBehavior: Clip.antiAlias,
                     children: [
-                      Container(
-                        decoration: BoxDecoration(
-                            border:
-                                Border.all(color: getTheme(context).cardColor),
-                            borderRadius: BorderRadius.circular(20),
-                            image: DecorationImage(
-                              image: CachedNetworkImageProvider(message),
-                              fit: BoxFit.fill,
-                            )),
+                      GestureDetector(
+                        onTap: () => Navigator.pushNamed(
+                            context, ExpandedViewScreen.routeName,
+                            arguments: {'file': message, 'type': messageType}),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: getTheme(context).cardColor),
+                              borderRadius: BorderRadius.circular(20),
+                              image: DecorationImage(
+                                image: CachedNetworkImageProvider(message),
+                                fit: BoxFit.fill,
+                              )),
+                        ),
                       ),
                       if (caption != '')
                         Positioned(
@@ -104,7 +110,14 @@ class MessageWidget extends StatelessWidget {
                         border: Border.all(color: getTheme(context).cardColor),
                         borderRadius: BorderRadius.circular(30),
                       ),
-                      child: VideoPlayerItem(url: message)),
+                      child: GestureDetector(
+                          onTap: () => Navigator.pushNamed(
+                                  context, ExpandedViewScreen.routeName,
+                                  arguments: {
+                                    'file': message,
+                                    'type': messageType
+                                  }),
+                          child: VideoPlayerItem(url: message))),
                   if (caption != '')
                     Positioned(
                       bottom: 0,

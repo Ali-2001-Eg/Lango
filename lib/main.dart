@@ -1,24 +1,24 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+// ignore: depend_on_referenced_packages
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:whatsapp_clone/controllers/auth_controller.dart';
+import 'package:whatsapp_clone/repositories/firebase_notification_repo.dart';
 import 'package:whatsapp_clone/screens/call/call_pickup_screen.dart';
 import 'package:whatsapp_clone/screens/home_screen.dart';
 import 'package:whatsapp_clone/screens/landing/landing_screen.dart';
-import 'package:whatsapp_clone/shared/enums/app_theme.dart';
 import 'package:whatsapp_clone/shared/notifiers/localization.dart';
 import 'package:whatsapp_clone/shared/notifiers/theme_notifier.dart';
-import 'package:whatsapp_clone/repositories/firebase_notification_repo.dart';
 import 'package:whatsapp_clone/shared/routes/routes.dart';
 import 'package:whatsapp_clone/shared/utils/base/error_screen.dart';
-import 'package:whatsapp_clone/shared/utils/base/notifications_config.dart';
 import 'package:whatsapp_clone/shared/utils/functions.dart';
 import 'package:whatsapp_clone/shared/widgets/custom_indicator.dart';
+
 import 'generated/l10n.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -60,6 +60,8 @@ class MyApp extends ConsumerWidget {
       },
       child: MaterialApp(
         title: 'Chat & Live',
+        themeAnimationCurve: Curves.easeInToLinear,
+        themeAnimationDuration: const Duration(milliseconds: 100),
         locale: locale.selectedLocale == 'en'
             ? const Locale('en')
             : const Locale('ar'),
@@ -72,8 +74,9 @@ class MyApp extends ConsumerWidget {
         ],
         supportedLocales: S.delegate.supportedLocales,
         theme: theme.selectedTheme == 'light'
-            ? lightMode(context)
-            : darkMode(context),
+            ? lightMode(context, ref)
+            : darkMode(context, ref),
+
         onGenerateRoute: (settings) => generateRoute(settings),
         //watch to keep tracking user state
         home: Scaffold(
@@ -82,8 +85,8 @@ class MyApp extends ConsumerWidget {
               if (user == null) {
                 return const LandingScreen();
               }
-              return CallPickupScreen(
-                scaffold: const HomeScreen(),
+              return const CallPickupScreen(
+                scaffold: HomeScreen(),
               );
             },
             error: (error, stackTrace) {

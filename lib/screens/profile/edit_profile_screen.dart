@@ -50,7 +50,7 @@ class _HomePage extends ConsumerState<EditProfileScreen> {
       appBar: AppBar(
         title: Text(
           S.of(context).edit_profile,
-          style: getTextTheme(context),
+          style: getTextTheme(context, ref),
         ),
       ),
       body: SingleChildScrollView(
@@ -177,7 +177,7 @@ class _HomePage extends ConsumerState<EditProfileScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Text(
             label,
-            style: getTextTheme(context),
+            style: getTextTheme(context, ref),
             textDirection: TextDirection.ltr,
           ),
         ),

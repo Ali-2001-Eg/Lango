@@ -6,9 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_clone/controllers/call_controller.dart';
 import 'package:whatsapp_clone/generated/l10n.dart';
 import 'package:whatsapp_clone/shared/utils/base/error_screen.dart';
-import 'package:whatsapp_clone/shared/widgets/custom_indicator.dart';
 import 'package:whatsapp_clone/shared/utils/functions.dart';
-import '../../controllers/chat_controller.dart';
 import '../../models/call_model.dart';
 import 'call_screen.dart';
 
@@ -16,7 +14,8 @@ class CallPickupScreen extends ConsumerWidget {
   final Widget scaffold;
   // final String receiverName;
 
-  CallPickupScreen({
+  const CallPickupScreen({
+    super.key,
     required this.scaffold,
   });
 
@@ -42,7 +41,7 @@ class CallPickupScreen extends ConsumerWidget {
                     children: [
                       Text(
                         S.of(context).incoming_call,
-                        style: getTextTheme(context)!.copyWith(
+                        style: getTextTheme(context, ref).copyWith(
                             fontSize: 25, color: getTheme(context).hoverColor),
                       ),
                       const SizedBox(
@@ -57,7 +56,7 @@ class CallPickupScreen extends ConsumerWidget {
                       ),
                       Text(
                         callData.callerName,
-                        style: getTextTheme(context)!.copyWith(
+                        style: getTextTheme(context, ref).copyWith(
                             fontSize: 30, color: getTheme(context).hoverColor),
                       ),
                       const SizedBox(

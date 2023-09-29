@@ -53,7 +53,7 @@ class _HomePage extends ConsumerState<SearchScreen> {
             onChanged: (value) => _filterGroups(_searchController.text.trim()),
             decoration: InputDecoration.collapsed(
               filled: false,
-              hintStyle: getTextTheme(context)!.copyWith(
+              hintStyle: getTextTheme(context, ref).copyWith(
                   fontSize: 16,
                   color: Colors.grey,
                   fontWeight: FontWeight.w300),
@@ -136,7 +136,7 @@ class _HomePage extends ConsumerState<SearchScreen> {
             children: [
               Text(
                 '${group.membersUid.length} subscribers',
-                style: getTextTheme(context)!.copyWith(
+                style: getTextTheme(context, ref).copyWith(
                     fontSize: 13, color: getTheme(context).hoverColor),
               ),
               const Divider(

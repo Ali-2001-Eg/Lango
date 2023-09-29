@@ -27,6 +27,7 @@ class MessageTile extends ConsumerWidget {
   final String caption;
   final MessageEnum messageReplyType;
   final bool isSeen;
+  final String senderName;
   final bool isGroupchat;
   const MessageTile({
     Key? key,
@@ -38,6 +39,7 @@ class MessageTile extends ConsumerWidget {
     required this.messageReply,
     required this.username,
     required this.messageId,
+    required this.senderName,
     required this.receiverUid,
     this.caption = '',
     required this.isGroupchat,
@@ -83,7 +85,13 @@ class MessageTile extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              customPopupMenuButton(ref, context),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (isGroupchat && !isMe) ...[Text('~$senderName')],
+                  customPopupMenuButton(ref, context),
+                ],
+              ),
               if (isReplying) ...[
                 Container(
                   width: double.maxFinite,
@@ -114,7 +122,6 @@ class MessageTile extends ConsumerWidget {
                   ),
                 ),
               ],
-              //if (isGroupchat) ...[Text('~$username')],
               MessageWidget(
                 messageType: messageType,
                 message: message,
@@ -199,12 +206,14 @@ class MessageTile extends ConsumerWidget {
             Icons.replay_rounded,
             color: Colors.green,
           ),
-          onTap: () => ref.read(messageReplyProvider.state).update((state) =>
-              MessageReply(
-                  message: message,
-                  messageType: messageType,
-                  isMe: receiverUid ==
-                      ref.read(authRepositoryProvider).auth.currentUser!.uid)),
+          onTap: () => ref
+              .read(messageReplyProvider.state)
+              .update((state) => MessageReply(
+                    message: message,
+                    messageType: messageType,
+                    isMe: receiverUid ==
+                        ref.read(authRepositoryProvider).auth.currentUser!.uid,
+                  )),
         )
       ],
     );

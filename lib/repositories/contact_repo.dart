@@ -28,7 +28,6 @@ class ContactRepo {
       Contact selectedContact, BuildContext context) async {
     try {
       var userCollection = await firestore.collection('users').get();
-      bool isFound;
       for (var doc in userCollection.docs) {
         var userData = UserModel.fromJson(doc.data());
         String selectedPhoneNum =
@@ -42,8 +41,7 @@ class ContactRepo {
         /*  if (kDebugMode) {
           print(userData.phoneNumber);
         } */
-        if (selectedPhoneNum == userData.phoneNumber) {
-          isFound = true;
+        if (selectedPhoneNum == userData.phoneNumber && context.mounted) {
           Navigator.pushNamed(
             context,
             ChatScreen.routeName,

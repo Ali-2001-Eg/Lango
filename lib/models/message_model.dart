@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:whatsapp_clone/shared/enums/message_enum.dart';
 
 class MessageModel {
@@ -12,6 +13,7 @@ class MessageModel {
   final String repliedTo;
   final MessageEnum messageReplyType;
   final String? caption;
+  final String senderName;
   MessageModel({
     required this.id,
     required this.senderUid,
@@ -24,6 +26,7 @@ class MessageModel {
     required this.repliedTo,
     required this.messageReplyType,
     required this.caption,
+    required this.senderName,
   });
 
   factory MessageModel.fromJson(Map<String, dynamic> json) {
@@ -38,7 +41,8 @@ class MessageModel {
       isSeen: json["isSeen"] ?? false,
       messageReply: json["messageReply"],
       repliedTo: json['repliedTo'],
-      caption: json['caption']??'',
+      caption: json['caption'] ?? '',
+      senderName: json['senderName'] ?? '',
     );
   }
 
@@ -54,7 +58,8 @@ class MessageModel {
       "messageReply": messageReply,
       'repliedTo': repliedTo,
       'messageReplyType': messageReplyType.type,
-      'caption':caption,
+      'caption': caption,
+      'senderName': senderName,
     };
   }
 }

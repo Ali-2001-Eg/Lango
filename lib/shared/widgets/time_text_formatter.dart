@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:whatsapp_clone/shared/utils/functions.dart';
 
-class TimeTextFormatter extends StatelessWidget {
+class TimeTextFormatter extends ConsumerWidget {
   final DateTime time;
   const TimeTextFormatter({Key? key, required this.time}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     DateTime now = DateTime.now();
     String timeText;
     if (time.year == now.year &&
@@ -26,7 +27,7 @@ class TimeTextFormatter extends StatelessWidget {
     }
     return Text(
       timeText,
-      style: getTextTheme(context)!.copyWith(fontSize: 13),
+      style: getTextTheme(context, ref).copyWith(fontSize: 13),
     );
   }
 }
