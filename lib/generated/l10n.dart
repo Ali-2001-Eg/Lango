@@ -719,6 +719,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Video Message`
+  String get video_message {
+    return Intl.message(
+      'Video Message',
+      name: 'video_message',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `PDF Message`
+  String get pdf_message {
+    return Intl.message(
+      'PDF Message',
+      name: 'pdf_message',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `GIF  Message`
+  String get gif_message {
+    return Intl.message(
+      'GIF  Message',
+      name: 'gif_message',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

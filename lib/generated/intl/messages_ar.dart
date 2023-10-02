@@ -32,7 +32,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "calls": MessageLookupByLibrary.simpleMessage("المكالمات"),
         "cam": MessageLookupByLibrary.simpleMessage("كاميرا"),
         "chat": MessageLookupByLibrary.simpleMessage("المحادثات"),
-        "chat_box_hint": MessageLookupByLibrary.simpleMessage("ارسل..."),
+        "chat_box_hint": MessageLookupByLibrary.simpleMessage("...ارسل"),
         "choose_lang":
             MessageLookupByLibrary.simpleMessage("اختر لغتك المفضله"),
         "choose_theme":
@@ -63,6 +63,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "enter_phone_num":
             MessageLookupByLibrary.simpleMessage("ادخل رقم التليفون"),
         "gal": MessageLookupByLibrary.simpleMessage("المعرض"),
+        "gif_message":
+            MessageLookupByLibrary.simpleMessage("رساله صوره متحركه"),
         "group_members": MessageLookupByLibrary.simpleMessage("أعضاء المجموعه"),
         "group_name": MessageLookupByLibrary.simpleMessage("اسم المجموعه"),
         "groups": MessageLookupByLibrary.simpleMessage("المجموعات و القنوات"),
@@ -87,6 +89,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "هذا الرقم لا يمتلك حساب على البرنامج"),
         "offline": MessageLookupByLibrary.simpleMessage("غير متصل"),
         "online": MessageLookupByLibrary.simpleMessage("متصل"),
+        "pdf_message": MessageLookupByLibrary.simpleMessage("رساله ملف"),
         "phone_nember": MessageLookupByLibrary.simpleMessage("رقم الهاتف"),
         "phone_num": MessageLookupByLibrary.simpleMessage("رقم التليفون"),
         "pick_country": MessageLookupByLibrary.simpleMessage("اختر بلدتك"),
@@ -109,6 +112,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "username": MessageLookupByLibrary.simpleMessage("الاسم الشخصي"),
         "verify_num":
             MessageLookupByLibrary.simpleMessage("جاري التأكد من هويتك"),
+        "video_message": MessageLookupByLibrary.simpleMessage("رساله فيديو "),
         "voice_message": MessageLookupByLibrary.simpleMessage("🎵 رساله صوتيه"),
         "welcome_landing":
             MessageLookupByLibrary.simpleMessage("أهلا بك Chat & Live"),

@@ -117,10 +117,11 @@ class DescriptionScreen extends ConsumerWidget {
                 ),
           !isGroupChat
               ? GestureDetector(
-                  onTap: () => Clipboard.setData(
-                          ClipboardData(text: phoneNumber))
-                      .then((value) =>
-                          customSnackBar(S.of(context).copy_snackbar, context)),
+                  onTap: () =>
+                      Clipboard.setData(ClipboardData(text: phoneNumber)).then(
+                          (value) => customSnackBar(
+                              S.of(context).copy_snackbar, context,
+                              color: Colors.green)),
                   child: _buildDescriptionTile(
                     context,
                     S.of(context).phone_nember,
@@ -156,14 +157,13 @@ class DescriptionScreen extends ConsumerWidget {
   }
 
   void _leaveGroup(WidgetRef ref, BuildContext context) {
-    ref
-        .read(groupControllerProvider)
-        .leaveGroup(id)
-        .then((value) => Navigator.pushNamed(context, HomeScreen.routeName))
-        .then((value) => customSnackBar(
-            !isArabic ? 'You left $name successfully!' : '$name تم مغادره ',
-            context,
-            color: Colors.green));
+    ref.read(groupControllerProvider).leaveGroup(id).then((value) {
+      customSnackBar(
+          !isArabic ? 'You left $name successfully!' : ' تم مغادره بنجاح $name',
+          context,
+          color: Colors.green);
+      return Navigator.pushNamed(context, HomeScreen.routeName);
+    });
   }
 
   void _joinGroup(WidgetRef ref, BuildContext context) {

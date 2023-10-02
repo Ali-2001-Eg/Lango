@@ -2,6 +2,8 @@ import 'package:cached_video_player/cached_video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:whatsapp_clone/shared/utils/functions.dart';
 
+import '../../generated/l10n.dart';
+
 class VideoPlayerItem extends StatefulWidget {
   final String url;
   final bool isReply;
@@ -34,39 +36,50 @@ class _VideoPlayerItemState extends State<VideoPlayerItem> {
 
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: widget.isReply ? 3 / 3 : 9 / 9,
-      child: Stack(
-        children: [
-          CachedVideoPlayer(videoPlayerController),
-          Align(
-            alignment: Alignment.center,
-            child: Container(
-              decoration: BoxDecoration(
-                color: getTheme(context).hoverColor,
-                shape: BoxShape.circle,
-              ),
-              child: IconButton(
-                onPressed: () {
-                  if (isPlay) {
-                    videoPlayerController.pause();
-                  } else {
-                    videoPlayerController.play();
-                  }
+    return widget.isReply
+        ? Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children:  [
+              Text(S.of(context).video_message,
+                  style: const TextStyle(
+                    color: Colors.white,
+                  )),
+              const Icon(Icons.video_call),
+            ],
+          )
+        : AspectRatio(
+            aspectRatio: 6 / 8,
+            child: Stack(
+              children: [
+                CachedVideoPlayer(videoPlayerController),
+                Align(
+                  alignment: Alignment.center,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: getTheme(context).hoverColor,
+                      shape: BoxShape.circle,
+                    ),
+                    child: IconButton(
+                      onPressed: () {
+                        if (isPlay) {
+                          videoPlayerController.pause();
+                        } else {
+                          videoPlayerController.play();
+                        }
 
-                  setState(() {
-                    isPlay = !isPlay;
-                  });
-                },
-                icon: Icon(
-                  isPlay ? Icons.pause : Icons.play_arrow,
-                  color: Colors.white,
+                        setState(() {
+                          isPlay = !isPlay;
+                        });
+                      },
+                      icon: Icon(
+                        isPlay ? Icons.pause : Icons.play_arrow,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
-          ),
-        ],
-      ),
-    );
+          );
   }
 }

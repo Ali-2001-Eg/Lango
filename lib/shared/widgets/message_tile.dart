@@ -88,7 +88,12 @@ class MessageTile extends ConsumerWidget {
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  if (isGroupchat && !isMe) ...[Text('~$senderName')],
+                  if (isGroupchat && !isMe) ...[
+                    Text(
+                      '~$senderName',
+                      style: TextStyle(color: Colors.white),
+                    )
+                  ],
                   customPopupMenuButton(ref, context),
                 ],
               ),
@@ -112,8 +117,7 @@ class MessageTile extends ConsumerWidget {
                                   ? '$username قام بالرد عليك'
                                   : '$username replied for you',
                           style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
+                              fontWeight: FontWeight.bold, color: Colors.white),
                         ),
                       ),
                       MessageWidget(
@@ -134,16 +138,17 @@ class MessageTile extends ConsumerWidget {
               ),
               Container(
                 decoration: BoxDecoration(
-                    color: Colors.grey,
-                    borderRadius: BorderRadius.circular(5),
-                    boxShadow: const [
-                      BoxShadow(
-                          color: Colors.black38,
-                          offset: Offset(0, 5),
-                          spreadRadius: 3,
-                          blurRadius: 1,
-                          blurStyle: BlurStyle.inner)
-                    ]),
+                  //color: Colors.grey,
+                  borderRadius: BorderRadius.circular(5),
+                  /* boxShadow: const [
+                    BoxShadow(
+                        color: Colors.black38,
+                        offset: Offset(0, 5),
+                        spreadRadius: 3,
+                        blurRadius: 1,
+                        blurStyle: BlurStyle.inner)
+                  ], */
+                ),
                 child: Padding(
                   padding: const EdgeInsets.all(3),
                   child: Row(
@@ -152,7 +157,7 @@ class MessageTile extends ConsumerWidget {
                       Text(
                         DateFormat('h:mm a').format(DateTime.parse(date)),
                         style:
-                            const TextStyle(color: Colors.black, fontSize: 12),
+                            const TextStyle(color: Colors.white, fontSize: 12),
                       ),
                       const SizedBox(
                         width: 5,

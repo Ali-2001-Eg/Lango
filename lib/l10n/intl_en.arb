@@ -66,5 +66,9 @@
    "mic_permission_snackbar":"Mic Permission not allowed",
    "message_notification_title":"sent you a message",
    "yesterday":"Yesterday",
-   "search_hint":"Search for a group"
+   "search_hint":"Search for a group",
+
+   "video_message":"Video Message",
+   "pdf_message":"PDF Message",
+   "gif_message":"GIF  Message"
 }

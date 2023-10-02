@@ -17,7 +17,6 @@ class MessageReplyWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final messageReply = ref.watch(messageReplyProvider);
-
     return Container(
       width: size(context).width / 1.3,
       decoration: BoxDecoration(

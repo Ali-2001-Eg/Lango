@@ -49,11 +49,13 @@ dependencies:
   flutter_contacts: ^1.1.5
   flutter_linkify: ^6.0.0
   flutter_localization: null
+  flutter_native_splash: ^2.2.0+1
   flutter_riverpod: ^2.3.6
   flutter_sound: ^9.2.13
   geocoding: ^2.1.0
   geolocator: ^10.0.1
   google_maps_flutter: ^2.3.0
+  http: ^0.13.4
   image_picker: ^1.0.1
   intl: ^0.17.0
   lottie: ^1.4.2
@@ -65,16 +67,20 @@ dependencies:
   syncfusion_flutter_pdfviewer: ^19.4.55
   url_launcher: ^6.1.11
   uuid: ^3.0.7
-  http: ^0.13.4
-  awesome_notifications: ^0.6.21
-  #onesignal_flutter: ^5.0.0
+  #flutter_downloader: ^1.4.4
 #  file_picker: ^4.0.0
+  dio: ^5.3.3
 dev_dependencies:
   flutter_launcher_icons: ^0.10.0
   flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
- 
+flutter_native_splash:
+  color: "#ffffff"
+  image: assets/images/app_icon.png
+  android: true
+  ios: true
+  #web: false
 
 flutter_icons:
   android: "launcher_icon"

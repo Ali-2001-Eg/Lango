@@ -218,9 +218,9 @@ class _HomePage extends ConsumerState<EditProfileScreen> {
                                 .backgroundColor!)),
                     child: IconButton(
                       onPressed: onPressed,
-                      icon: Icon(Icons.done,
-                          color:
-                              getTheme(context).appBarTheme.backgroundColor!),
+                      icon: const Icon(Icons.done
+                      
+                      ),
                     ),
                   ),
                 )),
@@ -242,6 +242,7 @@ class _HomePage extends ConsumerState<EditProfileScreen> {
   pickImage() async {
     var pickedImage = await pickImageFromGallery(context);
     if (pickedImage != null) {
+      print(pickedImage.path);
       setState(() {
         image = File(pickedImage.path);
       });

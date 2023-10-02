@@ -1,4 +1,3 @@
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -24,18 +23,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await FirebaseMessagingRepo(FirebaseMessaging.instance).init();
-  AwesomeNotifications().initialize(null, [
-    NotificationChannel(
-      channelKey: 'call_channel',
-      channelName: 'call_channel_name',
-      channelDescription: 'Calling Notification',
-      defaultColor: Colors.redAccent,
-      ledColor: Colors.white,
-      importance: NotificationImportance.Max,
-      channelShowBadge: true,
-      defaultRingtoneType: DefaultRingtoneType.Ringtone,
-    ),
-  ]);
+
   //to listen to providers
   runApp(const ProviderScope(
     child: MyApp(),
@@ -85,9 +73,7 @@ class MyApp extends ConsumerWidget {
               if (user == null) {
                 return const LandingScreen();
               }
-              return const CallPickupScreen(
-                scaffold: HomeScreen(),
-              );
+              return const HomeScreen();
             },
             error: (error, stackTrace) {
               return const Scaffold(
@@ -95,11 +81,7 @@ class MyApp extends ConsumerWidget {
               );
             },
             loading: () {
-              return const Scaffold(
-                body: Center(
-                  child: CustomIndicator(),
-                ),
-              );
+              return Scaffold(body: Container());
             },
           ),
         ),

@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_clone/shared/enums/message_enum.dart';
 import 'package:whatsapp_clone/shared/utils/functions.dart';
 
+import '../../shared/managers/download_manager.dart';
 import '../../shared/widgets/video_player_item.dart';
 
 class ExpandedViewScreen extends ConsumerWidget {
@@ -21,7 +22,34 @@ class ExpandedViewScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: AppBar(),
+      backgroundColor: getTheme(context).appBarTheme.backgroundColor,
+      appBar: AppBar(
+        actions: [
+          PopupMenuButton(itemBuilder: ((context) {
+            return [
+              PopupMenuItem(
+                child: Text(
+                  'Save to phone',
+                  style: getTextTheme(context, ref)
+                      .copyWith(fontSize: 18, color: Colors.white),
+                ),
+                onTap: () {
+                  ref
+                      .read(downloadManagerProvider)
+                      .downloadFile(
+                        fileUrl: fileUrl,
+                        fileType: fileType,
+                        context: context,
+                      )
+                      .then((value) => customSnackBar(
+                          'Dowmloaded successfully', context,
+                          color: Colors.green));
+                },
+              ),
+            ];
+          })),
+        ],
+      ),
       body: GestureDetector(
         child: Stack(children: [
           Positioned.fill(
@@ -42,11 +70,12 @@ class ExpandedViewScreen extends ConsumerWidget {
                 alignment: Alignment.bottomCenter,
                 padding: const EdgeInsets.all(15),
                 decoration: BoxDecoration(
-                    color: getTheme(context).cardColor,
+                    color: getTheme(context).appBarTheme.backgroundColor,
                     borderRadius: BorderRadius.circular(10)),
                 child: Text(
                   caption!,
-                  style: getTextTheme(context, ref),
+                  style:
+                      getTextTheme(context, ref).copyWith(color: Colors.white),
                 ),
               ),
             ),

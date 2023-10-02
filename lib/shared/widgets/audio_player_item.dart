@@ -63,9 +63,15 @@ class _AudioPlayerItemState extends ConsumerState<AudioPlayerItem> {
             borderRadius: BorderRadius.circular(15)),
         padding: const EdgeInsets.all(8),
         child: widget.isReply
-            ?  Text(
-                S.of(context).voice_message,
-                style: const TextStyle(fontSize: 10, color: Colors.white),
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text(
+                    S.of(context).voice_message,
+                    style: const TextStyle(fontSize: 10, color: Colors.white),
+                  ),
+                  const Icon(Icons.audiotrack)
+                ],
               )
             : audioPlayerBody(context, formattedTime, ref));
   }

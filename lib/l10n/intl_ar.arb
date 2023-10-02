@@ -23,7 +23,7 @@
     "incoming_call":"مكالمه من",
     "online":"متصل",
     "offline":"غير متصل",
-    "chat_box_hint":"ارسل...",
+    "chat_box_hint":"...ارسل",
     "doc":"ملف",
     "cam":"كاميرا",
     "gal":"المعرض",
@@ -67,6 +67,10 @@
     "mic_permission_snackbar":"يتعذر الوصول للميكروفون",
     "message_notification_title":"أرسل لك رساله",
     "yesterday":"البارحه",
-   "search_hint":"ابحث عن القناه"
+    "search_hint":"ابحث عن القناه",
+
+    "video_message":"رساله فيديو ",
+    "pdf_message":"رساله ملف",
+    "gif_message":"رساله صوره متحركه"
 
 }

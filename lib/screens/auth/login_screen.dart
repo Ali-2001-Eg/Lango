@@ -29,8 +29,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     // print('build');
     return Scaffold(
       appBar: AppBar(
-        title: Text(S.of(context).enter_phone_num,
-            style: getTextTheme(context, ref)),
+        title: Text(
+          S.of(context).enter_phone_num,
+        ),
         backgroundColor: backgroundColor,
       ),
       body: Center(
@@ -52,7 +53,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                               getTheme(context).cardColor),
                         ),
                         child: Text(S.of(context).pick_country,
-                            style: getTextTheme(context, ref))),
+                            style: getTextTheme(context, ref)
+                                .copyWith(color: Colors.white))),
                     const SizedBox(height: 10),
                     Row(
                       children: [
@@ -93,7 +95,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   //pick country
   void _pickCountry() {
     showCountryPicker(
-      
       context: context,
       onSelect: (Country ctr) {
         setState(() {

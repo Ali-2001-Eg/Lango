@@ -45,7 +45,20 @@ class StatusContactsScreen extends ConsumerWidget {
           if (snapshot.data!.isEmpty) {
             return Center(
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  if (loading) ...[
+                    Column(
+                      children: [
+                        LinearProgressIndicator(
+                            color: getTheme(context).cardColor),
+                        Text(
+                          S.of(context).uploading_status,
+                          style: getTextTheme(context, ref),
+                        )
+                      ],
+                    )
+                  ],
                   SizedBox(
                       height: 200,
                       child: Lottie.asset('assets/json/empty_list.json')),
@@ -71,7 +84,7 @@ class StatusContactsScreen extends ConsumerWidget {
                         LinearProgressIndicator(
                             color: getTheme(context).cardColor),
                         Text(
-                          S.of(context).uploading_status, 
+                          S.of(context).uploading_status,
                           style: getTextTheme(context, ref),
                         )
                       ],

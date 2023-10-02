@@ -21,21 +21,7 @@ class NotificationController {
         );
   }
 
-  Future<void> postCallNotification(
-      {required String body,
-      required Map<String, dynamic> data,
-      required String receiver,
-      required String token}) async {
-    (value) async => ref
-        .read(userDataProvider)
-        .whenData((value) => repo.postCallingNotification(
-              title: 'Incoming Call',
-              body: body,
-              token: token,
-              data: data,
-              channelName: '$receiver ${value!.name}',
-            ));
-  }
+ 
 }
 
 final notificationControllerProvider = Provider((ref) {

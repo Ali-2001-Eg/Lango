@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lottie/lottie.dart';
 import 'package:whatsapp_clone/screens/call/call_pickup_screen.dart';
 import 'package:whatsapp_clone/screens/chat/chat_screen.dart';
 import 'package:whatsapp_clone/shared/utils/base/error_screen.dart';
@@ -84,6 +85,13 @@ class _HomePage extends ConsumerState<SearchScreen> {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(
                   child: CircularProgressIndicator(),
+                );
+              }
+              if (snapshot.hasData && snapshot.data!.isEmpty) {
+                return SizedBox(
+                  height: 200,
+                  width: 200,
+                  child: Lottie.asset('assets/json/empty_search.json'),
                 );
               } else {
                 return ListView.builder(

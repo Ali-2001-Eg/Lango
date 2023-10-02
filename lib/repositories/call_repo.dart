@@ -145,14 +145,7 @@ class CallRepo {
     }
   }
 
-  void notifyReceiver(
-      CallModel callData, String body, Map<String, dynamic> data) {
-    ref.read(notificationControllerProvider).postCallNotification(
-        body: body,
-        data: data,
-        receiver: callData.receiverName,
-        token: callData.token);
-  }
+ 
 
   void _saveCallHistory(CallModel call, String callerToken) async {
     //for caller

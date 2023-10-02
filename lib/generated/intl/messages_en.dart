@@ -67,6 +67,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "enter_phone_num":
             MessageLookupByLibrary.simpleMessage("Enter your phone number"),
         "gal": MessageLookupByLibrary.simpleMessage("Gallery"),
+        "gif_message": MessageLookupByLibrary.simpleMessage("GIF  Message"),
         "group_members": MessageLookupByLibrary.simpleMessage("Group Members"),
         "group_name": MessageLookupByLibrary.simpleMessage("Group Name"),
         "groups": MessageLookupByLibrary.simpleMessage("Groups and Channels"),
@@ -91,6 +92,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "This Number does not exist in the app."),
         "offline": MessageLookupByLibrary.simpleMessage("Offline"),
         "online": MessageLookupByLibrary.simpleMessage("Online"),
+        "pdf_message": MessageLookupByLibrary.simpleMessage("PDF Message"),
         "phone_nember": MessageLookupByLibrary.simpleMessage("PhoneNumber"),
         "phone_num": MessageLookupByLibrary.simpleMessage("Phone number"),
         "pick_country": MessageLookupByLibrary.simpleMessage("Pick Country"),
@@ -115,6 +117,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "username": MessageLookupByLibrary.simpleMessage("Username"),
         "verify_num":
             MessageLookupByLibrary.simpleMessage("Verifying your number"),
+        "video_message": MessageLookupByLibrary.simpleMessage("Video Message"),
         "voice_message":
             MessageLookupByLibrary.simpleMessage("🎵 Voice Message"),
         "welcome_landing":

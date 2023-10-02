@@ -109,7 +109,7 @@ class _BottomChatFieldWidgetState extends ConsumerState<BottomChatFieldWidget> {
                         prefixIcon: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: SizedBox(
-                            width: size(context).width/4,
+                            width: size(context).width / 6,
                             child: Row(
                               children: [
                                 InkWell(

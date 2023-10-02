@@ -13,11 +13,13 @@ import 'package:whatsapp_clone/shared/widgets/video_player_item.dart';
 
 import '../../controllers/chat_controller.dart';
 import '../../controllers/message_reply_controller.dart';
+import '../../generated/l10n.dart';
 import '../../repositories/auth_repo.dart';
+import '../managers/download_manager.dart';
 import '../utils/colors.dart';
 import 'audio_player_item.dart';
 
-class MessageWidget extends StatelessWidget {
+class MessageWidget extends ConsumerWidget {
   final String message;
   final MessageEnum messageType;
   final Color textColor;
@@ -39,7 +41,7 @@ class MessageWidget extends StatelessWidget {
       : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     // print(message);
     switch (messageType) {
       case MessageEnum.text:
@@ -126,7 +128,9 @@ class MessageWidget extends StatelessWidget {
                 children: [
                   Container(
                       decoration: BoxDecoration(
-                        border: Border.all(color: getTheme(context).cardColor),
+                        border: isReply
+                            ? null
+                            : Border.all(color: getTheme(context).cardColor),
                         borderRadius: BorderRadius.circular(30),
                       ),
                       child: GestureDetector(
@@ -146,58 +150,96 @@ class MessageWidget extends StatelessWidget {
                       bottom: 0,
                       right: 0,
                       left: 0,
-                      child: Text(
-                        caption,
-                        // textAlign: TextAlign.end,
-                        style: TextStyle(color: textColor, fontSize: 16),
+                      child: Container(
+                        constraints:
+                            BoxConstraints(maxWidth: size(context).width / 2),
+                        color: Theme.of(context).cardColor,
+                        alignment: AlignmentDirectional.center,
+                        width: double.infinity,
+                        child: Text(
+                          caption,
+                          textAlign: TextAlign.end,
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 16),
+                        ),
                       ),
                     ),
                 ],
               );
       case MessageEnum.gif:
-        return Container(
-          width: size(context).width / 2,
-          constraints: BoxConstraints(
-            maxHeight: size(context).height / 3,
-            minHeight: size(context).height / 6,
-          ),
-          decoration: BoxDecoration(
-              color: backgroundColor,
-              borderRadius: BorderRadius.circular(30),
-              border: Border.all(color: getTheme(context).cardColor, width: 2),
-              image: DecorationImage(
-                  image: CachedNetworkImageProvider(message),
-                  fit: BoxFit.fill)),
-        );
+        return isReply
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children:  [
+                  Text(S.of(context).gif_message,
+                      style: TextStyle(
+                        color: Colors.white,
+                      )),
+                  Icon(Icons.gif_box),
+                ],
+              )
+            : Container(
+                width: size(context).width / 2,
+                constraints: BoxConstraints(
+                  maxHeight: size(context).height / 3,
+                  minHeight: size(context).height / 6,
+                ),
+                decoration: BoxDecoration(
+                    color: backgroundColor,
+                    borderRadius: BorderRadius.circular(30),
+                    border: Border.all(
+                        color: getTheme(context).cardColor, width: 2),
+                    image: DecorationImage(
+                        image: CachedNetworkImageProvider(message),
+                        fit: BoxFit.fill)),
+              );
       case MessageEnum.pdf:
-        return ListTile(
-          tileColor: Theme.of(context).cardColor,
-          title: Column(
+        if (isReply) {
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Text(
-                caption,
-                style: Theme.of(context)
-                    .textTheme
-                    .titleMedium!
-                    .copyWith(color: Colors.white),
+                S.of(context).pdf_message,
+                style: TextStyle(color: Colors.white),
               ),
+              const Icon(Icons.picture_as_pdf_outlined)
             ],
-          ),
-          onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) =>
-                    PdfViewerScreen(title: caption, pdfPath: message),
-              )),
-        );
+          );
+        } else {
+          int delimiterIndex = caption.lastIndexOf('.pdf');
+          String fileName = caption.substring(0, delimiterIndex);
+          String fileCaption = caption.substring(delimiterIndex + 8);
+          return ListTile(
+            tileColor: Theme.of(context).cardColor,
+            title: Text(
+              fileName,
+              style: Theme.of(context)
+                  .textTheme
+                  .titleMedium!
+                  .copyWith(color: Colors.white),
+            ),
+            subtitle: Text(
+              fileCaption,
+              style: const TextStyle(color: Colors.grey),
+            ),
+            trailing: IconButton(
+              icon: const Icon(
+                Icons.file_download_outlined,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                ref.read(downloadManagerProvider).downloadFile(
+                    fileUrl: message, fileType: messageType, context: context);
+              },
+            ),
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      PdfViewerScreen(title: fileName, pdfPath: message),
+                )),
+          );
+        }
     }
-  }
-
-  Future<void> downloadFile(String url, String savePath) async {
-    final httpClient = HttpClient();
-    final request = await httpClient.getUrl(Uri.parse(url));
-    final response = await request.close();
-    final file = File(savePath);
-    await response.pipe(file.openWrite());
   }
 }

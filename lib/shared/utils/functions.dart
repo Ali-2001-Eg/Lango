@@ -19,6 +19,7 @@ void customSnackBar(String text, BuildContext context,
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       backgroundColor: color,
       elevation: 0,
+      duration: const Duration(seconds: 1),
       shape: const StadiumBorder(),
       behavior: SnackBarBehavior.floating,
       margin: const EdgeInsets.all(20),

@@ -7,7 +7,6 @@ import 'package:whatsapp_clone/shared/utils/functions.dart';
 import 'package:http/http.dart' as http;
 import '../screens/chat/chat_screen.dart';
 import '../shared/utils/base/notifications_config.dart';
-import 'package:awesome_notifications/awesome_notifications.dart';
 
 final firebaseMessagingRepoProvider =
     Provider((ref) => FirebaseMessagingRepo(FirebaseMessaging.instance));
@@ -54,45 +53,9 @@ class FirebaseMessagingRepo extends ChangeNotifier {
     if (response.statusCode == 200) {
     } else {}
   }
-
-  postCallingNotification({
-    required String title,
-    required String body,
-    required String token,
-    required Map<String, dynamic> data,
-    required String channelName,
-  }) {
-    AwesomeNotifications().initialize('defaultIcon', [
-      NotificationChannel(
-        channelKey: 'call_channel',
-        channelName: channelName,
-        channelDescription: 'Calling Notification',
-        defaultColor: Colors.redAccent,
-        ledColor: Colors.white,
-        importance: NotificationImportance.Max,
-        channelShowBadge: true,
-        defaultRingtoneType: DefaultRingtoneType.Ringtone,
-      ),
-    ]);
-    postNotification(body: body, data: data, title: title, token: token);
-    FirebaseMessaging.onBackgroundMessage(callingBackgroundHandler);
-    FirebaseMessaging.onMessage.listen(callingBackgroundHandler);
-  }
 }
 
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   navigatorKey.currentState!.pushNamed(ChatScreen.routeName,
       arguments: message.data.toString.toString());
-}
-
-Future<void> callingBackgroundHandler(RemoteMessage message) async {
-  String? title = message.notification!.title;
-  String? body = message.notification!.body;
-  AwesomeNotifications().actionStream.listen((query) {
-    if (query.buttonKeyPressed == 'ACCEPT') {
-    } else if (query.buttonKeyPressed == 'DECLINE') {
-    } else {}
-  });
-  /* navigatorKey.currentState!.pushNamed(CallScreen.routeName,
-      arguments: message.data.toString.toString()); */
 }
