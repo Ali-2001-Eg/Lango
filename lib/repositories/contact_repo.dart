@@ -32,10 +32,10 @@ class ContactRepo {
       for (var doc in userCollection.docs) {
         var userData = UserModel.fromJson(doc.data());
         String selectedPhoneNum =
-            selectedContact.phones[0].number.replaceAll(' ', '');
-        if (!selectedPhoneNum.startsWith('+2')) {
+            selectedContact.phones[0].normalizedNumber.replaceAll(' ', '');
+        /* if (!selectedPhoneNum.startsWith('+2')) {
           selectedPhoneNum = '+2$selectedPhoneNum';
-        }
+        } */
         if (kDebugMode) {
           print(selectedPhoneNum);
         }

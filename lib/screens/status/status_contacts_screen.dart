@@ -43,36 +43,37 @@ class StatusContactsScreen extends ConsumerWidget {
             return const CustomIndicator();
           }
           if (snapshot.data!.isEmpty) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  if (loading) ...[
-                    Column(
+            return loading
+                ? Column(
+                    children: [
+                      LinearProgressIndicator(
+                          color: getTheme(context).cardColor),
+                      Text(
+                        S.of(context).uploading_status,
+                        style: getTextTheme(context, ref),
+                      )
+                    ],
+                  )
+                : Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        LinearProgressIndicator(
-                            color: getTheme(context).cardColor),
+                        SizedBox(
+                            height: 200,
+                            child: Lottie.asset('assets/json/empty_list.json')),
                         Text(
-                          S.of(context).uploading_status,
-                          style: getTextTheme(context, ref),
-                        )
+                          S.of(context).empty_status_list,
+                          style:
+                              getTextTheme(context, ref).copyWith(fontSize: 16),
+                        ),
+                        Text(
+                          S.of(context).empty_status_list_sub_title,
+                          style:
+                              getTextTheme(context, ref).copyWith(fontSize: 16),
+                        ),
                       ],
-                    )
-                  ],
-                  SizedBox(
-                      height: 200,
-                      child: Lottie.asset('assets/json/empty_list.json')),
-                  Text(
-                    S.of(context).empty_status_list,
-                    style: getTextTheme(context, ref).copyWith(fontSize: 16),
-                  ),
-                  Text(
-                    S.of(context).empty_status_list_sub_title,
-                    style: getTextTheme(context, ref).copyWith(fontSize: 16),
-                  ),
-                ],
-              ),
-            );
+                    ),
+                  );
           } else {
             _removeRedundantName(snapshot.data!);
             return SingleChildScrollView(

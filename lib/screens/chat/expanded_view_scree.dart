@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_clone/shared/enums/message_enum.dart';
 import 'package:whatsapp_clone/shared/utils/functions.dart';
 
+import '../../generated/l10n.dart';
 import '../../shared/managers/download_manager.dart';
 import '../../shared/widgets/video_player_item.dart';
 
@@ -29,7 +30,7 @@ class ExpandedViewScreen extends ConsumerWidget {
             return [
               PopupMenuItem(
                 child: Text(
-                  'Save to phone',
+                  S.of(context).save,
                   style: getTextTheme(context, ref)
                       .copyWith(fontSize: 18, color: Colors.white),
                 ),
@@ -42,7 +43,7 @@ class ExpandedViewScreen extends ConsumerWidget {
                         context: context,
                       )
                       .then((value) => customSnackBar(
-                          'Dowmloaded successfully', context,
+                          S.of(context).download_snackbar, context,
                           color: Colors.green));
                 },
               ),

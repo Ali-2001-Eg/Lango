@@ -145,8 +145,6 @@ class CallRepo {
     }
   }
 
- 
-
   void _saveCallHistory(CallModel call, String callerToken) async {
     //for caller
     await firestore
@@ -190,6 +188,7 @@ class CallRepo {
           .collection('users')
           .doc(auth.currentUser!.uid)
           .collection('callHistory')
+          .orderBy('timeSent', descending: true)
           .snapshots()
           .map((query) {
         List<Map<String, dynamic>> callHistory = [];

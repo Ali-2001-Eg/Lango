@@ -41,89 +41,96 @@ class _ChatListState extends ConsumerState<ChatList> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<List<MessageModel>>(
-        stream: widget.isGroupChat
-            ? ref
-                .read(chatControllerProvider)
-                .groupChatStream(widget.receiverUid)
-            : ref.read(chatControllerProvider).chatStream(widget.receiverUid),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CustomIndicator());
-          } else {
-            //to scroll to the new message when chatting automatically
-            SchedulerBinding.instance.addPostFrameCallback((_) {
-              _scrollController
-                  .jumpTo(_scrollController.position.maxScrollExtent);
-            });
-            return ListView.builder(
-              controller: _scrollController,
-              itemCount: snapshot.data!.length,
-              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-              physics: const BouncingScrollPhysics(),
-              itemBuilder: (context, index) {
-                final message = snapshot.data![index];
-                //print('chat list token is  ${widget.token}');
-                // print(message.isSeen);
-                // print('current uuid is ${FirebaseAuth.instance.currentUser!.uid}');
-                // print('length is ${snapshot.data!.length}');
-                // print('receiver uid is ${message.receiverUid}');
-                //to decrease performance overhead
-                if (!message.isSeen &&
-                    message.receiverUid ==
-                        FirebaseAuth.instance.currentUser!.uid) {
-                  ref
-                      .read(chatControllerProvider)
-                      .setMessageSeen(message.id, context, widget.receiverUid);
-                }
-                if (!message.isSeen) {
-                  ref.read(chatControllerProvider).notifyReceiver(
-                        title: S.of(context).message_notification_title,
-                        body: message.messageType == MessageEnum.text
-                            ? message.messageText
-                            : message.messageType.type,
-                        receiverUid: widget.receiverUid,
-                        token: widget.token,
-                        isGroupChat: widget.isGroupChat,
-                      );
-                }
-                // print(message.receiverUid);
-                //print(message.senderName);
-                return MessageTile(
-                  message: message.messageText,
-                  date: message.timeSent.toString(),
-                  senderName: message.senderName,
-                  isMe: widget.isGroupChat
-                      ? message.senderUid ==
-                          ref.read(authRepositoryProvider).auth.currentUser!.uid
-                      : message.receiverUid !=
-                          ref
-                              .read(authRepositoryProvider)
-                              .auth
-                              .currentUser!
-                              .uid,
-                  messageType: message.messageType,
-                  messageReply: message.messageReply,
-                  username: message.repliedTo,
-                  messageReplyType: message.messageReplyType,
-                  caption: message.caption ?? '',
-                  onLeftOrRightSwipe: () => _onMessageSwipe(
-                    message.messageText,
-                    message.receiverUid ==
-                        ref.watch(chatControllerProvider).user?.uid,
-                    message.messageType,
-                  ),
-                  isGroupchat: widget.isGroupChat,
-                  receiverUid: message.receiverUid,
-                  messageId: message.id,
-                  isSeen: message.receiverUid != message.senderUid
-                      ? message.isSeen
-                      : true,
-                );
-              },
-            );
-          }
-        });
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: StreamBuilder<List<MessageModel>>(
+          stream: widget.isGroupChat
+              ? ref
+                  .read(chatControllerProvider)
+                  .groupChatStream(widget.receiverUid)
+              : ref.read(chatControllerProvider).chatStream(widget.receiverUid),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CustomIndicator());
+            } else {
+              //to scroll to the new message when chatting automatically
+              SchedulerBinding.instance.addPostFrameCallback((_) {
+                _scrollController
+                    .jumpTo(_scrollController.position.maxScrollExtent);
+              });
+              return ListView.builder(
+                controller: _scrollController,
+                itemCount: snapshot.data!.length,
+                keyboardDismissBehavior:
+                    ScrollViewKeyboardDismissBehavior.onDrag,
+                physics: const BouncingScrollPhysics(),
+                itemBuilder: (context, index) {
+                  final message = snapshot.data![index];
+                  //print('chat list token is  ${widget.token}');
+                  // print(message.isSeen);
+                  // print('current uuid is ${FirebaseAuth.instance.currentUser!.uid}');
+                  // print('length is ${snapshot.data!.length}');
+                  // print('receiver uid is ${message.receiverUid}');
+                  //to decrease performance overhead
+                  if (!message.isSeen &&
+                      message.receiverUid ==
+                          FirebaseAuth.instance.currentUser!.uid) {
+                    ref.read(chatControllerProvider).setMessageSeen(
+                        message.id, context, widget.receiverUid);
+                  }
+                  if (!message.isSeen) {
+                    ref.read(chatControllerProvider).notifyReceiver(
+                          title: S.of(context).message_notification_title,
+                          body: message.messageType == MessageEnum.text
+                              ? message.messageText
+                              : message.messageType.type,
+                          receiverUid: widget.receiverUid,
+                          token: widget.token,
+                          isGroupChat: widget.isGroupChat,
+                        );
+                  }
+                  // print(message.receiverUid);
+                  //print(message.senderName);
+                  return MessageTile(
+                    message: message.messageText,
+                    date: message.timeSent.toString(),
+                    senderName: message.senderName,
+                    isMe: widget.isGroupChat
+                        ? message.senderUid ==
+                            ref
+                                .read(authRepositoryProvider)
+                                .auth
+                                .currentUser!
+                                .uid
+                        : message.receiverUid !=
+                            ref
+                                .read(authRepositoryProvider)
+                                .auth
+                                .currentUser!
+                                .uid,
+                    messageType: message.messageType,
+                    messageReply: message.messageReply,
+                    username: message.repliedTo,
+                    messageReplyType: message.messageReplyType,
+                    caption: message.caption ?? '',
+                    onLeftOrRightSwipe: () => _onMessageSwipe(
+                      message.messageText,
+                      message.receiverUid ==
+                          ref.watch(chatControllerProvider).user?.uid,
+                      message.messageType,
+                    ),
+                    isGroupchat: widget.isGroupChat,
+                    receiverUid: message.receiverUid,
+                    messageId: message.id,
+                    isSeen: message.receiverUid != message.senderUid
+                        ? message.isSeen
+                        : true,
+                  );
+                },
+              );
+            }
+          }),
+    );
   }
 
   void _onMessageSwipe(String message, bool isMe, MessageEnum messageType) {

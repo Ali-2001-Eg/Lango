@@ -70,5 +70,9 @@
 
    "video_message":"Video Message",
    "pdf_message":"PDF Message",
-   "gif_message":"GIF  Message"
+   "gif_message":"GIF  Message",
+
+   "empty_call_history":"Try to call your contacts to have Call History !",
+   "download_snackbar":"Dowmloaded successfully"
+   
 }

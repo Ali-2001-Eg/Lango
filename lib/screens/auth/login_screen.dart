@@ -32,47 +32,56 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         title: Text(
           S.of(context).enter_phone_num,
         ),
-        backgroundColor: backgroundColor,
+        //backgroundColor: backgroundColor,
       ),
       body: Center(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(15),
+            padding: const EdgeInsets.all(0),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Column(
+                  //crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(S.of(context).login_heading,
                         style: getTextTheme(context, ref)),
-                    const SizedBox(height: 10),
-                    TextButton(
+                    SizedBox(height: size(context).height / 8),
+                    ElevatedButton(
                         onPressed: _pickCountry,
                         style: ButtonStyle(
                           backgroundColor: MaterialStatePropertyAll(
-                              getTheme(context).cardColor),
+                              getTheme(context).hoverColor),
                         ),
                         child: Text(S.of(context).pick_country,
                             style: getTextTheme(context, ref)
                                 .copyWith(color: Colors.white))),
+                    SizedBox(height: size(context).height / 4),
                     const SizedBox(height: 10),
-                    Row(
-                      children: [
-                        if (country != null) Text('+${country!.phoneCode}'),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        SizedBox(
-                          width: size(context).width * 0.7,
-                          child: TextField(
-                              textAlign: TextAlign.center,
-                              controller: _phoneController,
-                              keyboardType: TextInputType.phone,
-                              decoration: InputDecoration(
-                                hintText: S.of(context).phone_num,
-                              )),
-                        )
-                      ],
+                    Directionality(
+                      textDirection: TextDirection.ltr,
+                      child: Row(
+                        children: [
+                          if (country != null)
+                            Text(
+                              '+${country!.phoneCode}',
+                              style: getTextTheme(context, ref),
+                            ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                            child: TextField(
+                                textAlign: TextAlign.center,
+                                controller: _phoneController,
+                                keyboardType: TextInputType.phone,
+                                style: getTextTheme(context, ref),
+                                decoration: InputDecoration(
+                                  hintText: S.of(context).phone_num,
+                                )),
+                          )
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -95,6 +104,21 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   //pick country
   void _pickCountry() {
     showCountryPicker(
+      countryListTheme: CountryListThemeData(
+        backgroundColor: getTheme(context).hoverColor,
+        textStyle: const TextStyle(color: Colors.white),
+        searchTextStyle: const TextStyle(
+          color: Colors.white,
+          decorationThickness: 0,
+        ),
+        bottomSheetHeight: size(context).height / 1.5,
+        inputDecoration: InputDecoration(
+          hintText: S.of(context).search_hint,
+          filled: true,
+          fillColor: Colors.white10,
+          hintStyle: const TextStyle(color: Colors.white),
+        ),
+      ),
       context: context,
       onSelect: (Country ctr) {
         setState(() {

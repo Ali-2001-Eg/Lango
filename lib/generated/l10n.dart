@@ -749,6 +749,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Try to call your contacts to have Call History !`
+  String get empty_call_history {
+    return Intl.message(
+      'Try to call your contacts to have Call History !',
+      name: 'empty_call_history',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Dowmloaded successfully`
+  String get download_snackbar {
+    return Intl.message(
+      'Dowmloaded successfully',
+      name: 'download_snackbar',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

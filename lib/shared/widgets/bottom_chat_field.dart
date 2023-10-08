@@ -83,8 +83,9 @@ class _BottomChatFieldWidgetState extends ConsumerState<BottomChatFieldWidget> {
                 Expanded(
                   child: Container(
                     constraints:
-                        BoxConstraints(maxHeight: size(context).height / 6),
+                        BoxConstraints(maxHeight: size(context).height / 10),
                     child: TextField(
+                      textAlign: TextAlign.center,
                       onChanged: (value) {
                         if (_messageController.text.isNotEmpty) {
                           setState(() {

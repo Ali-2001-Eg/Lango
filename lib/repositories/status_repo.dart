@@ -52,24 +52,25 @@ class StatusRepo extends ChangeNotifier {
 
       //we will get all contacts data
       for (int i = 0; i < contacts.length - 1; i++) {
+        // print(contacts[i].name.first);
         if (contacts[i].phones.isEmpty) {
           //for any problem in contact list
-          break;
+          return;
         }
-        //print(contacts[i].phones);
+        // print(contacts[i].phones[0].number);
         var userData = await firestore.collection('users').get();
         if (userData.docs.isNotEmpty) {
           UserModel userModel;
           for (var element in userData.docs) {
             userModel = UserModel.fromJson(element.data());
-            //print('phone number ${userModel.phoneNumber}');
+            // print('phone number ${userModel.phoneNumber}');
             if (contacts[i]
                 .phones[0]
-                .number
+                .normalizedNumber
                 .replaceAll(' ', '')
                 .contains(userModel.phoneNumber)) {
               audience.add(userModel.uid);
-              //print('audience $audience');
+              // print('audience $audience');
             }
           }
         }
@@ -90,7 +91,7 @@ class StatusRepo extends ChangeNotifier {
           .collection('status')
           .doc(statusId)
           .set(statusModel.toJson());
-      //print('status is  ${statusModel.toString()}');
+      // print('status is  ${statusModel.toString()}');
       ref.read(loadingCreateStatus.state).update((state) => false);
       notifyListeners();
     } catch (e) {
@@ -108,7 +109,7 @@ class StatusRepo extends ChangeNotifier {
           .where(
             'createdAt',
             isGreaterThan: DateTime.now()
-                .subtract(const Duration(days: 1))
+                .subtract(const Duration(hours: 24))
                 .millisecondsSinceEpoch,
           )
           .snapshots()

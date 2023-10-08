@@ -61,23 +61,26 @@ class MyApp extends ConsumerWidget {
           GlobalCupertinoLocalizations.delegate,
         ],
         supportedLocales: S.delegate.supportedLocales,
-        theme: theme.selectedTheme == 'light'
-            ? lightMode(context, ref)
-            : darkMode(context, ref),
-
+        theme: lightMode(context, ref),
+        darkTheme: darkMode(context, ref),
+        themeMode:
+            theme.selectedTheme == 'light' ? ThemeMode.light : ThemeMode.dark,
         onGenerateRoute: (settings) => generateRoute(settings),
         //watch to keep tracking user state
         home: Scaffold(
           body: ref.watch(userDataProvider).when(
             data: (user) {
+              print('user is  ${user}');
               if (user == null) {
                 return const LandingScreen();
               }
               return const HomeScreen();
             },
             error: (error, stackTrace) {
-              return const Scaffold(
-                body: ErrorScreen(error: 'This page doesn\'t exist'),
+              return Scaffold(
+                body: ErrorScreen(
+                    error:
+                        'This page doesn\'t exist because ${error.toString()}'),
               );
             },
             loading: () {

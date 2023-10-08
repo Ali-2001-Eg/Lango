@@ -154,7 +154,8 @@ class _StatusScreenState extends ConsumerState<StatusScreen> {
             .sendTextMessage(context, messageText, widget.receiverUid, false)
             .then((value) {
           _cancelReply();
-          customSnackBar(S.of(context).reply_snackbar, context,color: Colors.green);
+          customSnackBar(S.of(context).reply_snackbar, context,
+              color: Colors.green);
           Navigator.pop(context);
         }));
   }

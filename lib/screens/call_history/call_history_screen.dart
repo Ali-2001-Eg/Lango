@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lottie/lottie.dart';
 import 'package:whatsapp_clone/shared/utils/base/error_screen.dart';
 import 'package:whatsapp_clone/shared/utils/functions.dart';
 import 'package:whatsapp_clone/shared/widgets/custom_indicator.dart';
@@ -26,7 +27,29 @@ class CallHistoryScreen extends ConsumerWidget {
             return const CustomIndicator();
           }
           if (snapshot.hasData && snapshot.data!.isEmpty) {
-            return const Center(child: Text('Empty data'));
+            return Center(
+              child: SizedBox(
+                height: size(context).height,
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: 300,
+                        width: 300,
+                        child:
+                            Lottie.asset('assets/json/empty_call_history.json'),
+                      ),
+                      Text(
+                        S.of(context).empty_call_history,
+                        style: getTextTheme(context, ref),
+                        textAlign: TextAlign.center,
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            );
           } else {
             return ListView.builder(
               shrinkWrap: true,

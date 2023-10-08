@@ -40,10 +40,10 @@ class _HomePageState extends ConsumerState<MapsScreen> {
 
   _init() {
     //set default latlng for camera position
-    _defaultLatLng = const LatLng(11, 104);
+    _defaultLatLng = const LatLng(30.0333, 31.233334);
     _draggedLatlng = _defaultLatLng;
     _cameraPosition =
-        CameraPosition(target: _defaultLatLng, zoom: 17.5 // number of map view
+        CameraPosition(target: _defaultLatLng, zoom: 5 // number of map view
             );
 
     //map will redirect to my current location when loaded
@@ -182,21 +182,18 @@ class _HomePageState extends ConsumerState<MapsScreen> {
     LocationPermission locationPermission;
     bool isLocationServiceEnabled = await Geolocator.isLocationServiceEnabled();
     //check if user enable service for location permission
-    if (!isLocationServiceEnabled) {
-    }
+    if (!isLocationServiceEnabled) {}
 
     locationPermission = await Geolocator.checkPermission();
 
     //check if user denied location and retry requesting for permission
     if (locationPermission == LocationPermission.denied) {
       locationPermission = await Geolocator.requestPermission();
-      if (locationPermission == LocationPermission.denied) {
-      }
+      if (locationPermission == LocationPermission.denied) {}
     }
 
     //check if user denied permission forever
-    if (locationPermission == LocationPermission.deniedForever) {
-    }
+    if (locationPermission == LocationPermission.deniedForever) {}
 
     return await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.best);

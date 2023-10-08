@@ -32,7 +32,7 @@ class AuthController {
   }
 
   Future<UserModel?> get getUserData async {
-    return await authRepo.getUSerData;
+    return await authRepo.getUserData;
   }
 
   Stream<UserModel> userData(String uid) {

@@ -68,164 +68,160 @@ class ChatScreen extends ConsumerWidget {
         return true;
       },
       child: CallPickupScreen(
-        scaffold: Directionality(
-          textDirection: TextDirection.ltr,
-          child: Scaffold(
-            resizeToAvoidBottomInset: true,
-            appBar: AppBar(
-              shadowColor: Colors.black,
-              automaticallyImplyLeading: false,
-              leading: IconButton(
-                icon: const Icon(Icons.arrow_back_sharp),
-                onPressed: () => Navigator.pushNamedAndRemoveUntil(
-                    context, HomeScreen.routeName, (route) => false),
-              ),
-              title: isGroupChat
-                  ? Text(
-                      name,
-                      style: getTextTheme(context, ref).copyWith(
-                          color: appTheme.selectedTheme == 'light'
-                              ? lightScaffold
-                              : Colors.white),
-                    )
-                  : StreamBuilder<UserModel>(
-                      stream: ref.read(authControllerProvider).userData(uid),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return Container();
-                        } else if (snapshot.hasError) {
-                          return Text(snapshot.error.toString());
-                        } else {
-                          return Column(
-                            children: [
-                              Text(
-                                name,
+        scaffold: Scaffold(
+          resizeToAvoidBottomInset: true,
+          appBar: AppBar(
+            shadowColor: Colors.black,
+            automaticallyImplyLeading: false,
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back_sharp),
+              onPressed: () => Navigator.pushNamedAndRemoveUntil(
+                  context, HomeScreen.routeName, (route) => false),
+            ),
+            title: isGroupChat
+                ? Text(
+                    name,
+                    style: getTextTheme(context, ref).copyWith(
+                        color: appTheme.selectedTheme == 'light'
+                            ? lightScaffold
+                            : Colors.white),
+                  )
+                : StreamBuilder<UserModel>(
+                    stream: ref.read(authControllerProvider).userData(uid),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Container();
+                      } else if (snapshot.hasError) {
+                        return Text(snapshot.error.toString());
+                      } else {
+                        return Column(
+                          children: [
+                            Text(
+                              name,
+                              style: getTextTheme(context, ref).copyWith(
+                                  color: appTheme.selectedTheme == 'light'
+                                      ? lightScaffold
+                                      : Colors.white),
+                            ),
+                            Text(
+                                snapshot.data!.isOnline
+                                    ? S.of(context).online
+                                    : S.of(context).offline,
                                 style: getTextTheme(context, ref).copyWith(
-                                    color: appTheme.selectedTheme == 'light'
-                                        ? lightScaffold
-                                        : Colors.white),
-                              ),
-                              Text(
-                                  snapshot.data!.isOnline
-                                      ? S.of(context).online
-                                      : S.of(context).offline,
-                                  style: getTextTheme(context, ref).copyWith(
-                                    height: 0,
-                                    color: appTheme.selectedTheme == 'light'
-                                        ? greyColor
-                                        : Colors.white,
-                                    fontSize: 13,
-                                  )),
-                            ],
-                          );
-                        }
-                      }),
-              actions: [
-                IconButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => DescriptionScreen(
-                                  isGroupChat: isGroupChat,
-                                  name: name,
-                                  phoneNumber: phoneNumber,
-                                  pic: profilePic,
-                                  description: description,
-                                  id: uid)));
-                    },
-                    icon: const Icon(
-                      Icons.info,
-                      size: 20,
-                    )),
-                isGroupChat
-                    ? StreamBuilder<bool>(
-                        stream:
-                            ref.read(groupControllerProvider).isUserJoined(uid),
-                        builder: (context, snapshot) {
-                          return IconButton(
-                              onPressed: () => snapshot.data!
-                                  ? makeCall(ref, context)
-                                  : customSnackBar(
-                                      !isArabic
-                                          ? 'You must join $name first to make call.'
-                                          : '$name لاتمام المكالمات انضم ل مجموعه',
-                                      context),
-                              icon: const Icon(
-                                Icons.call,
-                                size: 30,
-                              ));
-                        })
-                    : IconButton(
-                        onPressed: () => makeCall(ref, context),
-                        icon: const Icon(
-                          Icons.call,
-                          size: 30,
-                        )),
-              ],
-            ),
-            body: Container(
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      colorFilter: appTheme.selectedTheme == 'light'
-                          ? const ColorFilter.linearToSrgbGamma()
-                          : null,
-                      fit: BoxFit.fill,
-                      image: const AssetImage('assets/images/background.png'))),
-              child: StreamBuilder<bool>(
-                  stream: ref.read(groupControllerProvider).isUserJoined(uid),
-                  builder: (context, snapshot) {
-                    print('user is  ${snapshot.data}');
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const CustomIndicator();
-                    }
-                    return Column(
-                      children: [
-                        Expanded(
-                            child: ChatList(
-                          receiverUid: uid,
-                          isGroupChat: isGroupChat,
-                          token: token,
-                        )),
-                        (isGroupChat && !snapshot.data!)
-                            ? Container(
-                                height: size(context).height / 4,
-                                width: size(context).width,
-                                padding: const EdgeInsets.all(20),
-                                decoration: BoxDecoration(
-                                  color: getTheme(context).cardColor,
-                                ),
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Text(
-                                      !isArabic
-                                          ? 'You must join $name first to make messages.'
-                                          : '$name لاتمام المحادثات انضم ل مجموعه',
-                                      style: const TextStyle(
-                                          fontSize: 18, color: Colors.white70),
-                                    ),
-                                    CustomButton(
-                                      text: S.of(context).join_group,
-                                      onPress: () {
-                                        ref
-                                            .read(groupControllerProvider)
-                                            .joinGroup(uid);
-                                      },
-                                    )
-                                  ],
-                                ),
-                              )
-                            : BottomChatFieldWidget(
-                                receiverUid: uid,
+                                  height: 0,
+                                  color: appTheme.selectedTheme == 'light'
+                                      ? greyColor
+                                      : Colors.white,
+                                  fontSize: 13,
+                                )),
+                          ],
+                        );
+                      }
+                    }),
+            actions: [
+              IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => DescriptionScreen(
                                 isGroupChat: isGroupChat,
+                                name: name,
+                                phoneNumber: phoneNumber,
+                                pic: profilePic,
+                                description: description,
+                                id: uid)));
+                  },
+                  icon: const Icon(
+                    Icons.info,
+                    size: 20,
+                  )),
+              isGroupChat
+                  ? StreamBuilder<bool>(
+                      stream:
+                          ref.read(groupControllerProvider).isUserJoined(uid),
+                      builder: (context, snapshot) {
+                        return IconButton(
+                            onPressed: () => snapshot.data!
+                                ? makeCall(ref, context)
+                                : customSnackBar(
+                                    !isArabic
+                                        ? 'You must join $name first to make call.'
+                                        : 'لاتمام المكالمات انضم ل مجموعه $name',
+                                    context),
+                            icon: const Icon(
+                              Icons.call,
+                              size: 30,
+                            ));
+                      })
+                  : IconButton(
+                      onPressed: () => makeCall(ref, context),
+                      icon: const Icon(
+                        Icons.call,
+                        size: 30,
+                      )),
+            ],
+          ),
+          body: Container(
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    colorFilter: appTheme.selectedTheme == 'light'
+                        ? const ColorFilter.linearToSrgbGamma()
+                        : null,
+                    fit: BoxFit.fill,
+                    image: const AssetImage('assets/images/background.png'))),
+            child: StreamBuilder<bool>(
+                stream: ref.read(groupControllerProvider).isUserJoined(uid),
+                builder: (context, snapshot) {
+                  print('user is  ${snapshot.data}');
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CustomIndicator();
+                  }
+                  return Column(
+                    children: [
+                      Expanded(
+                          child: ChatList(
+                        receiverUid: uid,
+                        isGroupChat: isGroupChat,
+                        token: token,
+                      )),
+                      (isGroupChat && !snapshot.data!)
+                          ? Container(
+                              height: size(context).height / 4,
+                              width: size(context).width,
+                              padding: const EdgeInsets.all(20),
+                              decoration: BoxDecoration(
+                                color: getTheme(context).cardColor,
                               ),
-                      ],
-                    );
-                  }),
-            ),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Text(
+                                    !isArabic
+                                        ? 'You must join $name first to make messages.'
+                                        : 'لاتمام المحادثات انضم لمجموعه $name ',
+                                    style: const TextStyle(
+                                        fontSize: 18, color: Colors.white70),
+                                  ),
+                                  CustomButton(
+                                    text: S.of(context).join_group,
+                                    onPress: () {
+                                      ref
+                                          .read(groupControllerProvider)
+                                          .joinGroup(uid);
+                                    },
+                                  )
+                                ],
+                              ),
+                            )
+                          : BottomChatFieldWidget(
+                              receiverUid: uid,
+                              isGroupChat: isGroupChat,
+                            ),
+                    ],
+                  );
+                }),
           ),
         ),
       ),

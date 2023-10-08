@@ -1,16 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lottie/lottie.dart';
 import 'package:whatsapp_clone/screens/call/call_pickup_screen.dart';
 import 'package:whatsapp_clone/screens/chat/chat_screen.dart';
-import 'package:whatsapp_clone/shared/utils/base/error_screen.dart';
-import 'package:whatsapp_clone/shared/utils/colors.dart';
 import 'package:whatsapp_clone/shared/utils/functions.dart';
-import 'package:whatsapp_clone/shared/widgets/custom_indicator.dart';
 
-import '../../controllers/chat_controller.dart';
 import '../../controllers/group_controller.dart';
 import '../../generated/l10n.dart';
 import '../../models/group_model.dart';
@@ -26,7 +21,7 @@ class SearchScreen extends ConsumerStatefulWidget {
 class _HomePage extends ConsumerState<SearchScreen> {
   final _searchController = TextEditingController();
   final FocusNode _focusNode = FocusNode();
-  List<GroupModel> filteredList = [];
+  late List<GroupModel> filteredList;
   List<GroupModel> allGroups = [];
   @override
   void dispose() {
@@ -37,7 +32,8 @@ class _HomePage extends ConsumerState<SearchScreen> {
   @override
   void initState() {
     super.initState();
-    filteredList = allGroups;
+    _focusNode.requestFocus();
+    //filteredList = allGroups;
   }
 
   @override
@@ -50,6 +46,7 @@ class _HomePage extends ConsumerState<SearchScreen> {
           title: TextField(
             controller: _searchController,
             focusNode: _focusNode,
+            textAlign: TextAlign.center,
             style: const TextStyle(decorationThickness: 0, color: Colors.white),
             textDirection: isArabic ? TextDirection.rtl : TextDirection.ltr,
             //textAlign: TextAlign.center,
@@ -86,18 +83,12 @@ class _HomePage extends ConsumerState<SearchScreen> {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
-              }
-              if (snapshot.hasData && snapshot.data!.isEmpty) {
-                return SizedBox(
-                  height: 200,
-                  width: 200,
-                  child: Lottie.asset('assets/json/empty_search.json'),
-                );
               } else {
+                //print(allGroups.length);
                 return ListView.builder(
                   keyboardDismissBehavior:
                       ScrollViewKeyboardDismissBehavior.onDrag,
-                  itemCount: _searchController.text.isEmpty
+                  itemCount: _searchController.text.trim().isEmpty
                       ? snapshot.data!.length
                       : filteredList.length,
                   physics: const BouncingScrollPhysics(),
@@ -109,8 +100,31 @@ class _HomePage extends ConsumerState<SearchScreen> {
                       GroupModel group = snapshot.data![i];
                       return _groupTile(group, context);
                     } else {
+                      print(
+                          'filtered list is ${filteredList.map((e) => e.name)}');
                       //for searched groups
-                      return _groupTile(filteredList[i], context);
+                      return filteredList == []
+                          ? SizedBox(
+                              height: size(context).height,
+                              child: Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SizedBox(
+                                      height: 500,
+                                      width: 500,
+                                      child: Lottie.asset(
+                                          'assets/json/empty_search.json'),
+                                    ),
+                                    Text(
+                                      'No groups with this name',
+                                      style: getTextTheme(context, ref),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            )
+                          : _groupTile(filteredList[i], context);
                     }
                   },
                 );
@@ -123,6 +137,9 @@ class _HomePage extends ConsumerState<SearchScreen> {
   }
 
   void _filterGroups(String query) {
+    setState(() {
+      filteredList = [];
+    });
     List<GroupModel> tempList = [];
     tempList.addAll(allGroups);
 
@@ -174,7 +191,7 @@ class _HomePage extends ConsumerState<SearchScreen> {
                 'isOnline': false,
                 'phoneNumber': '',
                 'isGroupChat': true,
-                'token': ref.watch(chatControllerProvider).user?.token,
+                'token': '',
               },
             );
           },

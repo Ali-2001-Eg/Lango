@@ -31,7 +31,9 @@ class CallPickupScreen extends ConsumerWidget {
                 snapshot.data!.data() as Map<String, dynamic>);
 
             // print('call token is ${callData.token}');
-            if (!callData.hasDialled) {
+            if (!callData.hasDialled &&
+                callData.callerId !=
+                    ref.read(callControllerProvider).auth.currentUser!.uid) {
               return Scaffold(
                 body: Container(
                   //alignment: Alignment.center,
@@ -72,6 +74,12 @@ class CallPickupScreen extends ConsumerWidget {
                                 splashColor: Colors.transparent,
                                 borderRadius: BorderRadius.circular(50),
                                 onTap: () {
+                                  ref.read(callControllerProvider).endCall(
+                                      callerId: callData.callerId,
+                                      receiverId: callData.receiverId,
+                                      context: context,
+                                      isGroupChat: true,
+                                      call: callData);
                                   Navigator.pop(context);
                                 },
                                 child: Container(
@@ -81,7 +89,8 @@ class CallPickupScreen extends ConsumerWidget {
                                       color: Color.fromARGB(255, 179, 44, 44)),
                                   child: const Icon(
                                     Icons.call_end,
-                                    size: 35,color: Colors.white,
+                                    size: 35,
+                                    color: Colors.white,
                                   ),
                                 )),
                             InkWell(
@@ -106,7 +115,8 @@ class CallPickupScreen extends ConsumerWidget {
                                       color: Color.fromARGB(255, 8, 133, 14)),
                                   child: const Icon(
                                     Icons.call,
-                                    size: 35,color: Colors.white,
+                                    size: 35,
+                                    color: Colors.white,
                                   ),
                                 )),
                           ],

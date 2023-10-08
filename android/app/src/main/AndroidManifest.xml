@@ -22,7 +22,7 @@
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
           <meta-data android:name="com.google.android.geo.API_KEY"
-               android:value="YOUR_APIKEY"/>
+               android:value="AIzaSyCTCg4l9pTBznvmowldSi7eLIt_Pq7LYKI"/>
         
        
         <activity

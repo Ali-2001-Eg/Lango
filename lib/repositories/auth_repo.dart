@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:io';
@@ -6,6 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:whatsapp_clone/models/user_model.dart';
 import 'package:whatsapp_clone/repositories/firebase_notification_repo.dart';
 import 'package:whatsapp_clone/screens/auth/otp_screen.dart';
@@ -14,11 +16,17 @@ import 'package:whatsapp_clone/screens/home_screen.dart';
 import 'package:whatsapp_clone/shared/repos/firebase_storage_repo.dart';
 import 'package:whatsapp_clone/shared/utils/functions.dart';
 
+import '../controllers/auth_controller.dart';
+
 class AuthRepo {
   final FirebaseAuth auth;
   final FirebaseFirestore firestore;
-
-  AuthRepo({required this.auth, required this.firestore});
+  final ProviderRef ref;
+  AuthRepo({
+    required this.auth,
+    required this.firestore,
+    required this.ref,
+  });
 
   Future<void> signInWithPhone(BuildContext context, String phoneNumber) async {
     try {
@@ -28,6 +36,7 @@ class AuthRepo {
           await auth.signInWithCredential(credential);
         },
         verificationFailed: (e) {
+          customSnackBar(e.message!, context);
           throw Exception(e.message);
         },
         codeSent: ((String verificationId, int? resendToken) async {
@@ -53,11 +62,21 @@ class AuthRepo {
         smsCode: otpSubmittedFromUser,
       );
       await auth.signInWithCredential(credential);
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        UserInfoScreen.routeName,
-        (route) => false,
-      );
+      var user =
+          await firestore.collection('users').doc(auth.currentUser!.uid).get();
+      if (user.exists) {
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          HomeScreen.routeName,
+          (route) => false,
+        );
+      } else {
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          UserInfoScreen.routeName,
+          (route) => false,
+        );
+      }
     } on FirebaseAuthException catch (e) {
       customSnackBar(e.message!, context);
     }
@@ -101,7 +120,7 @@ class AuthRepo {
   }
 
 //to get user data and to know if user has registered or not to redirect an appropriate page to him
-  Future<UserModel?> get getUSerData async {
+  Future<UserModel?> get getUserData async {
     UserModel? user;
     var userData =
         await firestore.collection('users').doc(auth.currentUser?.uid).get();
@@ -147,5 +166,6 @@ final authRepositoryProvider = Provider(
   (ref) => AuthRepo(
     auth: FirebaseAuth.instance,
     firestore: FirebaseFirestore.instance,
+    ref: ref,
   ),
 );

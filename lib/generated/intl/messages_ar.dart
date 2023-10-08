@@ -46,7 +46,11 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تم حذف الرساله بنجاح"),
         "description": MessageLookupByLibrary.simpleMessage("الوصف"),
         "doc": MessageLookupByLibrary.simpleMessage("ملف"),
+        "download_snackbar":
+            MessageLookupByLibrary.simpleMessage("تم الحفظ بنجاح"),
         "edit_profile": MessageLookupByLibrary.simpleMessage("تعديل الحساب"),
+        "empty_call_history": MessageLookupByLibrary.simpleMessage(
+            "قم بإجراي مكالمات مع أصدقائك لكي تتحصل علي سجل المكالمات الخاص بك !"),
         "empty_group": MessageLookupByLibrary.simpleMessage(
             "هذه القناه لا تحتوي علي اي مشتركين"),
         "empty_status_list": MessageLookupByLibrary.simpleMessage(

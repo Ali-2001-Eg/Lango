@@ -1,4 +1,4 @@
-import 'package:cached_video_player/cached_video_player.dart';
+import 'package:video_player/video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:whatsapp_clone/shared/utils/functions.dart';
 
@@ -15,14 +15,15 @@ class VideoPlayerItem extends StatefulWidget {
 }
 
 class _VideoPlayerItemState extends State<VideoPlayerItem> {
-  late CachedVideoPlayerController videoPlayerController;
+  late VideoPlayerController videoPlayerController;
   bool isPlay = true;
 
   @override
   void initState() {
-    videoPlayerController = CachedVideoPlayerController.network(widget.url)
+    videoPlayerController = VideoPlayerController.network(widget.url)
       ..initialize().then((value) {
         videoPlayerController.setVolume(1);
+        //videoPlayerController.play();
       });
     super.initState();
   }
@@ -39,7 +40,7 @@ class _VideoPlayerItemState extends State<VideoPlayerItem> {
     return widget.isReply
         ? Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children:  [
+            children: [
               Text(S.of(context).video_message,
                   style: const TextStyle(
                     color: Colors.white,
@@ -51,7 +52,7 @@ class _VideoPlayerItemState extends State<VideoPlayerItem> {
             aspectRatio: 6 / 8,
             child: Stack(
               children: [
-                CachedVideoPlayer(videoPlayerController),
+                VideoPlayer(videoPlayerController),
                 Align(
                   alignment: Alignment.center,
                   child: Container(

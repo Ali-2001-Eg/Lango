@@ -484,6 +484,9 @@ class ChatRepo {
           .collection('messages')
           .doc(messageId)
           .delete();
+      if (context.mounted) {
+        customSnackBar(S.of(context).delete_snackbar, context);
+      }
     } catch (e) {
       customSnackBar(e.toString(), context);
     }

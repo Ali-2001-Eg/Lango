@@ -217,10 +217,7 @@ class ContactListScreen extends ConsumerWidget {
                                       'isOnline': false,
                                       'phoneNumber': '',
                                       'isGroupChat': true,
-                                      'token': ref
-                                          .watch(chatControllerProvider)
-                                          .user
-                                          ?.token,
+                                      'token': '',
                                     },
                                   ),
                                   child: Padding(

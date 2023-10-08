@@ -50,7 +50,11 @@ class MessageLookup extends MessageLookupByLibrary {
             "message deleted Successfully"),
         "description": MessageLookupByLibrary.simpleMessage("Description"),
         "doc": MessageLookupByLibrary.simpleMessage("Document"),
+        "download_snackbar":
+            MessageLookupByLibrary.simpleMessage("Dowmloaded successfully"),
         "edit_profile": MessageLookupByLibrary.simpleMessage("Edit Profile"),
+        "empty_call_history": MessageLookupByLibrary.simpleMessage(
+            "Try to call your contacts to have Call History !"),
         "empty_group": MessageLookupByLibrary.simpleMessage(
             "there are No members in this group"),
         "empty_status_list": MessageLookupByLibrary.simpleMessage(

@@ -151,6 +151,7 @@ class MessageWidget extends ConsumerWidget {
                       right: 0,
                       left: 0,
                       child: Container(
+                        padding: const EdgeInsets.all(10),
                         constraints:
                             BoxConstraints(maxWidth: size(context).width / 2),
                         color: Theme.of(context).cardColor,
@@ -170,7 +171,7 @@ class MessageWidget extends ConsumerWidget {
         return isReply
             ? Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children:  [
+                children: [
                   Text(S.of(context).gif_message,
                       style: TextStyle(
                         color: Colors.white,

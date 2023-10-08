@@ -105,8 +105,7 @@ class ChatController {
     BuildContext context,
     String receiverUid,
   ) {
-    chatRepo.deleteMessage(messageId, context, receiverUid).then(
-        (value) => customSnackBar(S.of(context).delete_snackbar, context));
+    chatRepo.deleteMessage(messageId, context, receiverUid);
   }
 
   void copyToClipboard(String message, context) {
