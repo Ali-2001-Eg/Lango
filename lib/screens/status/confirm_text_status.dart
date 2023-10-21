@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:whatsapp_clone/controllers/status_controller.dart';
-import 'package:whatsapp_clone/generated/l10n.dart';
-import 'package:whatsapp_clone/shared/enums/message_enum.dart';
+import 'package:Chat_Live/controllers/status_controller.dart';
+import 'package:Chat_Live/generated/l10n.dart';
+import 'package:Chat_Live/shared/enums/message_enum.dart';
 
 import '../../shared/utils/colors.dart';
 import '../../shared/utils/functions.dart';

@@ -1,6 +1,6 @@
 import 'package:video_player/video_player.dart';
 import 'package:flutter/material.dart';
-import 'package:whatsapp_clone/shared/utils/functions.dart';
+import 'package:Chat_Live/shared/utils/functions.dart';
 
 import '../../generated/l10n.dart';
 

@@ -2,13 +2,13 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:whatsapp_clone/controllers/auth_controller.dart';
-import 'package:whatsapp_clone/controllers/message_reply_controller.dart';
-import 'package:whatsapp_clone/generated/l10n.dart';
-import 'package:whatsapp_clone/models/chat_contacts_model.dart';
-import 'package:whatsapp_clone/models/group_model.dart';
-import 'package:whatsapp_clone/repositories/chat_repo.dart';
-import 'package:whatsapp_clone/shared/enums/message_enum.dart';
+import 'package:Chat_Live/controllers/auth_controller.dart';
+import 'package:Chat_Live/controllers/message_reply_controller.dart';
+import 'package:Chat_Live/generated/l10n.dart';
+import 'package:Chat_Live/models/chat_contacts_model.dart';
+import 'package:Chat_Live/models/group_model.dart';
+import 'package:Chat_Live/repositories/chat_repo.dart';
+import 'package:Chat_Live/shared/enums/message_enum.dart';
 
 import '../models/message_model.dart';
 import '../models/user_model.dart';

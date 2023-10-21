@@ -3,11 +3,11 @@
 import 'package:agora_uikit/agora_uikit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:whatsapp_clone/controllers/call_controller.dart';
+import 'package:Chat_Live/controllers/call_controller.dart';
 
-import 'package:whatsapp_clone/models/call_model.dart';
-import 'package:whatsapp_clone/shared/utils/base/agora_config.dart';
-import 'package:whatsapp_clone/shared/widgets/custom_indicator.dart';
+import 'package:Chat_Live/models/call_model.dart';
+import 'package:Chat_Live/shared/utils/base/agora_config.dart';
+import 'package:Chat_Live/shared/widgets/custom_indicator.dart';
 
 class CallScreen extends ConsumerStatefulWidget {
   static const String routeName = '/call-screen';

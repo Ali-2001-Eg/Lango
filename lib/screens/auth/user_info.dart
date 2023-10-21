@@ -2,10 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:whatsapp_clone/controllers/auth_controller.dart';
-import 'package:whatsapp_clone/generated/l10n.dart';
-import 'package:whatsapp_clone/shared/utils/functions.dart';
-import 'package:whatsapp_clone/shared/widgets/custom_button.dart';
+import 'package:Chat_Live/controllers/auth_controller.dart';
+import 'package:Chat_Live/generated/l10n.dart';
+import 'package:Chat_Live/shared/utils/functions.dart';
+import 'package:Chat_Live/shared/widgets/custom_button.dart';
 
 class UserInfoScreen extends ConsumerStatefulWidget {
   static const routeName = '/user-info';

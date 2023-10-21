@@ -1,5 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:whatsapp_clone/shared/enums/message_enum.dart';
+import 'package:Chat_Live/shared/enums/message_enum.dart';
 
 class MessageModel {
   final String id;

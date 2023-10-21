@@ -2,9 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lottie/lottie.dart';
-import 'package:whatsapp_clone/shared/utils/base/error_screen.dart';
-import 'package:whatsapp_clone/shared/utils/functions.dart';
-import 'package:whatsapp_clone/shared/widgets/custom_indicator.dart';
+import 'package:Chat_Live/shared/utils/base/error_screen.dart';
+import 'package:Chat_Live/shared/utils/functions.dart';
+import 'package:Chat_Live/shared/widgets/custom_indicator.dart';
 
 import '../../controllers/call_controller.dart';
 import '../../generated/l10n.dart';

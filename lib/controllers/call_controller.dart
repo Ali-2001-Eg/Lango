@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
-import 'package:whatsapp_clone/controllers/auth_controller.dart';
+import 'package:Chat_Live/controllers/auth_controller.dart';
 import '../models/call_model.dart';
 import '../repositories/call_repo.dart';
 

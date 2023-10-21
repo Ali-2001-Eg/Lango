@@ -9,10 +9,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
-import 'package:whatsapp_clone/models/status_model.dart';
-import 'package:whatsapp_clone/models/user_model.dart';
-import 'package:whatsapp_clone/shared/enums/message_enum.dart';
-import 'package:whatsapp_clone/shared/repos/firebase_storage_repo.dart';
+import 'package:Chat_Live/models/status_model.dart';
+import 'package:Chat_Live/models/user_model.dart';
+import 'package:Chat_Live/shared/enums/message_enum.dart';
+import 'package:Chat_Live/shared/repos/firebase_storage_repo.dart';
 
 class StatusRepo extends ChangeNotifier {
   final FirebaseFirestore firestore;

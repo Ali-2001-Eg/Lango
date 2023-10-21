@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:whatsapp_clone/controllers/group_controller.dart';
-import 'package:whatsapp_clone/generated/l10n.dart';
-import 'package:whatsapp_clone/screens/call/call_pickup_screen.dart';
-import 'package:whatsapp_clone/screens/chat/chat_screen.dart';
-import 'package:whatsapp_clone/screens/home_screen.dart';
-import 'package:whatsapp_clone/shared/utils/base/error_screen.dart';
-import 'package:whatsapp_clone/shared/widgets/custom_button.dart';
-import 'package:whatsapp_clone/shared/widgets/custom_indicator.dart';
+import 'package:Chat_Live/controllers/group_controller.dart';
+import 'package:Chat_Live/generated/l10n.dart';
+import 'package:Chat_Live/screens/call/call_pickup_screen.dart';
+import 'package:Chat_Live/screens/chat/chat_screen.dart';
+import 'package:Chat_Live/screens/home_screen.dart';
+import 'package:Chat_Live/shared/utils/base/error_screen.dart';
+import 'package:Chat_Live/shared/widgets/custom_button.dart';
+import 'package:Chat_Live/shared/widgets/custom_indicator.dart';
 
 import '../../controllers/call_controller.dart';
 import '../../controllers/chat_controller.dart';
@@ -162,7 +162,8 @@ class DescriptionScreen extends ConsumerWidget {
           !isArabic ? 'You left $name successfully!' : ' تم مغادره بنجاح $name',
           context,
           color: Colors.green);
-      return Navigator.pushNamed(context, HomeScreen.routeName);
+      return Navigator.pushNamedAndRemoveUntil(
+          context, HomeScreen.routeName, (route) => false);
     });
   }
 

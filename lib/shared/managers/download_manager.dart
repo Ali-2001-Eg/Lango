@@ -6,7 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:whatsapp_clone/shared/utils/functions.dart';
+import 'package:Chat_Live/shared/utils/functions.dart';
 
 import '../enums/message_enum.dart';
 

@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:whatsapp_clone/shared/utils/functions.dart';
+import 'package:Chat_Live/shared/utils/functions.dart';
 
 import '../../controllers/profile_controller.dart';
 import '../../generated/l10n.dart';
@@ -218,9 +218,7 @@ class _HomePage extends ConsumerState<EditProfileScreen> {
                                 .backgroundColor!)),
                     child: IconButton(
                       onPressed: onPressed,
-                      icon: const Icon(Icons.done
-                      
-                      ),
+                      icon: const Icon(Icons.done),
                     ),
                   ),
                 )),

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_contacts/contact.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:whatsapp_clone/repositories/contact_repo.dart';
+import 'package:Chat_Live/repositories/contact_repo.dart';
 
 class SelectContactsController {
   final ProviderRef ref;

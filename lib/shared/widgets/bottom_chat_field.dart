@@ -10,15 +10,15 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import 'package:whatsapp_clone/controllers/chat_controller.dart';
-import 'package:whatsapp_clone/generated/l10n.dart';
-import 'package:whatsapp_clone/screens/chat/confirm_file_screen.dart';
-import 'package:whatsapp_clone/screens/chat/maps_screen.dart';
-import 'package:whatsapp_clone/shared/enums/message_enum.dart';
-import 'package:whatsapp_clone/shared/utils/colors.dart';
-import 'package:whatsapp_clone/shared/utils/functions.dart';
-import 'package:whatsapp_clone/shared/widgets/message_reply_widget.dart';
-import 'package:whatsapp_clone/shared/widgets/modal_bottom_sheet_item.dart';
+import 'package:Chat_Live/controllers/chat_controller.dart';
+import 'package:Chat_Live/generated/l10n.dart';
+import 'package:Chat_Live/screens/chat/confirm_file_screen.dart';
+import 'package:Chat_Live/screens/chat/maps_screen.dart';
+import 'package:Chat_Live/shared/enums/message_enum.dart';
+import 'package:Chat_Live/shared/utils/colors.dart';
+import 'package:Chat_Live/shared/utils/functions.dart';
+import 'package:Chat_Live/shared/widgets/message_reply_widget.dart';
+import 'package:Chat_Live/shared/widgets/modal_bottom_sheet_item.dart';
 
 import '../../controllers/message_reply_controller.dart';
 

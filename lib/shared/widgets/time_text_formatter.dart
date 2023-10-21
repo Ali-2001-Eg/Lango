@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:whatsapp_clone/shared/utils/functions.dart';
+import 'package:Chat_Live/shared/utils/functions.dart';
 
 import '../../generated/l10n.dart';
 

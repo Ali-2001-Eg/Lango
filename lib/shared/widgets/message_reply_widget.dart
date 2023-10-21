@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:whatsapp_clone/shared/utils/colors.dart';
-import 'package:whatsapp_clone/shared/utils/functions.dart';
-import 'package:whatsapp_clone/shared/widgets/message_widget.dart';
+import 'package:Chat_Live/shared/utils/colors.dart';
+import 'package:Chat_Live/shared/utils/functions.dart';
+import 'package:Chat_Live/shared/widgets/message_widget.dart';
 
 import '../../controllers/message_reply_controller.dart';
 

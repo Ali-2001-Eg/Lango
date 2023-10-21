@@ -1,4 +1,4 @@
-import 'package:whatsapp_clone/shared/enums/message_enum.dart';
+import 'package:Chat_Live/shared/enums/message_enum.dart';
 
 class GroupModel {
   final String name;

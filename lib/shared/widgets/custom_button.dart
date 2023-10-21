@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:whatsapp_clone/shared/utils/colors.dart';
-import 'package:whatsapp_clone/shared/utils/functions.dart';
+import 'package:Chat_Live/shared/utils/colors.dart';
+import 'package:Chat_Live/shared/utils/functions.dart';
 
 class CustomButton extends ConsumerWidget {
   final String text;

@@ -5,11 +5,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:whatsapp_clone/controllers/notification_controller.dart';
-import 'package:whatsapp_clone/models/call_model.dart';
-import 'package:whatsapp_clone/models/group_model.dart';
-import 'package:whatsapp_clone/screens/call/call_screen.dart';
-import 'package:whatsapp_clone/shared/utils/functions.dart';
+import 'package:Chat_Live/controllers/notification_controller.dart';
+import 'package:Chat_Live/models/call_model.dart';
+import 'package:Chat_Live/models/group_model.dart';
+import 'package:Chat_Live/screens/call/call_screen.dart';
+import 'package:Chat_Live/shared/utils/functions.dart';
 
 final callRepoProvider = Provider(
   (ref) => CallRepo(

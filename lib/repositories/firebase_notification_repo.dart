@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:whatsapp_clone/shared/utils/functions.dart';
+import 'package:Chat_Live/shared/utils/functions.dart';
 import 'package:http/http.dart' as http;
 import '../screens/chat/chat_screen.dart';
 import '../shared/utils/base/notifications_config.dart';

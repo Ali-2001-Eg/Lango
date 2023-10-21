@@ -3,10 +3,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:whatsapp_clone/controllers/call_controller.dart';
-import 'package:whatsapp_clone/generated/l10n.dart';
-import 'package:whatsapp_clone/shared/utils/base/error_screen.dart';
-import 'package:whatsapp_clone/shared/utils/functions.dart';
+import 'package:Chat_Live/controllers/call_controller.dart';
+import 'package:Chat_Live/generated/l10n.dart';
+import 'package:Chat_Live/shared/utils/base/error_screen.dart';
+import 'package:Chat_Live/shared/utils/functions.dart';
 import '../../models/call_model.dart';
 import 'call_screen.dart';
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -18,13 +19,18 @@ class MessageTextFormatterWidget extends ConsumerWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Linkify(
-        maxLines: 1,
+        maxLines: null,
         onOpen: (link) async {
           // print('url is ${link.url}');
 
           try {
             if (await canLaunchUrlString(link.url)) {
-              //  await launchUrlString('${link.url}');
+              await launchUrlString(link.url);
+            } else {
+              Clipboard.setData(ClipboardData(text: link.url));
+              if (context.mounted) {
+                customSnackBar('Link Coppied', context, color: Colors.green);
+              }
             }
           } catch (e) {
             //print(e.toString());

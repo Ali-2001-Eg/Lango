@@ -2,10 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:whatsapp_clone/controllers/status_controller.dart';
-import 'package:whatsapp_clone/shared/enums/message_enum.dart';
-import 'package:whatsapp_clone/shared/utils/functions.dart';
-import 'package:whatsapp_clone/shared/widgets/video_player_item.dart';
+import 'package:Chat_Live/controllers/status_controller.dart';
+import 'package:Chat_Live/shared/enums/message_enum.dart';
+import 'package:Chat_Live/shared/utils/functions.dart';
+import 'package:Chat_Live/shared/widgets/video_player_item.dart';
 
 import '../../shared/utils/colors.dart';
 

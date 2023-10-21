@@ -5,17 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:whatsapp_clone/controllers/auth_controller.dart';
-import 'package:whatsapp_clone/repositories/firebase_notification_repo.dart';
-import 'package:whatsapp_clone/screens/call/call_pickup_screen.dart';
-import 'package:whatsapp_clone/screens/home_screen.dart';
-import 'package:whatsapp_clone/screens/landing/landing_screen.dart';
-import 'package:whatsapp_clone/shared/notifiers/localization.dart';
-import 'package:whatsapp_clone/shared/notifiers/theme_notifier.dart';
-import 'package:whatsapp_clone/shared/routes/routes.dart';
-import 'package:whatsapp_clone/shared/utils/base/error_screen.dart';
-import 'package:whatsapp_clone/shared/utils/functions.dart';
-import 'package:whatsapp_clone/shared/widgets/custom_indicator.dart';
+import 'package:Chat_Live/controllers/auth_controller.dart';
+import 'package:Chat_Live/repositories/firebase_notification_repo.dart';
+import 'package:Chat_Live/screens/call/call_pickup_screen.dart';
+import 'package:Chat_Live/screens/home_screen.dart';
+import 'package:Chat_Live/screens/landing/landing_screen.dart';
+import 'package:Chat_Live/shared/notifiers/localization.dart';
+import 'package:Chat_Live/shared/notifiers/theme_notifier.dart';
+import 'package:Chat_Live/shared/routes/routes.dart';
+import 'package:Chat_Live/shared/utils/base/error_screen.dart';
+import 'package:Chat_Live/shared/utils/functions.dart';
+import 'package:Chat_Live/shared/widgets/custom_indicator.dart';
 
 import 'generated/l10n.dart';
 
@@ -70,7 +70,7 @@ class MyApp extends ConsumerWidget {
         home: Scaffold(
           body: ref.watch(userDataProvider).when(
             data: (user) {
-              print('user is  ${user}');
+              //print('user is  ${user}');
               if (user == null) {
                 return const LandingScreen();
               }

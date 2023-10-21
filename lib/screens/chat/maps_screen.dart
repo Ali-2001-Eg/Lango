@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:whatsapp_clone/controllers/chat_controller.dart';
-import 'package:whatsapp_clone/generated/l10n.dart';
-import 'package:whatsapp_clone/shared/notifiers/localization.dart';
-import 'package:whatsapp_clone/shared/utils/functions.dart';
+import 'package:Chat_Live/controllers/chat_controller.dart';
+import 'package:Chat_Live/generated/l10n.dart';
+import 'package:Chat_Live/shared/notifiers/localization.dart';
+import 'package:Chat_Live/shared/utils/functions.dart';
 
 class MapsScreen extends ConsumerStatefulWidget {
   final String receiverUid;

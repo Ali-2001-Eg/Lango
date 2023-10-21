@@ -8,13 +8,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:whatsapp_clone/models/user_model.dart';
-import 'package:whatsapp_clone/repositories/firebase_notification_repo.dart';
-import 'package:whatsapp_clone/screens/auth/otp_screen.dart';
-import 'package:whatsapp_clone/screens/auth/user_info.dart';
-import 'package:whatsapp_clone/screens/home_screen.dart';
-import 'package:whatsapp_clone/shared/repos/firebase_storage_repo.dart';
-import 'package:whatsapp_clone/shared/utils/functions.dart';
+import 'package:Chat_Live/models/user_model.dart';
+import 'package:Chat_Live/repositories/firebase_notification_repo.dart';
+import 'package:Chat_Live/screens/auth/otp_screen.dart';
+import 'package:Chat_Live/screens/auth/user_info.dart';
+import 'package:Chat_Live/screens/home_screen.dart';
+import 'package:Chat_Live/shared/repos/firebase_storage_repo.dart';
+import 'package:Chat_Live/shared/utils/functions.dart';
 
 import '../controllers/auth_controller.dart';
 

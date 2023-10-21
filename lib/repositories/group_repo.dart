@@ -8,12 +8,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_contacts/contact.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
-import 'package:whatsapp_clone/models/group_model.dart';
-import 'package:whatsapp_clone/models/user_model.dart';
-import 'package:whatsapp_clone/shared/enums/message_enum.dart';
-import 'package:whatsapp_clone/shared/repos/firebase_storage_repo.dart';
+import 'package:Chat_Live/models/group_model.dart';
+import 'package:Chat_Live/models/user_model.dart';
+import 'package:Chat_Live/shared/enums/message_enum.dart';
+import 'package:Chat_Live/shared/repos/firebase_storage_repo.dart';
 // ignore: unused_import
-import 'package:whatsapp_clone/shared/widgets/select_contact_widget.dart';
+import 'package:Chat_Live/shared/widgets/select_contact_widget.dart';
 
 final groupRepoProvider = Provider(
   (ref) => GroupRepo(

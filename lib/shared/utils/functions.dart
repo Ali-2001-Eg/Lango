@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:whatsapp_clone/shared/notifiers/theme_notifier.dart';
+import 'package:Chat_Live/shared/notifiers/theme_notifier.dart';
 
 import 'colors.dart';
 

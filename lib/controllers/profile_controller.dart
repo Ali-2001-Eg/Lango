@@ -1,8 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:whatsapp_clone/models/user_model.dart';
+import 'package:Chat_Live/models/user_model.dart';
 
-import 'package:whatsapp_clone/repositories/profile_repo.dart';
+import 'package:Chat_Live/repositories/profile_repo.dart';
 
 final profileControllerProvider = Provider(
   (ref) {

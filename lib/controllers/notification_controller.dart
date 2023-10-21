@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:whatsapp_clone/controllers/auth_controller.dart';
-import 'package:whatsapp_clone/repositories/firebase_notification_repo.dart';
+import 'package:Chat_Live/controllers/auth_controller.dart';
+import 'package:Chat_Live/repositories/firebase_notification_repo.dart';
 
 class NotificationController {
   final ProviderRef ref;
@@ -20,8 +20,6 @@ class NotificationController {
               token: token),
         );
   }
-
- 
 }
 
 final notificationControllerProvider = Provider((ref) {

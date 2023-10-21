@@ -2,14 +2,14 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:whatsapp_clone/screens/chat/expanded_view_scree.dart';
-import 'package:whatsapp_clone/shared/enums/message_enum.dart';
+import 'package:Chat_Live/screens/chat/expanded_view_scree.dart';
+import 'package:Chat_Live/shared/enums/message_enum.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:whatsapp_clone/shared/utils/functions.dart';
-import 'package:whatsapp_clone/shared/widgets/custom_indicator.dart';
-import 'package:whatsapp_clone/shared/widgets/pdf_viewerScreen.dart';
-import 'package:whatsapp_clone/shared/widgets/text_message_formatter_widget.dart';
-import 'package:whatsapp_clone/shared/widgets/video_player_item.dart';
+import 'package:Chat_Live/shared/utils/functions.dart';
+import 'package:Chat_Live/shared/widgets/custom_indicator.dart';
+import 'package:Chat_Live/shared/widgets/pdf_viewerScreen.dart';
+import 'package:Chat_Live/shared/widgets/text_message_formatter_widget.dart';
+import 'package:Chat_Live/shared/widgets/video_player_item.dart';
 
 import '../../controllers/chat_controller.dart';
 import '../../controllers/message_reply_controller.dart';

@@ -7,20 +7,12 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:300912797259:android:f31e2ea6c62a4cacee8fce",
+        "mobilesdk_app_id": "1:300912797259:android:5ef76a8d9796ebbfee8fce",
         "android_client_info": {
-          "package_name": "com.example.whatsapp_clone"
+          "package_name": "com.example.Chat_Live"
         }
       },
       "oauth_client": [
-        {
-          "client_id": "300912797259-7781oq0mjbmro6q3833kmukccqeuqu60.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.whatsapp_clone",
-            "certificate_hash": "51ca73d11222010b977ac10e12e86df5527555e8"
-          }
-        },
         {
           "client_id": "300912797259-b1i6vk6ncdgd1bs8j3pm1cppdl9to221.apps.googleusercontent.com",
           "client_type": 3
@@ -28,7 +20,7 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCTCg4l9pTBznvmowldSi7eLIt_Pq7LYKI"
+          "current_key": "AIzaSyCApZ40zC45sT_q95zZqea-nqxrl_2xsys"
         }
       ],
       "services": {

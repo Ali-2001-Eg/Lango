@@ -2,21 +2,21 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:whatsapp_clone/controllers/call_controller.dart';
-import 'package:whatsapp_clone/controllers/chat_controller.dart';
-import 'package:whatsapp_clone/controllers/group_controller.dart';
-import 'package:whatsapp_clone/controllers/message_reply_controller.dart';
-import 'package:whatsapp_clone/generated/l10n.dart';
-import 'package:whatsapp_clone/models/user_model.dart';
-import 'package:whatsapp_clone/screens/call/call_pickup_screen.dart';
-import 'package:whatsapp_clone/screens/decription/description_screen.dart';
-import 'package:whatsapp_clone/screens/home_screen.dart';
-import 'package:whatsapp_clone/shared/notifiers/theme_notifier.dart';
-import 'package:whatsapp_clone/shared/utils/colors.dart';
-import 'package:whatsapp_clone/shared/utils/functions.dart';
-import 'package:whatsapp_clone/shared/widgets/bottom_chat_field.dart';
-import 'package:whatsapp_clone/shared/widgets/custom_button.dart';
-import 'package:whatsapp_clone/shared/widgets/custom_indicator.dart';
+import 'package:Chat_Live/controllers/call_controller.dart';
+import 'package:Chat_Live/controllers/chat_controller.dart';
+import 'package:Chat_Live/controllers/group_controller.dart';
+import 'package:Chat_Live/controllers/message_reply_controller.dart';
+import 'package:Chat_Live/generated/l10n.dart';
+import 'package:Chat_Live/models/user_model.dart';
+import 'package:Chat_Live/screens/call/call_pickup_screen.dart';
+import 'package:Chat_Live/screens/decription/description_screen.dart';
+import 'package:Chat_Live/screens/home_screen.dart';
+import 'package:Chat_Live/shared/notifiers/theme_notifier.dart';
+import 'package:Chat_Live/shared/utils/colors.dart';
+import 'package:Chat_Live/shared/utils/functions.dart';
+import 'package:Chat_Live/shared/widgets/bottom_chat_field.dart';
+import 'package:Chat_Live/shared/widgets/custom_button.dart';
+import 'package:Chat_Live/shared/widgets/custom_indicator.dart';
 
 import '../../controllers/auth_controller.dart';
 import '../../shared/widgets/chat_list.dart';
@@ -64,7 +64,8 @@ class ChatScreen extends ConsumerWidget {
     return WillPopScope(
       onWillPop: () async {
         ref.read(messageReplyProvider.state).update((state) => null);
-        Navigator.pushNamed(context, HomeScreen.routeName);
+        Navigator.pushNamedAndRemoveUntil(
+            context, HomeScreen.routeName, (route) => false);
         return true;
       },
       child: CallPickupScreen(

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:whatsapp_clone/screens/auth/login_screen.dart';
-import 'package:whatsapp_clone/shared/utils/colors.dart';
-import 'package:whatsapp_clone/shared/utils/functions.dart';
-import 'package:whatsapp_clone/shared/widgets/custom_button.dart';
-import 'package:whatsapp_clone/generated/l10n.dart';
+import 'package:Chat_Live/screens/auth/login_screen.dart';
+import 'package:Chat_Live/shared/utils/colors.dart';
+import 'package:Chat_Live/shared/utils/functions.dart';
+import 'package:Chat_Live/shared/widgets/custom_button.dart';
+import 'package:Chat_Live/generated/l10n.dart';
 
 class LandingScreen extends ConsumerWidget {
   const LandingScreen({Key? key}) : super(key: key);
