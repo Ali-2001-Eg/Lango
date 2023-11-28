@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:Chat_Live/controllers/auth_controller.dart';
-import 'package:Chat_Live/generated/l10n.dart';
-import 'package:Chat_Live/screens/landing/landing_screen.dart';
-import 'package:Chat_Live/shared/notifiers/localization.dart';
-import 'package:Chat_Live/shared/notifiers/theme_notifier.dart';
-import 'package:Chat_Live/shared/utils/functions.dart';
+import 'package:Lango/controllers/auth_controller.dart';
+import 'package:Lango/generated/l10n.dart';
+import 'package:Lango/screens/landing/landing_screen.dart';
+import 'package:Lango/shared/notifiers/localization.dart';
+import 'package:Lango/shared/notifiers/theme_notifier.dart';
+import 'package:Lango/shared/utils/functions.dart';
 
 class SettingsScreen extends ConsumerWidget {
   static const String routeName = '/settings-screen';

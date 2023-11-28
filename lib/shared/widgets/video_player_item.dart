@@ -1,6 +1,6 @@
 import 'package:video_player/video_player.dart';
 import 'package:flutter/material.dart';
-import 'package:Chat_Live/shared/utils/functions.dart';
+import 'package:Lango/shared/utils/functions.dart';
 
 import '../../generated/l10n.dart';
 
@@ -30,7 +30,6 @@ class _VideoPlayerItemState extends State<VideoPlayerItem> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     videoPlayerController.dispose();
   }

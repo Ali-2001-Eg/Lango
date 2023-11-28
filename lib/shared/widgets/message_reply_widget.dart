@@ -1,8 +1,9 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:Chat_Live/shared/utils/colors.dart';
-import 'package:Chat_Live/shared/utils/functions.dart';
-import 'package:Chat_Live/shared/widgets/message_widget.dart';
+import 'package:Lango/shared/utils/functions.dart';
+import 'package:Lango/shared/widgets/message_widget.dart';
 
 import '../../controllers/message_reply_controller.dart';
 

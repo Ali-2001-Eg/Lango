@@ -81,7 +81,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "leave_group": MessageLookupByLibrary.simpleMessage("Leave Group"),
         "loc": MessageLookupByLibrary.simpleMessage("Location"),
         "login_heading": MessageLookupByLibrary.simpleMessage(
-            "Chat&Live needs to verify your phone number."),
+            "Lango needs to verify your phone number."),
         "login_snackbar_error":
             MessageLookupByLibrary.simpleMessage("Fill out all the fields"),
         "message_notification_title":
@@ -125,7 +125,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "voice_message":
             MessageLookupByLibrary.simpleMessage("🎵 Voice Message"),
         "welcome_landing":
-            MessageLookupByLibrary.simpleMessage("Welcome To Chat & Live"),
+            MessageLookupByLibrary.simpleMessage("Welcome To LANGO"),
         "yesterday": MessageLookupByLibrary.simpleMessage("Yesterday")
       };
 }

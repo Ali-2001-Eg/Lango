@@ -2,19 +2,15 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:Chat_Live/screens/chat/expanded_view_scree.dart';
-import 'package:Chat_Live/shared/enums/message_enum.dart';
+import 'package:Lango/screens/chat/expanded_view_scree.dart';
+import 'package:Lango/shared/enums/message_enum.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:Chat_Live/shared/utils/functions.dart';
-import 'package:Chat_Live/shared/widgets/custom_indicator.dart';
-import 'package:Chat_Live/shared/widgets/pdf_viewerScreen.dart';
-import 'package:Chat_Live/shared/widgets/text_message_formatter_widget.dart';
-import 'package:Chat_Live/shared/widgets/video_player_item.dart';
+import 'package:Lango/shared/utils/functions.dart';
+import 'package:Lango/shared/widgets/pdf_viewer_screen.dart';
+import 'package:Lango/shared/widgets/text_message_formatter_widget.dart';
+import 'package:Lango/shared/widgets/video_player_item.dart';
 
-import '../../controllers/chat_controller.dart';
-import '../../controllers/message_reply_controller.dart';
 import '../../generated/l10n.dart';
-import '../../repositories/auth_repo.dart';
 import '../managers/download_manager.dart';
 import '../utils/colors.dart';
 import 'audio_player_item.dart';
@@ -173,10 +169,10 @@ class MessageWidget extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Text(S.of(context).gif_message,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.white,
                       )),
-                  Icon(Icons.gif_box),
+                  const Icon(Icons.gif_box),
                 ],
               )
             : Container(
@@ -201,7 +197,7 @@ class MessageWidget extends ConsumerWidget {
             children: [
               Text(
                 S.of(context).pdf_message,
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
               ),
               const Icon(Icons.picture_as_pdf_outlined)
             ],

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:Chat_Live/controllers/auth_controller.dart';
-import 'package:Chat_Live/generated/l10n.dart';
-import 'package:Chat_Live/shared/utils/colors.dart';
-import 'package:Chat_Live/shared/utils/functions.dart';
+import 'package:Lango/controllers/auth_controller.dart';
+import 'package:Lango/generated/l10n.dart';
+import 'package:Lango/shared/utils/colors.dart';
+import 'package:Lango/shared/utils/functions.dart';
 
 class OtpScreen extends ConsumerWidget {
   static const String routeName = '/otp-screen';
   final String verificationId;
-  OtpScreen({Key? key, required this.verificationId}) : super(key: key);
+  const OtpScreen({Key? key, required this.verificationId}) : super(key: key);
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // print(verificationId);

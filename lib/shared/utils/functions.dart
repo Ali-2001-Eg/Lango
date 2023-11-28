@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:Chat_Live/shared/notifiers/theme_notifier.dart';
+import 'package:Lango/shared/notifiers/theme_notifier.dart';
 
 import 'colors.dart';
 
@@ -123,7 +123,7 @@ Future<String?> pickFile() async {
       return null; // User canceled the file picking process.
     }
   } catch (e) {
-    print('Error while picking a file: $e');
+    // print('Error while picking a file: $e');
     return null; // Handle any potential errors.
   }
 }

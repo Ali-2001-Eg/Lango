@@ -1,12 +1,12 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:swipe_to/swipe_to.dart';
-import 'package:Chat_Live/shared/utils/colors.dart';
-import 'package:Chat_Live/shared/utils/functions.dart';
-import 'package:Chat_Live/shared/widgets/message_widget.dart';
-import 'package:Chat_Live/shared/widgets/time_text_formatter.dart';
+import 'package:Lango/shared/utils/functions.dart';
+import 'package:Lango/shared/widgets/message_widget.dart';
 
 import '../../controllers/chat_controller.dart';
 import '../../controllers/message_reply_controller.dart';
@@ -91,7 +91,7 @@ class MessageTile extends ConsumerWidget {
                   if (isGroupchat && !isMe) ...[
                     Text(
                       '~$senderName',
-                      style: TextStyle(color: Colors.white),
+                      style: const TextStyle(color: Colors.white),
                     )
                   ],
                   customPopupMenuButton(ref, context),

@@ -77,8 +77,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "language": MessageLookupByLibrary.simpleMessage("العربيه"),
         "leave_group": MessageLookupByLibrary.simpleMessage("مغادره المجموعه"),
         "loc": MessageLookupByLibrary.simpleMessage("الموقع"),
-        "login_heading": MessageLookupByLibrary.simpleMessage(
-            "Chat&Live يريد التأكد من هويتك."),
+        "login_heading":
+            MessageLookupByLibrary.simpleMessage("Lango يريد التأكد من هويتك."),
         "login_snackbar_error":
             MessageLookupByLibrary.simpleMessage("اكمل كل البيانات"),
         "message_notification_title":
@@ -119,7 +119,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "video_message": MessageLookupByLibrary.simpleMessage("رساله فيديو "),
         "voice_message": MessageLookupByLibrary.simpleMessage("🎵 رساله صوتيه"),
         "welcome_landing":
-            MessageLookupByLibrary.simpleMessage("أهلا بك Chat & Live"),
+            MessageLookupByLibrary.simpleMessage("أهلا بك LANGO"),
         "yesterday": MessageLookupByLibrary.simpleMessage("البارحه")
       };
 }

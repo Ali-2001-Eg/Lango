@@ -1,22 +1,18 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: public_member_api_docs, sort_constructors_first, must_be_immutable
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:Chat_Live/controllers/group_controller.dart';
-import 'package:Chat_Live/generated/l10n.dart';
-import 'package:Chat_Live/screens/call/call_pickup_screen.dart';
-import 'package:Chat_Live/screens/chat/chat_screen.dart';
-import 'package:Chat_Live/screens/home_screen.dart';
-import 'package:Chat_Live/shared/utils/base/error_screen.dart';
-import 'package:Chat_Live/shared/widgets/custom_button.dart';
-import 'package:Chat_Live/shared/widgets/custom_indicator.dart';
+import 'package:Lango/controllers/group_controller.dart';
+import 'package:Lango/generated/l10n.dart';
+import 'package:Lango/screens/call/call_pickup_screen.dart';
+import 'package:Lango/screens/chat/chat_screen.dart';
+import 'package:Lango/screens/home_screen.dart';
+import 'package:Lango/shared/utils/base/error_screen.dart';
+import 'package:Lango/shared/widgets/custom_button.dart';
+import 'package:Lango/shared/widgets/custom_indicator.dart';
 
-import '../../controllers/call_controller.dart';
-import '../../controllers/chat_controller.dart';
-import '../../controllers/profile_controller.dart';
 import '../../models/user_model.dart';
 import '../../repositories/auth_repo.dart';
 import '../../shared/notifiers/theme_notifier.dart';

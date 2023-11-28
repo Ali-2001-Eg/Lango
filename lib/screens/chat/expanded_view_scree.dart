@@ -2,8 +2,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:Chat_Live/shared/enums/message_enum.dart';
-import 'package:Chat_Live/shared/utils/functions.dart';
+import 'package:Lango/shared/enums/message_enum.dart';
+import 'package:Lango/shared/utils/functions.dart';
 
 import '../../generated/l10n.dart';
 import '../../shared/managers/download_manager.dart';

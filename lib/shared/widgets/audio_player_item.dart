@@ -1,7 +1,7 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:Chat_Live/shared/utils/functions.dart';
+import 'package:Lango/shared/utils/functions.dart';
 
 import '../../generated/l10n.dart';
 

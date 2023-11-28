@@ -1,10 +1,12 @@
+// ignore_for_file: unused_import
+
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:Chat_Live/controllers/auth_controller.dart';
-import 'package:Chat_Live/shared/utils/colors.dart';
-import 'package:Chat_Live/shared/utils/functions.dart';
-import 'package:Chat_Live/shared/widgets/custom_button.dart';
+import 'package:Lango/controllers/auth_controller.dart';
+import 'package:Lango/shared/utils/colors.dart';
+import 'package:Lango/shared/utils/functions.dart';
+import 'package:Lango/shared/widgets/custom_button.dart';
 
 import '../../generated/l10n.dart';
 

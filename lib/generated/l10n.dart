@@ -60,10 +60,10 @@ class S {
     );
   }
 
-  /// `Welcome To Chat & Live`
+  /// `Welcome To LANGO`
   String get welcome_landing {
     return Intl.message(
-      'Welcome To Chat & Live',
+      'Welcome To LANGO',
       name: 'welcome_landing',
       desc: '',
       args: [],
@@ -150,10 +150,10 @@ class S {
     );
   }
 
-  /// `Chat&Live needs to verify your phone number.`
+  /// `Lango needs to verify your phone number.`
   String get login_heading {
     return Intl.message(
-      'Chat&Live needs to verify your phone number.',
+      'Lango needs to verify your phone number.',
       name: 'login_heading',
       desc: '',
       args: [],

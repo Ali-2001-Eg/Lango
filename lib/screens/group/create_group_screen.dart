@@ -1,12 +1,12 @@
+// ignore_for_file: deprecated_member_use
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:Chat_Live/generated/l10n.dart';
-import 'package:Chat_Live/screens/home_screen.dart';
-import 'package:Chat_Live/shared/utils/colors.dart';
-import 'package:Chat_Live/shared/utils/functions.dart';
-import 'package:Chat_Live/shared/widgets/select_contact_widget.dart';
+import 'package:Lango/generated/l10n.dart';
+import 'package:Lango/shared/utils/functions.dart';
+import 'package:Lango/shared/widgets/select_contact_widget.dart';
 
 import '../../controllers/group_controller.dart';
 

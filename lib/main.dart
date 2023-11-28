@@ -5,23 +5,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:Chat_Live/controllers/auth_controller.dart';
-import 'package:Chat_Live/repositories/firebase_notification_repo.dart';
-import 'package:Chat_Live/screens/call/call_pickup_screen.dart';
-import 'package:Chat_Live/screens/home_screen.dart';
-import 'package:Chat_Live/screens/landing/landing_screen.dart';
-import 'package:Chat_Live/shared/notifiers/localization.dart';
-import 'package:Chat_Live/shared/notifiers/theme_notifier.dart';
-import 'package:Chat_Live/shared/routes/routes.dart';
-import 'package:Chat_Live/shared/utils/base/error_screen.dart';
-import 'package:Chat_Live/shared/utils/functions.dart';
-import 'package:Chat_Live/shared/widgets/custom_indicator.dart';
+import 'package:Lango/controllers/auth_controller.dart';
+import 'package:Lango/repositories/firebase_notification_repo.dart';
+import 'package:Lango/screens/home_screen.dart';
+import 'package:Lango/screens/landing/landing_screen.dart';
+import 'package:Lango/shared/notifiers/localization.dart';
+import 'package:Lango/shared/notifiers/theme_notifier.dart';
+import 'package:Lango/shared/routes/routes.dart';
+import 'package:Lango/shared/utils/base/error_screen.dart';
+import 'package:Lango/shared/utils/functions.dart';
 
+import 'firebase_options.dart';
 import 'generated/l10n.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+ await Firebase.initializeApp(
+  options: DefaultFirebaseOptions.currentPlatform,
+);
   await FirebaseMessagingRepo(FirebaseMessaging.instance).init();
 
   //to listen to providers
@@ -47,7 +48,7 @@ class MyApp extends ConsumerWidget {
         }
       },
       child: MaterialApp(
-        title: 'Chat & Live',
+        title: 'Lango',
         themeAnimationCurve: Curves.easeInOutQuad,
         themeAnimationDuration: const Duration(seconds: 1),
         locale: locale.selectedLocale == 'en'

@@ -1,10 +1,12 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/contact.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:Chat_Live/controllers/contact_controller.dart';
-import 'package:Chat_Live/shared/utils/base/error_screen.dart';
-import 'package:Chat_Live/shared/utils/colors.dart';
-import 'package:Chat_Live/shared/widgets/custom_indicator.dart';
+import 'package:Lango/controllers/contact_controller.dart';
+import 'package:Lango/shared/utils/base/error_screen.dart';
+import 'package:Lango/shared/utils/colors.dart';
+import 'package:Lango/shared/widgets/custom_indicator.dart';
 
 final selectGroupContacts = StateProvider<List<Contact>>((ref) => []);
 

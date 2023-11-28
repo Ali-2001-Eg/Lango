@@ -1,10 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lottie/lottie.dart';
-import 'package:Chat_Live/screens/call/call_pickup_screen.dart';
-import 'package:Chat_Live/screens/chat/chat_screen.dart';
-import 'package:Chat_Live/shared/utils/functions.dart';
+import 'package:Lango/screens/call/call_pickup_screen.dart';
+import 'package:Lango/screens/chat/chat_screen.dart';
+import 'package:Lango/shared/utils/functions.dart';
 
 import '../../controllers/group_controller.dart';
 import '../../generated/l10n.dart';
@@ -100,8 +101,10 @@ class _HomePage extends ConsumerState<SearchScreen> {
                       GroupModel group = snapshot.data![i];
                       return _groupTile(group, context);
                     } else {
-                      print(
-                          'filtered list is ${filteredList.map((e) => e.name)}');
+                      if (kDebugMode) {
+                        print(
+                            'filtered list is ${filteredList.map((e) => e.name)}');
+                      }
                       //for searched groups
                       return filteredList == []
                           ? SizedBox(

@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:Chat_Live/shared/enums/message_enum.dart';
+import 'package:Lango/shared/enums/message_enum.dart';
 
 class MessageReply {
   final String message;

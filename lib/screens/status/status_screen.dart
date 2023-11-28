@@ -1,12 +1,13 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:story_view/story_view.dart';
-import 'package:Chat_Live/controllers/chat_controller.dart';
-import 'package:Chat_Live/generated/l10n.dart';
-import 'package:Chat_Live/shared/utils/colors.dart';
-import 'package:Chat_Live/shared/utils/functions.dart';
-import 'package:Chat_Live/shared/widgets/bottom_chat_field.dart';
+import 'package:Lango/controllers/chat_controller.dart';
+import 'package:Lango/generated/l10n.dart';
+import 'package:Lango/shared/utils/colors.dart';
+import 'package:Lango/shared/utils/functions.dart';
 import '../../controllers/message_reply_controller.dart';
 import '../../models/status_model.dart';
 import '../../repositories/auth_repo.dart';
@@ -68,7 +69,7 @@ class _StatusScreenState extends ConsumerState<StatusScreen> {
                   });
                 }
               },
-              indicatorForegroundColor: getTheme(context).cardColor,
+              //indicatorForegroundColor: getTheme(context).cardColor,
               indicatorColor: getTheme(context).hoverColor,
               onComplete: () => Navigator.pop(context),
             ),

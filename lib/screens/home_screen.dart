@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:Chat_Live/controllers/auth_controller.dart';
-import 'package:Chat_Live/screens/call/call_pickup_screen.dart';
-import 'package:Chat_Live/screens/contact_list/contact_list_screen.dart';
-import 'package:Chat_Live/screens/group/create_group_screen.dart';
-import 'package:Chat_Live/screens/profile/edit_profile_screen.dart';
-import 'package:Chat_Live/screens/search/search_screen.dart';
-import 'package:Chat_Live/screens/settings/settings_screen.dart';
-import 'package:Chat_Live/screens/status/status_contacts_screen.dart';
-import 'package:Chat_Live/shared/notifiers/theme_notifier.dart';
-import 'package:Chat_Live/shared/utils/colors.dart';
-import 'package:Chat_Live/shared/utils/functions.dart';
-import 'package:Chat_Live/generated/l10n.dart';
+import 'package:Lango/controllers/auth_controller.dart';
+import 'package:Lango/screens/call/call_pickup_screen.dart';
+import 'package:Lango/screens/contact_list/contact_list_screen.dart';
+import 'package:Lango/screens/group/create_group_screen.dart';
+import 'package:Lango/screens/profile/edit_profile_screen.dart';
+import 'package:Lango/screens/search/search_screen.dart';
+import 'package:Lango/screens/settings/settings_screen.dart';
+import 'package:Lango/screens/status/status_contacts_screen.dart';
+import 'package:Lango/shared/utils/functions.dart';
+import 'package:Lango/generated/l10n.dart';
 
-import '../controllers/group_controller.dart';
 import 'call_history/call_history_screen.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
@@ -31,7 +28,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
   late TabController tabBarController;
   @override
   void initState() {
-    // TODO: implement initState
     tabBarController = TabController(length: 3, vsync: this);
     //to listen to changes in user state
     WidgetsBinding.instance.addObserver(this);
@@ -42,7 +38,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
   //to know if user left app or not
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    // TODO: implement didChangeAppLifecycleState
     switch (state) {
       case AppLifecycleState.resumed:
         ref.read(authControllerProvider).setUserState(true);
@@ -69,7 +64,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
 
   @override
   Widget build(BuildContext context) {
-    final themeNotifier = ref.read(appThemeProvider);
+    //final themeNotifier = ref.read(appThemeProvider);
 
     return DefaultTabController(
       length: 3,
@@ -82,7 +77,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
             // backgroundColor: appBarColor,
             centerTitle: false,
             title: const Text(
-              'Chat & Live',
+              'LANGO',
               style: TextStyle(
                 fontSize: 20,
                 // color: Colors.grey,

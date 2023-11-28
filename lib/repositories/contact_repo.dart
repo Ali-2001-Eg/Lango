@@ -3,10 +3,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:Chat_Live/generated/l10n.dart';
-import 'package:Chat_Live/models/user_model.dart';
-import 'package:Chat_Live/screens/chat/chat_screen.dart';
-import 'package:Chat_Live/shared/utils/functions.dart';
+import 'package:Lango/generated/l10n.dart';
+import 'package:Lango/models/user_model.dart';
+import 'package:Lango/screens/chat/chat_screen.dart';
+import 'package:Lango/shared/utils/functions.dart';
 
 class ContactRepo {
   final FirebaseFirestore firestore;

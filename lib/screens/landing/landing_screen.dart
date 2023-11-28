@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:Chat_Live/screens/auth/login_screen.dart';
-import 'package:Chat_Live/shared/utils/colors.dart';
-import 'package:Chat_Live/shared/utils/functions.dart';
-import 'package:Chat_Live/shared/widgets/custom_button.dart';
-import 'package:Chat_Live/generated/l10n.dart';
+import 'package:Lango/screens/auth/login_screen.dart';
+import 'package:Lango/shared/utils/colors.dart';
+import 'package:Lango/shared/utils/functions.dart';
+import 'package:Lango/shared/widgets/custom_button.dart';
+import 'package:Lango/generated/l10n.dart';
 
 class LandingScreen extends ConsumerWidget {
   const LandingScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, ref) {
-    var name = MediaQuery.of(context).orientation.name;
-    print(name);
+    //var name = MediaQuery.of(context).orientation.name;
+    // print(name);
     return SafeArea(
       child: Scaffold(
         //appBar: AppBar(),
@@ -40,7 +40,7 @@ class LandingScreen extends ConsumerWidget {
                 ),
                 SizedBox(height: size(context).height / 9),
                 Padding(
-                  padding: EdgeInsets.all(15),
+                  padding: const EdgeInsets.all(15),
                   child: Text(
                     S.of(context).read_our_privacy,
                     textAlign: TextAlign.center,

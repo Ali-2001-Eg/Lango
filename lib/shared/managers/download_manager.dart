@@ -1,12 +1,12 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:Chat_Live/shared/utils/functions.dart';
+import 'package:Lango/shared/utils/functions.dart';
 
 import '../enums/message_enum.dart';
 
@@ -51,12 +51,19 @@ class DownloadManager {
         }
         String pathToSave = '${dir!.path}/$fileName.$fileExtension';
         final response = await dio.download(fileUrl, pathToSave);
-        print('status code is ${response.statusCode}'); // Check the status code
-        print(
-            'status message${response.statusMessage!}'); // Check the status message
-        print('File saved at: $pathToSave');
+        if (kDebugMode) {
+          print('status code is ${response.statusCode}');
+        } // Check the status code
+        if (kDebugMode) {
+          print('status message${response.statusMessage!}');
+        } // Check the status message
+        if (kDebugMode) {
+          print('File saved at: $pathToSave');
+        }
       } else if (permissionStatus.isDenied && context.mounted) {
-        print('permission denied');
+        if (kDebugMode) {
+          print('permission denied');
+        }
         showDialog(
           context: context,
           builder: (BuildContext context) => AlertDialog(
@@ -77,7 +84,7 @@ class DownloadManager {
       }
     } catch (e) {
       customSnackBar(e.toString(), context);
-      print(e.toString());
+      // print(e.toString());
     }
   }
 }

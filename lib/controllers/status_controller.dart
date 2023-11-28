@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:Chat_Live/controllers/auth_controller.dart';
-import 'package:Chat_Live/repositories/status_repo.dart';
+import 'package:Lango/controllers/auth_controller.dart';
+import 'package:Lango/repositories/status_repo.dart';
 import '../models/status_model.dart';
 import '../shared/enums/message_enum.dart';
 

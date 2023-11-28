@@ -1,6 +1,6 @@
 {
     "language":"English",
-    "welcome_landing": "Welcome To Chat & Live",
+    "welcome_landing": "Welcome To LANGO",
     "read_our_privacy":"Read our Privacy Policy. Tap \"Agree and continue to accept the Terms of Services\"",
     "agree_continue":"AGREE AND CONTINUE",
     "chat":"CHATS",
@@ -9,7 +9,7 @@
     "create_group":"Create Group",
     "settings":"Settings",
     "enter_phone_num":"Enter your phone number",
-    "login_heading":"Chat&Live needs to verify your phone number.",
+    "login_heading":"Lango needs to verify your phone number.",
     "pick_country":"Pick Country",
     "phone_num":"Phone number",
     "next":"Next",

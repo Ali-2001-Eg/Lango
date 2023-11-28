@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:Chat_Live/shared/utils/functions.dart';
+import 'package:Lango/shared/utils/functions.dart';
 
 import '../../controllers/profile_controller.dart';
 import '../../generated/l10n.dart';
@@ -14,7 +14,6 @@ class EditProfileScreen extends ConsumerStatefulWidget {
   const EditProfileScreen({super.key});
   @override
   ConsumerState<ConsumerStatefulWidget> createState() {
-    // TODO: implement createState
     return _HomePage();
   }
 }
@@ -240,7 +239,7 @@ class _HomePage extends ConsumerState<EditProfileScreen> {
   pickImage() async {
     var pickedImage = await pickImageFromGallery(context);
     if (pickedImage != null) {
-      print(pickedImage.path);
+      // print(pickedImage.path);
       setState(() {
         image = File(pickedImage.path);
       });

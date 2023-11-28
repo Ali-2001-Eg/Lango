@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:Chat_Live/controllers/status_controller.dart';
-import 'package:Chat_Live/generated/l10n.dart';
-import 'package:Chat_Live/shared/enums/message_enum.dart';
+import 'package:Lango/controllers/status_controller.dart';
+import 'package:Lango/generated/l10n.dart';
+import 'package:Lango/shared/enums/message_enum.dart';
 
-import '../../shared/utils/colors.dart';
 import '../../shared/utils/functions.dart';
 
+// ignore: must_be_immutable
 class ConfirmTextScreen extends ConsumerWidget {
   ConfirmTextScreen({Key? key}) : super(key: key);
   final TextEditingController _controller = TextEditingController();

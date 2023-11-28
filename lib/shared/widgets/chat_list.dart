@@ -1,18 +1,16 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:Chat_Live/controllers/auth_controller.dart';
-import 'package:Chat_Live/controllers/chat_controller.dart';
-import 'package:Chat_Live/generated/l10n.dart';
-import 'package:Chat_Live/models/message_model.dart';
-import 'package:Chat_Live/repositories/auth_repo.dart';
-import 'package:Chat_Live/shared/enums/message_enum.dart';
-import 'package:Chat_Live/repositories/firebase_notification_repo.dart';
-import 'package:Chat_Live/shared/utils/base/error_screen.dart';
-import 'package:Chat_Live/shared/widgets/custom_indicator.dart';
+import 'package:Lango/controllers/chat_controller.dart';
+import 'package:Lango/generated/l10n.dart';
+import 'package:Lango/models/message_model.dart';
+import 'package:Lango/repositories/auth_repo.dart';
+import 'package:Lango/shared/enums/message_enum.dart';
+import 'package:Lango/shared/widgets/custom_indicator.dart';
 import '../../controllers/message_reply_controller.dart';
-import '../../controllers/notification_controller.dart';
 import 'message_tile.dart';
 
 class ChatList extends ConsumerStatefulWidget {

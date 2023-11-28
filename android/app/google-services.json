@@ -1,39 +1,48 @@
 {
   "project_info": {
-    "project_number": "300912797259",
-    "project_id": "whatsapp-211b9",
-    "storage_bucket": "whatsapp-211b9.appspot.com"
+    "project_number": "947453899984",
+    "project_id": "chat-live-c1715",
+    "storage_bucket": "chat-live-c1715.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:300912797259:android:5ef76a8d9796ebbfee8fce",
+        "mobilesdk_app_id": "1:947453899984:android:316f8d78f9aa530df99ad5",
         "android_client_info": {
-          "package_name": "com.example.Chat_Live"
+          "package_name": "ali.mazen.Chat_Live"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "300912797259-b1i6vk6ncdgd1bs8j3pm1cppdl9to221.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCApZ40zC45sT_q95zZqea-nqxrl_2xsys"
+          "current_key": "AIzaSyCFMr4Y5Yal2PMwRf8bufBMWe_CUfpN23k"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "300912797259-b1i6vk6ncdgd1bs8j3pm1cppdl9to221.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:947453899984:android:0b095f8697163bbff99ad5",
+        "android_client_info": {
+          "package_name": "com.example.lango_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFMr4Y5Yal2PMwRf8bufBMWe_CUfpN23k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
         }
       }
     }
   ],
-  "configuration_version": "1"
+  "configuration_version":"1"
 }

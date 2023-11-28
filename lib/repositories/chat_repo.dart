@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print, empty_catches
+
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -7,13 +9,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
-import 'package:Chat_Live/generated/l10n.dart';
-import 'package:Chat_Live/models/chat_contacts_model.dart';
-import 'package:Chat_Live/models/group_model.dart';
-import 'package:Chat_Live/models/message_model.dart';
-import 'package:Chat_Live/models/user_model.dart';
-import 'package:Chat_Live/shared/enums/message_enum.dart';
-import 'package:Chat_Live/shared/utils/functions.dart';
+import 'package:Lango/generated/l10n.dart';
+import 'package:Lango/models/chat_contacts_model.dart';
+import 'package:Lango/models/group_model.dart';
+import 'package:Lango/models/message_model.dart';
+import 'package:Lango/models/user_model.dart';
+import 'package:Lango/shared/enums/message_enum.dart';
+import 'package:Lango/shared/utils/functions.dart';
 
 import '../controllers/message_reply_controller.dart';
 import '../controllers/notification_controller.dart';

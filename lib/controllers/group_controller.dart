@@ -1,9 +1,8 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_contacts/contact.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:Chat_Live/repositories/group_repo.dart';
+import 'package:Lango/repositories/group_repo.dart';
 
 import '../models/group_model.dart';
 import '../models/user_model.dart';

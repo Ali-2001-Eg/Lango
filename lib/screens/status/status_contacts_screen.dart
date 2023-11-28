@@ -1,18 +1,16 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lottie/lottie.dart';
-import 'package:Chat_Live/controllers/status_controller.dart';
-import 'package:Chat_Live/generated/l10n.dart';
-import 'package:Chat_Live/repositories/auth_repo.dart';
-import 'package:Chat_Live/screens/status/confirm_text_status.dart';
-import 'package:Chat_Live/screens/status/status_screen.dart';
-import 'package:Chat_Live/shared/utils/base/error_screen.dart';
-import 'package:Chat_Live/shared/utils/colors.dart';
-import 'package:Chat_Live/shared/widgets/custom_indicator.dart';
+import 'package:Lango/controllers/status_controller.dart';
+import 'package:Lango/generated/l10n.dart';
+import 'package:Lango/screens/status/confirm_text_status.dart';
+import 'package:Lango/screens/status/status_screen.dart';
+import 'package:Lango/shared/utils/base/error_screen.dart';
+import 'package:Lango/shared/utils/colors.dart';
+import 'package:Lango/shared/widgets/custom_indicator.dart';
 
 import '../../models/status_model.dart';
 import '../../repositories/status_repo.dart';
@@ -196,7 +194,7 @@ class StatusContactsScreen extends ConsumerWidget {
     );
   }
 
-  List<List<StatusModel>> _setMyStatusFirst(
+  /* List<List<StatusModel>> _setMyStatusFirst(
       AsyncSnapshot<List<List<StatusModel>>> snaphot, WidgetRef ref) {
     List<StatusModel> myStatus = [];
     List<List<StatusModel>> remainingStatuses = [];
@@ -211,7 +209,7 @@ class StatusContactsScreen extends ConsumerWidget {
     }
     List<List<StatusModel>> orderedLists = [myStatus, ...remainingStatuses];
     return orderedLists;
-  }
+  } */
 
   void _removeRedundantName(List<List<StatusModel>> statuses) {
     for (var innerList in statuses) {
@@ -219,7 +217,7 @@ class StatusContactsScreen extends ConsumerWidget {
         var key = object.uid;
         if (!orderedList.any((element) => element.uid == key)) {
           orderedList.add(object);
-          print(orderedList);
+          //print(orderedList);
           break;
         }
       }

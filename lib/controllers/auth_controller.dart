@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:Chat_Live/repositories/auth_repo.dart';
+import 'package:Lango/repositories/auth_repo.dart';
 import '../models/user_model.dart';
 
 class AuthController {

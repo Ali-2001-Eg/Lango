@@ -1,18 +1,19 @@
+// ignore_for_file: deprecated_member_use
+
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:Chat_Live/controllers/auth_controller.dart';
-import 'package:Chat_Live/controllers/message_reply_controller.dart';
-import 'package:Chat_Live/generated/l10n.dart';
-import 'package:Chat_Live/models/chat_contacts_model.dart';
-import 'package:Chat_Live/models/group_model.dart';
-import 'package:Chat_Live/repositories/chat_repo.dart';
-import 'package:Chat_Live/shared/enums/message_enum.dart';
+import 'package:Lango/controllers/auth_controller.dart';
+import 'package:Lango/controllers/message_reply_controller.dart';
+import 'package:Lango/models/chat_contacts_model.dart';
+import 'package:Lango/models/group_model.dart';
+import 'package:Lango/repositories/chat_repo.dart';
+import 'package:Lango/shared/enums/message_enum.dart';
 
 import '../models/message_model.dart';
 import '../models/user_model.dart';
-import '../shared/utils/functions.dart';
 
 class ChatController {
   final ChatRepo chatRepo;
@@ -39,7 +40,9 @@ class ChatController {
     //to handel errors
     //https://giphy.com/gifs/imoji-laughing-3ohzdQJJ2JGvMSYvdu ==>
     //https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExdzA2bXZyeWxmZDZkbnc4d21kNGlpaHJ3dXlsaWFwM3drNms1bzhtbiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/3ohzdQJJ2JGvMSYvdu/giphy.gif
-    print(gifUrl);
+    if (kDebugMode) {
+      print(gifUrl);
+    }
     int gifUrlPartIndex = gifUrl.lastIndexOf('-') + 1;
     String gifUrlPart = gifUrl.substring(gifUrlPartIndex);
     String newGifUrl =

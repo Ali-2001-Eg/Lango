@@ -4,11 +4,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:Chat_Live/controllers/message_reply_controller.dart';
-import 'package:Chat_Live/generated/l10n.dart';
-import 'package:Chat_Live/shared/enums/message_enum.dart';
-import 'package:Chat_Live/shared/utils/colors.dart';
-import 'package:Chat_Live/shared/widgets/message_widget.dart';
+import 'package:Lango/controllers/message_reply_controller.dart';
+import 'package:Lango/generated/l10n.dart';
+import 'package:Lango/shared/enums/message_enum.dart';
+import 'package:Lango/shared/utils/colors.dart';
+import 'package:Lango/shared/widgets/message_widget.dart';
 
 import '../../controllers/chat_controller.dart';
 import '../../shared/utils/functions.dart';

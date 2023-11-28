@@ -2,10 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:Chat_Live/controllers/status_controller.dart';
-import 'package:Chat_Live/shared/enums/message_enum.dart';
-import 'package:Chat_Live/shared/utils/functions.dart';
-import 'package:Chat_Live/shared/widgets/video_player_item.dart';
+import 'package:Lango/controllers/status_controller.dart';
+import 'package:Lango/shared/enums/message_enum.dart';
+import 'package:Lango/shared/utils/functions.dart';
+import 'package:Lango/shared/widgets/video_player_item.dart';
 
 import '../../shared/utils/colors.dart';
 
@@ -17,7 +17,7 @@ class ConfirmFileStatus extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    print(type.type);
+    //print(type.type);
     return Scaffold(
       backgroundColor: getTheme(context).appBarTheme.backgroundColor,
       appBar: AppBar(),

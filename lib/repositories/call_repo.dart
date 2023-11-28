@@ -5,11 +5,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:Chat_Live/controllers/notification_controller.dart';
-import 'package:Chat_Live/models/call_model.dart';
-import 'package:Chat_Live/models/group_model.dart';
-import 'package:Chat_Live/screens/call/call_screen.dart';
-import 'package:Chat_Live/shared/utils/functions.dart';
+import 'package:Lango/models/call_model.dart';
+import 'package:Lango/models/group_model.dart';
+import 'package:Lango/screens/call/call_screen.dart';
+import 'package:Lango/shared/utils/functions.dart';
 
 final callRepoProvider = Provider(
   (ref) => CallRepo(
@@ -192,11 +191,11 @@ class CallRepo {
           .snapshots()
           .map((query) {
         List<Map<String, dynamic>> callHistory = [];
-        query.docs.forEach((element) {
+        for (var element in query.docs) {
           if (element.data().isNotEmpty) {
             callHistory.add(element.data());
           }
-        });
+        }
         return callHistory;
       });
 }

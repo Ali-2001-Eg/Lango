@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:Chat_Live/shared/utils/colors.dart';
-import 'package:Chat_Live/shared/utils/functions.dart';
+import 'package:Lango/shared/utils/functions.dart';
 
 class CustomIndicator extends StatelessWidget {
   final double height;

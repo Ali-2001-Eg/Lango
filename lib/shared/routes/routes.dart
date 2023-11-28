@@ -1,20 +1,18 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:Chat_Live/models/status_model.dart';
-import 'package:Chat_Live/screens/auth/login_screen.dart';
-import 'package:Chat_Live/screens/auth/otp_screen.dart';
-import 'package:Chat_Live/screens/auth/user_info.dart';
-import 'package:Chat_Live/screens/chat/chat_screen.dart';
-import 'package:Chat_Live/screens/chat/expanded_view_scree.dart';
-import 'package:Chat_Live/screens/home_screen.dart';
-import 'package:Chat_Live/screens/select_contact/select_contact_screen.dart';
-import 'package:Chat_Live/screens/settings/settings_screen.dart';
-import 'package:Chat_Live/screens/status/confirm_file_status_screen.dart';
-import 'package:Chat_Live/screens/status/status_screen.dart';
-import 'package:Chat_Live/shared/enums/message_enum.dart';
-import 'package:Chat_Live/shared/utils/base/error_screen.dart';
+import 'package:Lango/screens/auth/login_screen.dart';
+import 'package:Lango/screens/auth/otp_screen.dart';
+import 'package:Lango/screens/auth/user_info.dart';
+import 'package:Lango/screens/chat/chat_screen.dart';
+import 'package:Lango/screens/chat/expanded_view_scree.dart';
+import 'package:Lango/screens/home_screen.dart';
+import 'package:Lango/screens/select_contact/select_contact_screen.dart';
+import 'package:Lango/screens/settings/settings_screen.dart';
+import 'package:Lango/screens/status/confirm_file_status_screen.dart';
+import 'package:Lango/screens/status/status_screen.dart';
+import 'package:Lango/shared/enums/message_enum.dart';
+import 'package:Lango/shared/utils/base/error_screen.dart';
 
 import '../../screens/group/create_group_screen.dart';
 import '../../screens/profile/edit_profile_screen.dart';

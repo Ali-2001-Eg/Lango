@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/contact.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod/riverpod.dart';
-import 'package:Chat_Live/controllers/contact_controller.dart';
-import 'package:Chat_Live/generated/l10n.dart';
-import 'package:Chat_Live/screens/auth/login_screen.dart';
-import 'package:Chat_Live/screens/chat/chat_screen.dart';
-import 'package:Chat_Live/shared/utils/base/error_screen.dart';
-import 'package:Chat_Live/shared/widgets/custom_indicator.dart';
+import 'package:Lango/controllers/contact_controller.dart';
+import 'package:Lango/generated/l10n.dart';
+import 'package:Lango/shared/utils/base/error_screen.dart';
+import 'package:Lango/shared/widgets/custom_indicator.dart';
 
 class SelectContactsScreen extends ConsumerWidget {
   static const routeName = '/select-contact';
