@@ -57,8 +57,10 @@ class StatusContactsScreen extends ConsumerWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SizedBox(
-                            height: 200,
-                            child: Lottie.asset('assets/json/empty_list.json')),
+                            height: 200
+                            ,
+                            child:
+                                Lottie.asset('assets/json/empty_search.json')),
                         Text(
                           S.of(context).empty_status_list,
                           style:

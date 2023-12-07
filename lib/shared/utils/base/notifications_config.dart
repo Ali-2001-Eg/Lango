@@ -1,7 +1,7 @@
 class NotificationConfig {
   static const String serverKey =
-      "AAAARg_M5ks:APA91bGhMxTUe_GcK-K1TtqKOrwPtHICVmh24PmkHV-Ywt7Utwm66bht78yKRWzBCTmAraXe2wTm-UYyLPOM4wY6DbE2-uePYpaSGEbMhDMogU_u7kIfY-E9CaYa1_qKNpTH1T6Fohde";
+      "BHNllXvmmqT-tB5dHEUMfpf4Jl3udjn2W9-cO4LVU0usZpEoPYGvDg2HNXeIB5C2LHLIudeEEy5eorI0bNdMSAE";
   static const String token =
-      "d8kCLtG8QMiJt-NIXrEfSP:APA91bFq0viujcNT9l1bMSyivLT0m7sEey0nnW2_4iVbj6Sz-r0Tvnc3UXf22j8jUxSG9-LkA-N5F3fW7ZeiNlJMn8WoH02t92PbJMC3DihU2pNkhuirxHqOOoijnq9_iYcv38deZdLA";
+      "fgxZSAfgSC2Pc8FT5Yve6u:APA91bHe107hkegKarhv7ScElJX96R6JCjZpPieHmu14z7aYsnNgMNBR4sJuHAqkshJYFEBSWFX5ZyZ3BYzdkHC0_MpPQ_wmqYj_Ug8gqfH517K5SXtKkNSmdAgPSP6Xkti0taD4eUSI";
   static const String baseUrl = "https://fcm.googleapis.com/fcm/send";
 }

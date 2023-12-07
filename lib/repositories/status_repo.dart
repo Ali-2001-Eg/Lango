@@ -52,12 +52,12 @@ class StatusRepo extends ChangeNotifier {
 
       //we will get all contacts data
       for (int i = 0; i < contacts.length - 1; i++) {
-        // print(contacts[i].name.first);
+        print(contacts[i].displayName);
         if (contacts[i].phones.isEmpty) {
           //for any problem in contact list
-          return;
+          continue;
         }
-        // print(contacts[i].phones[0].number);
+        print(contacts[i].phones[0].number);
         var userData = await firestore.collection('users').get();
         if (userData.docs.isNotEmpty) {
           UserModel userModel;

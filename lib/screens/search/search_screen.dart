@@ -22,7 +22,7 @@ class SearchScreen extends ConsumerStatefulWidget {
 class _HomePage extends ConsumerState<SearchScreen> {
   final _searchController = TextEditingController();
   final FocusNode _focusNode = FocusNode();
-  late List<GroupModel> filteredList;
+  List<GroupModel> filteredList = [];
   List<GroupModel> allGroups = [];
   @override
   void dispose() {
@@ -84,7 +84,8 @@ class _HomePage extends ConsumerState<SearchScreen> {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
-              } else {
+              }
+              if (snapshot.hasData && filteredList.isNotEmpty) {
                 //print(allGroups.length);
                 return ListView.builder(
                   keyboardDismissBehavior:
@@ -106,32 +107,29 @@ class _HomePage extends ConsumerState<SearchScreen> {
                             'filtered list is ${filteredList.map((e) => e.name)}');
                       }
                       //for searched groups
-                      return filteredList == []
-                          ? SizedBox(
-                              height: size(context).height,
-                              child: Center(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    SizedBox(
-                                      height: 500,
-                                      width: 500,
-                                      child: Lottie.asset(
-                                          'assets/json/empty_search.json'),
-                                    ),
-                                    Text(
-                                      'No groups with this name',
-                                      style: getTextTheme(context, ref),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            )
-                          : _groupTile(filteredList[i], context);
+                      return _groupTile(filteredList[i], context);
                     }
                   },
                 );
               }
+              return SizedBox(
+                height: size(context).height,
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: 300,
+                        child: Lottie.asset('assets/json/empty_search.json'),
+                      ),
+                      Text(
+                        'No groups with this name',
+                        style: getTextTheme(context, ref),
+                      )
+                    ],
+                  ),
+                ),
+              );
             },
           ),
         ),
