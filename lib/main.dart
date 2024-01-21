@@ -49,8 +49,8 @@ class MyApp extends ConsumerWidget {
       },
       child: MaterialApp(
         title: 'Lango',
-        themeAnimationCurve: Curves.easeInOutQuad,
-        themeAnimationDuration: const Duration(seconds: 1),
+        // themeAnimationCurve: Curves.easeInOutQuad,
+        // themeAnimationDuration: const Duration(seconds: 1),
         locale: locale.selectedLocale == 'en'
             ? const Locale('en')
             : const Locale('ar'),
@@ -71,7 +71,7 @@ class MyApp extends ConsumerWidget {
         home: Scaffold(
           body: ref.watch(userDataProvider).when(
             data: (user) {
-              //print('user is  ${user}');
+              //debugPrint('user is  ${user}');
               if (user == null) {
                 return const LandingScreen();
               }

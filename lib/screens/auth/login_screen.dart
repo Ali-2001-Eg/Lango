@@ -1,5 +1,6 @@
 // ignore_for_file: unused_import
 
+import 'package:Lango/repositories/status_repo.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -28,7 +29,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // print('build');
+    // debugPrint('build');
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -87,14 +88,17 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     ),
                   ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 100, vertical: 100),
-                  child: CustomButton(
-                    text: S.of(context).next,
-                    onPress: _submitPhoneNumber,
-                  ),
-                )
+                if (!ref.watch(loadingProvider))
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 100, vertical: 100),
+                    child: CustomButton(
+                      text: S.of(context).next,
+                      onPress: _submitPhoneNumber,
+                    ),
+                  )
+                else
+                  const Center(child: CircularProgressIndicator())
               ],
             ),
           ),
@@ -132,7 +136,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   void _submitPhoneNumber() {
     String phoneNumber = _phoneController.text;
-    if (country != null && phoneNumber.isNotEmpty) {
+    if (phoneNumber.isNotEmpty) {
+      // print('+${country!.phoneCode}$phoneNumber');
       ref
           .read<AuthController>(authControllerProvider)
           .signInWithPhone(context, '+${country!.phoneCode}$phoneNumber');

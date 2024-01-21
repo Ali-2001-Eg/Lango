@@ -30,7 +30,7 @@ class CallPickupScreen extends ConsumerWidget {
             CallModel callData = CallModel.fromJson(
                 snapshot.data!.data() as Map<String, dynamic>);
 
-            // print('call token is ${callData.token}');
+            // debugPrint('call token is ${callData.token}');
             if (!callData.hasDialled &&
                 callData.callerId !=
                     ref.read(callControllerProvider).auth.currentUser!.uid) {

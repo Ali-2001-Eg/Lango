@@ -3,6 +3,7 @@
 
 import 'dart:io';
 
+import 'package:Lango/repositories/status_repo.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -27,6 +28,7 @@ class AuthRepo {
   });
 
   Future<void> signInWithPhone(BuildContext context, String phoneNumber) async {
+    ref.read(loadingProvider.notifier).update((state) => true);
     try {
       await auth.verifyPhoneNumber(
         phoneNumber: phoneNumber,
@@ -46,8 +48,13 @@ class AuthRepo {
         }),
         codeAutoRetrievalTimeout: (String verificationId) {},
       );
+      // await Future.delayed(
+      //   const Duration(seconds: 3),
+      // );
+      ref.read(loadingProvider.notifier).update((state) => false);
     } on FirebaseAuthException catch (e) {
       customSnackBar(e.message!, context);
+      ref.read(loadingProvider.notifier).update((state) => false);
     }
   }
 
@@ -118,14 +125,18 @@ class AuthRepo {
   }
 
 //to get user data and to know if user has registered or not to redirect an appropriate page to him
-  Future<UserModel?> get getUserData async {
-    UserModel? user;
-    var userData =
-        await firestore.collection('users').doc(auth.currentUser?.uid).get();
-    if (userData.data() != null) {
-      user = UserModel.fromJson(userData.data()!);
-    }
-    return user;
+  Stream<UserModel?> get getUserData {
+    return firestore
+        .collection('users')
+        .doc(auth.currentUser?.uid)
+        .snapshots()
+        .map((event) {
+      UserModel? user;
+      if (event.data() != null) {
+        user = UserModel.fromJson(event.data()!);
+      }
+      return user;
+    });
   }
 
   Stream<UserModel> userData(String uid) {

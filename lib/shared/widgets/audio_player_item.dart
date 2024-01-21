@@ -85,18 +85,24 @@ class _AudioPlayerItemState extends ConsumerState<AudioPlayerItem> {
           children: [
             CircleAvatar(
               radius: 30,
-              backgroundColor: getTheme(context).hoverColor,
+              backgroundColor: getTheme(context).dividerColor,
               child: IconButton(
                 //iconSize: 20,
-                //style: getTheme(context).iconButtonTheme.style,
+
                 icon: isPlaying
-                    ? const Icon(Icons.pause)
-                    : const Icon(Icons.play_arrow),
+                    ? const Icon(
+                        Icons.pause,
+                        color: Colors.black,
+                      )
+                    : const Icon(
+                        Icons.play_arrow,
+                        color: Colors.black,
+                      ),
                 onPressed: () async {
                   if (isPlaying) {
                     await audioPlayer.pause();
                   } else {
-                    // print('audio message url is: ${widget.url}');
+                    // debugPrint('audio message url is: ${widget.url}');
                     await audioPlayer.play(UrlSource(widget.url));
                   }
                 },

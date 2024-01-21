@@ -239,7 +239,7 @@ class _HomePage extends ConsumerState<EditProfileScreen> {
   pickImage() async {
     var pickedImage = await pickImageFromGallery(context);
     if (pickedImage != null) {
-      // print(pickedImage.path);
+      // debugPrint(pickedImage.path);
       setState(() {
         image = File(pickedImage.path);
       });

@@ -23,13 +23,13 @@ class StatusContactsScreen extends ConsumerWidget {
   final List<StatusModel> orderedList = [];
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final loading = ref.watch(loadingCreateStatus);
+    final loading = ref.watch(loadingProvider);
 
     return Scaffold(
       body: StreamBuilder<List<List<StatusModel>>>(
         stream: ref.read(statusControllerProvider).status,
         builder: (context, snapshot) {
-          //print('snapshot: ${snapshot.data!.length}');
+          //debugPrint('snapshot: ${snapshot.data!.length}');
 
           if (snapshot.hasError) {
             // customSnackBar(snapshot.error.toString(), context);
@@ -57,8 +57,7 @@ class StatusContactsScreen extends ConsumerWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SizedBox(
-                            height: 200
-                            ,
+                            height: 200,
                             child:
                                 Lottie.asset('assets/json/empty_search.json')),
                         Text(
@@ -101,7 +100,7 @@ class StatusContactsScreen extends ConsumerWidget {
                           children: [
                             InkWell(
                               onTap: () {
-                                //print(status.audience);
+                                //debugPrint(status.audience);
                                 Navigator.pushNamed(
                                   context,
                                   StatusScreen.routeName,
@@ -219,7 +218,7 @@ class StatusContactsScreen extends ConsumerWidget {
         var key = object.uid;
         if (!orderedList.any((element) => element.uid == key)) {
           orderedList.add(object);
-          //print(orderedList);
+          //debugPrint(orderedList);
           break;
         }
       }

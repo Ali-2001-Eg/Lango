@@ -92,7 +92,7 @@ class ChatRepo {
         'groupId': sender.groupId,
         'isGroupChat': isGroupChat
       },
-    ).then((value) => print('body is: {$body}'));
+    ).then((value) => debugPrint('body is: {$body}'));
   }
 
   Future<void> sendGifMessage({
@@ -138,9 +138,9 @@ class ChatRepo {
           isGroupChat: isGroupChat);
     } catch (e) {
       if (kDebugMode) {
-        print(e.toString());
+        debugPrint(e.toString());
       }
-      customSnackBar(e.toString(), context);
+      if (context.mounted) customSnackBar(e.toString(), context);
     }
   }
 
@@ -156,7 +156,7 @@ class ChatRepo {
       String type) async {
     //first collection for receiver
     if (kDebugMode) {
-      print('the type is: $isText');
+      debugPrint('the type is: $isText');
     }
     if (isGroupChat) {
       await firestore.collection('groups').doc(receiverUid).update({
@@ -394,12 +394,12 @@ class ChatRepo {
       var userDataMap =
           await firestore.collection('users').doc(receiverUid).get();
       if (kDebugMode) {
-        print('user data map is $userDataMap');
+        debugPrint('user data map is $userDataMap');
       }
       recieverUserData = UserModel.fromJson(userDataMap.data()!);
     }
     if (kDebugMode) {
-      print('reciever user data is $recieverUserData');
+      debugPrint('reciever user data is $recieverUserData');
     }
     _saveContacts(
       senderData,
@@ -456,7 +456,7 @@ class ChatRepo {
         'isSeen': true,
       });
     } catch (e) {
-      customSnackBar(e.toString(), context);
+      if (context.mounted) customSnackBar(e.toString(), context);
     }
   }
 
@@ -490,7 +490,7 @@ class ChatRepo {
         customSnackBar(S.of(context).delete_snackbar, context);
       }
     } catch (e) {
-      customSnackBar(e.toString(), context);
+      if (context.mounted) customSnackBar(e.toString(), context);
     }
   }
 

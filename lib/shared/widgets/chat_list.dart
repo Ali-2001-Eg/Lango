@@ -64,11 +64,11 @@ class _ChatListState extends ConsumerState<ChatList> {
                 physics: const BouncingScrollPhysics(),
                 itemBuilder: (context, index) {
                   final message = snapshot.data![index];
-                  //print('chat list token is  ${widget.token}');
-                  // print(message.isSeen);
-                  // print('current uuid is ${FirebaseAuth.instance.currentUser!.uid}');
-                  // print('length is ${snapshot.data!.length}');
-                  // print('receiver uid is ${message.receiverUid}');
+                  //debugPrint('chat list token is  ${widget.token}');
+                  // debugPrint(message.isSeen);
+                  // debugPrint('current uuid is ${FirebaseAuth.instance.currentUser!.uid}');
+                  // debugPrint('length is ${snapshot.data!.length}');
+                  // debugPrint('receiver uid is ${message.receiverUid}');
                   //to decrease performance overhead
                   if (!message.isSeen &&
                       message.receiverUid ==
@@ -87,8 +87,8 @@ class _ChatListState extends ConsumerState<ChatList> {
                           isGroupChat: widget.isGroupChat,
                         );
                   }
-                  // print(message.receiverUid);
-                  //print(message.senderName);
+                  // debugPrint(message.receiverUid);
+                  //debugPrint(message.senderName);
                   return MessageTile(
                     message: message.messageText,
                     date: message.timeSent.toString(),

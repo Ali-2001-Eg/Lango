@@ -52,17 +52,17 @@ class DownloadManager {
         String pathToSave = '${dir!.path}/$fileName.$fileExtension';
         final response = await dio.download(fileUrl, pathToSave);
         if (kDebugMode) {
-          print('status code is ${response.statusCode}');
+          debugPrint('status code is ${response.statusCode}');
         } // Check the status code
         if (kDebugMode) {
-          print('status message${response.statusMessage!}');
+          debugPrint('status message${response.statusMessage!}');
         } // Check the status message
         if (kDebugMode) {
-          print('File saved at: $pathToSave');
+          debugPrint('File saved at: $pathToSave');
         }
       } else if (permissionStatus.isDenied && context.mounted) {
         if (kDebugMode) {
-          print('permission denied');
+          debugPrint('permission denied');
         }
         showDialog(
           context: context,
@@ -83,8 +83,8 @@ class DownloadManager {
         );
       }
     } catch (e) {
-      customSnackBar(e.toString(), context);
-      // print(e.toString());
+      if (context.mounted) customSnackBar(e.toString(), context);
+      // debugPrint(e.toString());
     }
   }
 }

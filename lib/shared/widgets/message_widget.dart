@@ -38,7 +38,7 @@ class MessageWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
-    // print(message);
+    // debugPrint(message);
     switch (messageType) {
       case MessageEnum.text:
         return MessageTextFormatterWidget(

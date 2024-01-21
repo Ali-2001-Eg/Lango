@@ -1246,10 +1246,10 @@ packages:
     dependency: "direct main"
     description:
       name: story_view
-      sha256: "792fb10fb8b3e72e6bbbc5c94bc6ff6399a752237dd2afb1fcb97392814797b9"
+      sha256: f5b81d91e42bc9e5884d9982933339c91a66d256060402e7ee2476c40c2bcd83
       url: "https://pub.dev"
     source: hosted
-    version: "0.15.0"
+    version: "0.16.0"
   stream_channel:
     dependency: transitive
     description:

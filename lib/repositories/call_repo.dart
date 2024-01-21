@@ -53,7 +53,7 @@ class CallRepo {
       _saveCallHistory(receiverData, callerToken);
     } catch (e) {
       if (kDebugMode) {
-        print(e.toString());
+        debugPrint(e.toString());
       }
       customSnackBar(e.toString(), context);
     }
@@ -74,7 +74,7 @@ class CallRepo {
       //_saveCallHistory(call);
     } catch (e) {
       if (kDebugMode) {
-        print(e.toString());
+        debugPrint(e.toString());
       }
       customSnackBar(e.toString(), context);
     }
@@ -97,7 +97,7 @@ class CallRepo {
           .get();
       GroupModel group = GroupModel.fromJson(groupSnapshot.data()!);
       if (kDebugMode) {
-        print('members uid list is ${group.membersUid.length}');
+        debugPrint('members uid list is ${group.membersUid.length}');
       }
       for (var id in group.membersUid) {
         await firestore
@@ -115,7 +115,7 @@ class CallRepo {
           ));
     } catch (e) {
       if (kDebugMode) {
-        print(e.toString());
+        debugPrint(e.toString());
       }
       customSnackBar(e.toString(), context);
     }
@@ -138,7 +138,7 @@ class CallRepo {
       //_saveCallHistory(call);
     } catch (e) {
       if (kDebugMode) {
-        print(e.toString());
+        debugPrint(e.toString());
       }
       customSnackBar(e.toString(), context);
     }

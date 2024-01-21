@@ -101,7 +101,7 @@ class _UserInfoScreenState extends ConsumerState<UserInfoScreen> {
   }
 
   void _selectImage() async {
-    // print('Ali');
+    // debugPrint('Ali');
     image = await pickImageFromGallery(context);
     setState(() {});
   }
@@ -114,7 +114,7 @@ class _UserInfoScreenState extends ConsumerState<UserInfoScreen> {
           .read(authControllerProvider)
           .saveUserDataToFireStore(context, name, image, description);
     } else {
-      // print('error');
+      // debugPrint('error');
       customSnackBar(S.of(context).missed__info_field, context);
     }
   }

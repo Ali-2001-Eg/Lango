@@ -86,7 +86,7 @@ class _HomePage extends ConsumerState<SearchScreen> {
                 );
               }
               if (snapshot.hasData && filteredList.isNotEmpty) {
-                //print(allGroups.length);
+                //debugPrint(allGroups.length);
                 return ListView.builder(
                   keyboardDismissBehavior:
                       ScrollViewKeyboardDismissBehavior.onDrag,
@@ -98,12 +98,12 @@ class _HomePage extends ConsumerState<SearchScreen> {
                   itemBuilder: (_, i) {
                     if (_searchController.text.isEmpty) {
                       allGroups = snapshot.data!;
-                      //print('filtered groups $filteredList\n');
+                      //debugPrint('filtered groups $filteredList\n');
                       GroupModel group = snapshot.data![i];
                       return _groupTile(group, context);
                     } else {
                       if (kDebugMode) {
-                        print(
+                        debugPrint(
                             'filtered list is ${filteredList.map((e) => e.name)}');
                       }
                       //for searched groups

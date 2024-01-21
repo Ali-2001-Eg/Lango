@@ -44,7 +44,7 @@ Future<File?> pickImageFromGallery(BuildContext context) async {
       image = File(pickedImage.path);
     }
   } catch (e) {
-    customSnackBar(e.toString(), context);
+    if (context.mounted) customSnackBar(e.toString(), context);
   }
   return image;
 }
@@ -60,7 +60,7 @@ Future<File?> pickImageFromCamera(BuildContext context) async {
       image = File(pickedImage.path);
     }
   } catch (e) {
-    customSnackBar(e.toString(), context);
+    if (context.mounted) customSnackBar(e.toString(), context);
   }
   return image;
 }
@@ -75,7 +75,7 @@ Future<File?> pickVideoFromGallery(BuildContext context) async {
       video = File(pickedVideo.path);
     }
   } catch (e) {
-    customSnackBar(e.toString(), context);
+    if (context.mounted) customSnackBar(e.toString(), context);
   }
   return video;
 }
@@ -91,7 +91,7 @@ Future<File?> pickVideoFromCamera(BuildContext context) async {
       video = File(pickedVideo.path);
     }
   } catch (e) {
-    customSnackBar(e.toString(), context);
+    if (context.mounted) customSnackBar(e.toString(), context);
   }
   return video;
 }
@@ -103,7 +103,7 @@ Future<GiphyGif?> pickGif(BuildContext context) async {
     gif = await Giphy.getGif(
         context: context, apiKey: 'Tm7ihHgYu7WJTXOo6bY0JgEXTN1Q1MYt');
   } catch (e) {
-    customSnackBar(e.toString(), context);
+    if (context.mounted) customSnackBar(e.toString(), context);
   }
   return gif;
 }
@@ -123,7 +123,7 @@ Future<String?> pickFile() async {
       return null; // User canceled the file picking process.
     }
   } catch (e) {
-    // print('Error while picking a file: $e');
+    // debugPrint('Error while picking a file: $e');
     return null; // Handle any potential errors.
   }
 }

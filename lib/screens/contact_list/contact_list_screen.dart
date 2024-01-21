@@ -83,7 +83,7 @@ class ContactListScreen extends ConsumerWidget {
                             itemCount: snapshot.data!.length,
                             itemBuilder: (context, index) {
                               final contacts = snapshot.data![index];
-                              // print(contacts.type);
+                              // debugPrint(contacts.type);
                               return Column(
                                 children: [
                                   InkWell(
@@ -196,7 +196,7 @@ class ContactListScreen extends ConsumerWidget {
                           itemCount: snapshot.data!.length,
                           itemBuilder: (context, index) {
                             final group = snapshot.data![index];
-                            // print(contacts.isOnlyText);
+                            // debugPrint(contacts.isOnlyText);
 
                             return Column(
                               children: [

@@ -37,10 +37,10 @@ class ContactRepo {
           selectedPhoneNum = '+2$selectedPhoneNum';
         } */
         if (kDebugMode) {
-          print(selectedPhoneNum);
+          debugPrint(selectedPhoneNum);
         }
         /*  if (kDebugMode) {
-          print(userData.phoneNumber);
+          debugPrint(userData.phoneNumber);
         } */
         if (selectedPhoneNum == userData.phoneNumber && context.mounted) {
           Navigator.pushNamed(
@@ -59,11 +59,13 @@ class ContactRepo {
             },
           );
         } else {
-          customSnackBar(S.of(context).non_register_user, context);
+          if (context.mounted) {
+            customSnackBar(S.of(context).non_register_user, context);
+          }
         }
       }
     } catch (e) {
-      customSnackBar(e.toString(), context);
+      if (context.mounted) customSnackBar(e.toString(), context);
     }
   }
 }

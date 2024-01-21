@@ -1,3 +1,4 @@
+import 'package:Lango/shared/utils/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/contact.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -48,8 +49,13 @@ class SelectContactsScreen extends ConsumerWidget {
                   ),
                 ),
                 leading: contact.photo == null
-                    ? const CircleAvatar(
-                        child: Icon(Icons.person),
+                    ? CircleAvatar(
+                        backgroundColor:
+                            getTheme(_).appBarTheme.backgroundColor,
+                        child: const Icon(
+                          Icons.person,
+                          color: Colors.white,
+                        ),
                       )
                     : CircleAvatar(
                         backgroundImage: MemoryImage(contact.photo!),

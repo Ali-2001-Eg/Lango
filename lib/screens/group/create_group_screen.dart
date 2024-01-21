@@ -43,9 +43,9 @@ class _CreateGroupScreenState extends ConsumerState<CreateGroupScreen> {
           IconButton(
             onPressed: _createGroup,
             icon: const Icon(Icons.done),
-            style: ButtonStyle(
-                backgroundColor:
-                    getTheme(context).iconButtonTheme.style!.iconColor),
+            // style: ButtonStyle(
+            //     backgroundColor:
+            //         getTheme(context).iconButtonTheme.style!.iconColor),
           ),
         ],
       ),

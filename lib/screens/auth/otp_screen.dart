@@ -11,7 +11,7 @@ class OtpScreen extends ConsumerWidget {
   const OtpScreen({Key? key, required this.verificationId}) : super(key: key);
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // print(verificationId);
+    // debugPrint(verificationId);
 
     return Scaffold(
       appBar: AppBar(

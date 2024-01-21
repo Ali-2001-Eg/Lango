@@ -12,7 +12,7 @@ class LandingScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     //var name = MediaQuery.of(context).orientation.name;
-    // print(name);
+    // debugPrint(name);
     return SafeArea(
       child: Scaffold(
         //appBar: AppBar(),

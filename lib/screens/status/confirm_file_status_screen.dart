@@ -17,7 +17,7 @@ class ConfirmFileStatus extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    //print(type.type);
+    //debugPrint(type.type);
     return Scaffold(
       backgroundColor: getTheme(context).appBarTheme.backgroundColor,
       appBar: AppBar(),

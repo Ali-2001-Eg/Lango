@@ -51,6 +51,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
       case AppLifecycleState.detached:
         ref.read(authControllerProvider).setUserState(false);
         break;
+      case AppLifecycleState.hidden:
+        ref.read(authControllerProvider).setUserState(false);
+        break;
     }
     super.didChangeAppLifecycleState(state);
   }
@@ -94,7 +97,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                 },
               ),
               PopupMenuButton(
-                //color: Colors.white,
+                color: getTheme(context).appBarTheme.backgroundColor,
                 icon: const Icon(
                   Icons.more_vert,
                   // color: Colors.grey,

@@ -20,7 +20,7 @@ class MessageTextFormatterWidget extends ConsumerWidget {
       child: Linkify(
         maxLines: null,
         onOpen: (link) async {
-          // print('url is ${link.url}');
+          // debugPrint('url is ${link.url}');
 
           try {
             if (await canLaunchUrlString(link.url)) {
@@ -32,8 +32,10 @@ class MessageTextFormatterWidget extends ConsumerWidget {
               }
             }
           } catch (e) {
-            //print(e.toString());
-            customSnackBar(e.toString(), context);
+            if (context.mounted) {
+              //debugPrint(e.toString());
+              customSnackBar(e.toString(), context);
+            }
           }
         },
         text: text,

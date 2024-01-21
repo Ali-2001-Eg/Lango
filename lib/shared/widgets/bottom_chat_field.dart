@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: public_member_api_docs, sort_constructors_first, use_build_context_synchronously
 import 'dart:io';
 
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
@@ -227,7 +227,8 @@ class _BottomChatFieldWidgetState extends ConsumerState<BottomChatFieldWidget> {
   }
 
   Future<void> _sendTextMessage() async {
-    // print(isRecorderInit);
+    // debugPrint(isRecorderInit);
+    print(_messageController.text);
     if (isTyping && _messageController.text.isNotEmpty) {
       ref.read(chatControllerProvider).sendTextMessage(
           context,

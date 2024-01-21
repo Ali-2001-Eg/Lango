@@ -24,14 +24,15 @@ class ChatController {
   Future<void> sendTextMessage(BuildContext context, String messageText,
       String receiverUid, bool isGroupChat) async {
     //to handel errors
-    ref.read(userDataProvider).whenData((value) async =>
-        chatRepo.sendTextMessage(
+    ref.read(userDataProvider).whenData((value) {
+      return chatRepo.sendTextMessage(
             messageText: messageText,
             context: context,
             receiverUid: receiverUid,
             isGroupChat: isGroupChat,
             sender: value!,
-            messageReply: ref.read(messageReplyProvider)));
+            messageReply: ref.read(messageReplyProvider));
+    });
     ref.read(messageReplyProvider.state).update((state) => null);
   }
 
@@ -41,7 +42,7 @@ class ChatController {
     //https://giphy.com/gifs/imoji-laughing-3ohzdQJJ2JGvMSYvdu ==>
     //https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExdzA2bXZyeWxmZDZkbnc4d21kNGlpaHJ3dXlsaWFwM3drNms1bzhtbiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/3ohzdQJJ2JGvMSYvdu/giphy.gif
     if (kDebugMode) {
-      print(gifUrl);
+      debugPrint(gifUrl);
     }
     int gifUrlPartIndex = gifUrl.lastIndexOf('-') + 1;
     String gifUrlPart = gifUrl.substring(gifUrlPartIndex);
