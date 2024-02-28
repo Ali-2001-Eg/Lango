@@ -23,26 +23,7 @@
           "other_platform_oauth_client": []
         }
       }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:947453899984:android:0b095f8697163bbff99ad5",
-        "android_client_info": {
-          "package_name": "com.example.lango_app"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCFMr4Y5Yal2PMwRf8bufBMWe_CUfpN23k"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
     }
   ],
-  "configuration_version":"1"
+  "configuration_version": "1"
 }

@@ -37,6 +37,7 @@ class AuthRepo {
         },
         verificationFailed: (e) {
           customSnackBar(e.message!, context);
+          print(e.message);
           throw Exception(e.message);
         },
         codeSent: ((String verificationId, int? resendToken) async {
