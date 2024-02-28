@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use, avoid_print
 
+import 'package:Lango/shared/widgets/custom_stream_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:Lango/controllers/call_controller.dart';
@@ -87,37 +88,32 @@ class ChatScreen extends ConsumerWidget {
                             ? lightScaffold
                             : Colors.white),
                   )
-                : StreamBuilder<UserModel>(
-                    stream: ref.read(authControllerProvider).userData(uid),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Container();
-                      } else if (snapshot.hasError) {
-                        return Text(snapshot.error.toString());
-                      } else {
-                        return Column(
-                          children: [
-                            Text(
-                              name,
+                : CustomStreamOrFutureWidget(
+                    stream: userStateProvider(uid),
+                    loader: Text(''),
+                    builder: (data) {
+                      return Column(
+                        children: [
+                          Text(
+                            name,
+                            style: getTextTheme(context, ref).copyWith(
+                                color: appTheme.selectedTheme == 'light'
+                                    ? lightScaffold
+                                    : Colors.white),
+                          ),
+                          Text(
+                              data.isOnline
+                                  ? S.of(context).online
+                                  : S.of(context).offline,
                               style: getTextTheme(context, ref).copyWith(
-                                  color: appTheme.selectedTheme == 'light'
-                                      ? lightScaffold
-                                      : Colors.white),
-                            ),
-                            Text(
-                                snapshot.data!.isOnline
-                                    ? S.of(context).online
-                                    : S.of(context).offline,
-                                style: getTextTheme(context, ref).copyWith(
-                                  height: 0,
-                                  color: appTheme.selectedTheme == 'light'
-                                      ? greyColor
-                                      : Colors.white,
-                                  fontSize: 13,
-                                )),
-                          ],
-                        );
-                      }
+                                height: 0,
+                                color: appTheme.selectedTheme == 'light'
+                                    ? greyColor
+                                    : Colors.white,
+                                fontSize: 13,
+                              )),
+                        ],
+                      );
                     }),
             actions: [
               IconButton(
@@ -229,3 +225,7 @@ class ChatScreen extends ConsumerWidget {
     );
   }
 }
+
+final userStateProvider = StreamProviderFamily((ref, String uid) {
+  return ref.read(authControllerProvider).userData(uid);
+});

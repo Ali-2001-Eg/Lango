@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:Lango/shared/widgets/custom_stream_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -21,14 +22,12 @@ class CallPickupScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return StreamBuilder<DocumentSnapshot>(
-        stream: ref.read(callControllerProvider).chatStream,
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return ErrorScreen(error: snapshot.error.toString());
-          } else if (snapshot.hasData && snapshot.data!.data() != null) {
-            CallModel callData = CallModel.fromJson(
-                snapshot.data!.data() as Map<String, dynamic>);
+    return CustomStreamOrFutureWidget<DocumentSnapshot<Object?>>(
+        stream: callPickupProvider,
+        builder: (data) {
+          if (data.data() != null) {
+            CallModel callData =
+                CallModel.fromJson(data.data() as Map<String, dynamic>);
 
             // debugPrint('call token is ${callData.token}');
             if (!callData.hasDialled &&
@@ -132,3 +131,7 @@ class CallPickupScreen extends ConsumerWidget {
         });
   }
 }
+
+final callPickupProvider = StreamProvider((ref) {
+  return ref.read(callControllerProvider).chatStream;
+});

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:enough_giphy_flutter/enough_giphy_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:intl/intl.dart';
@@ -139,6 +140,7 @@ ThemeData lightMode(context, ref) => ThemeData.light().copyWith(
       iconTheme: const IconThemeData(
         color: lightButton,
       ),
+      textTheme: TextTheme(bodyMedium: getTextTheme(context, ref)),
       hoverColor: lightReplyColor,
       iconButtonTheme: const IconButtonThemeData(
         style: ButtonStyle(
@@ -187,13 +189,13 @@ ThemeData darkMode(context, ref) => ThemeData.dark().copyWith(
       inputDecorationTheme: const InputDecorationTheme(
           fillColor: mobileChatBoxColor, iconColor: greyColor),
     );
-TextStyle get darkTextStyle => const TextStyle(
+TextStyle get darkTextStyle => GoogleFonts.lato(
       color: textColor,
       fontWeight: FontWeight.w500,
       height: 2,
       fontSize: 20,
     );
-TextStyle get lightTextStyle => const TextStyle(
+TextStyle get lightTextStyle => GoogleFonts.aBeeZee(
       color: lightText,
       height: 2,
       fontSize: 20,

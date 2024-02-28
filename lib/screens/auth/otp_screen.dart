@@ -32,6 +32,7 @@ class OtpScreen extends ConsumerWidget {
                 textAlign: TextAlign.center,
                 keyboardType: TextInputType.number,
                 maxLength: 6,
+                style: getTextTheme(context, ref).copyWith(color: Colors.black),
                 onChanged: (value) {
                   if (value.length == 6) {
                     _verifyOtp(context, value.trim(), ref);

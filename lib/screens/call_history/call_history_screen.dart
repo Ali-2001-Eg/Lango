@@ -1,10 +1,9 @@
+import 'package:Lango/shared/widgets/custom_stream_widget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lottie/lottie.dart';
-import 'package:Lango/shared/utils/base/error_screen.dart';
 import 'package:Lango/shared/utils/functions.dart';
-import 'package:Lango/shared/widgets/custom_indicator.dart';
 
 import '../../controllers/call_controller.dart';
 import '../../generated/l10n.dart';
@@ -17,16 +16,11 @@ class CallHistoryScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      body: StreamBuilder<List<Map<String, dynamic>>>(
-        stream: ref.read(callControllerProvider).callHistory,
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return ErrorScreen(error: snapshot.error.toString());
-          }
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const CustomIndicator();
-          }
-          if (snapshot.hasData && snapshot.data!.isEmpty) {
+      body: CustomStreamOrFutureWidget(
+        stream: callHistoryProvider,
+        builder: (data) {
+          
+          if ( data.isEmpty) {
             return Center(
               child: SizedBox(
                 height: size(context).height,
@@ -53,12 +47,12 @@ class CallHistoryScreen extends ConsumerWidget {
           } else {
             return ListView.builder(
               shrinkWrap: true,
-              itemCount: snapshot.data!.length,
+              itemCount: data.length,
               itemBuilder: (_, i) {
-                var item = snapshot.data![i];
+                var item = data[i];
 
                 bool didICall = item['callerUid'] ==
-                    ref.read(callControllerProvider).auth.currentUser!.uid;
+                    ref.watch(callControllerProvider).auth.currentUser!.uid;
                 return Padding(
                   padding: const EdgeInsets.all(8.0)
                       .add(const EdgeInsets.only(top: 25)),
@@ -70,7 +64,7 @@ class CallHistoryScreen extends ConsumerWidget {
                               ? isArabic
                                   ? (' لقد قمت بعمل مكالمه مع ${item['receiverName']}')
                                   : ('You called  ${item['receiverName']}')
-                              : !isArabic
+                              : isArabic
                                   ? 'You recieved a call from ${item['callerName']}'
                                   : 'تم استقبال مكالمه من ${item['callerName']}',
                         ),
@@ -118,3 +112,6 @@ class CallHistoryScreen extends ConsumerWidget {
     );
   }
 }
+final callHistoryProvider = StreamProvider((ref) {
+  return ref.read(callControllerProvider).callHistory;
+});

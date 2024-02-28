@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:Lango/shared/widgets/custom_stream_widget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -8,9 +9,9 @@ import 'package:Lango/controllers/status_controller.dart';
 import 'package:Lango/generated/l10n.dart';
 import 'package:Lango/screens/status/confirm_text_status.dart';
 import 'package:Lango/screens/status/status_screen.dart';
-import 'package:Lango/shared/utils/base/error_screen.dart';
+// import 'package:Lango/shared/utils/base/error_screen.dart';
 import 'package:Lango/shared/utils/colors.dart';
-import 'package:Lango/shared/widgets/custom_indicator.dart';
+// import 'package:Lango/shared/widgets/custom_indicator.dart';
 
 import '../../models/status_model.dart';
 import '../../repositories/status_repo.dart';
@@ -26,21 +27,10 @@ class StatusContactsScreen extends ConsumerWidget {
     final loading = ref.watch(loadingProvider);
 
     return Scaffold(
-      body: StreamBuilder<List<List<StatusModel>>>(
-        stream: ref.read(statusControllerProvider).status,
-        builder: (context, snapshot) {
-          //debugPrint('snapshot: ${snapshot.data!.length}');
-
-          if (snapshot.hasError) {
-            // customSnackBar(snapshot.error.toString(), context);
-            return ErrorScreen(
-              error: snapshot.error.toString(),
-            );
-          }
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const CustomIndicator();
-          }
-          if (snapshot.data!.isEmpty) {
+      body: CustomStreamOrFutureWidget<List<List<StatusModel>>>(
+        stream: statusProvider,
+        builder: (data) {
+          if (data.isEmpty) {
             return loading
                 ? Column(
                     children: [
@@ -74,7 +64,7 @@ class StatusContactsScreen extends ConsumerWidget {
                     ),
                   );
           } else {
-            _removeRedundantName(snapshot.data!);
+            _removeRedundantName(data);
             return SingleChildScrollView(
               child: Column(
                 children: [
@@ -105,7 +95,7 @@ class StatusContactsScreen extends ConsumerWidget {
                                   context,
                                   StatusScreen.routeName,
                                   arguments: {
-                                    'status': snapshot.data![i],
+                                    'status': data[i],
                                     'uid': status.uid,
                                     'index': i,
                                   },
@@ -225,3 +215,7 @@ class StatusContactsScreen extends ConsumerWidget {
     }
   }
 }
+
+final statusProvider = StreamProvider((ref) {
+  return ref.read(statusControllerProvider).status;
+});
