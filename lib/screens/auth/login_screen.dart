@@ -98,7 +98,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     ),
                   )
                 else
-                  const Center(child: CircularProgressIndicator())
+                   const Center(child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 100, vertical: 100),
+                    child: CircularProgressIndicator(),
+                  ))
               ],
             ),
           ),
