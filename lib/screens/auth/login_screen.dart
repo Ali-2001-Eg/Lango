@@ -48,7 +48,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   //crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(S.of(context).login_heading,
-                        style: getTextTheme(context, ref)),
+                        style: getTextTheme(context, ref).copyWith(fontWeight: FontWeight.bold),textAlign: TextAlign.center,),
                     SizedBox(height: size(context).height / 8),
                     ElevatedButton(
                         onPressed: _pickCountry,
