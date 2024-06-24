@@ -1,4 +1,4 @@
-package ali.mazen.Chat_Live
+package com.ali.lango
 
 import io.flutter.embedding.android.FlutterActivity
 

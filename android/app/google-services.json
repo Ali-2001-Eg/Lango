@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:947453899984:android:316f8d78f9aa530df99ad5",
+        "mobilesdk_app_id": "1:947453899984:android:3929da37fdc4ce5bf99ad5",
         "android_client_info": {
-          "package_name": "ali.mazen.Chat_Live"
+          "package_name": "com.ali.lango"
         }
       },
       "oauth_client": [],

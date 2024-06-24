@@ -14,7 +14,6 @@ final firebaseMessagingRepoProvider =
 class FirebaseMessagingRepo extends ChangeNotifier {
   final FirebaseMessaging firebaseMessaging;
   FirebaseMessagingRepo(this.firebaseMessaging);
-
   Future<void> init() async {
     firebaseMessaging.requestPermission();
 
