@@ -66,6 +66,7 @@ class _UserInfoScreenState extends ConsumerState<UserInfoScreen> {
                       padding: const EdgeInsets.all(20),
                       child: TextField(
                         controller: _nameController,
+                        style: getTextTheme(context, ref),
                         decoration: InputDecoration(
                           hintText: S.of(context).enter_name,
                         ),
@@ -76,6 +77,7 @@ class _UserInfoScreenState extends ConsumerState<UserInfoScreen> {
                       width: size(context).width * 0.85,
                       padding: const EdgeInsets.all(20),
                       child: TextField(
+                        style: getTextTheme(context, ref),
                         controller: _descriptionController,
                         decoration: InputDecoration(
                           hintText: S.of(context).enter_description,

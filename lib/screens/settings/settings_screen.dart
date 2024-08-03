@@ -51,15 +51,18 @@ class SettingsScreen extends ConsumerWidget {
                         const SizedBox(
                           width: 5,
                         ),
-                        Text(S.of(context).app_lang,
-                            style: const TextStyle(
-                                color: Colors.grey,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 15)),
+                        Text(
+                          S.of(context).app_lang,
+                          style: const TextStyle(
+                              color: Colors.grey,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 15),
+                        ),
                       ],
                     ),
                     Container(
                       width: 200,
+                      alignment: Alignment.center,
                       padding: const EdgeInsets.symmetric(
                           horizontal: 6, vertical: 2),
                       decoration: BoxDecoration(
@@ -80,6 +83,11 @@ class SettingsScreen extends ConsumerWidget {
                             Icons.arrow_drop_down,
                             color: Colors.grey,
                           ),
+                          elevation: 16,
+                          underline: Container(
+                            height: 2,
+                            color: Colors.grey,
+                          ),
                           items: [
                             DropdownMenuItem(
                               value: localeNotifier.selectedLocale == 'en'
@@ -87,6 +95,8 @@ class SettingsScreen extends ConsumerWidget {
                                   : 'ar',
                               child: Text(
                                 localeNotifier.selectedLocale,
+                                style: getTextTheme(context, ref)
+                                    .copyWith(fontSize: 20),
                               ),
                             ),
                             DropdownMenuItem(
@@ -95,6 +105,8 @@ class SettingsScreen extends ConsumerWidget {
                                 localeNotifier.selectedLocale != 'en'
                                     ? 'en'
                                     : 'ar',
+                                style: getTextTheme(context, ref)
+                                    .copyWith(fontSize: 20),
                               ),
                             ),
                           ],

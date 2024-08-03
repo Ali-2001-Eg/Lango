@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -25,13 +26,15 @@ class ChatController {
       String receiverUid, bool isGroupChat) async {
     //to handel errors
     ref.read(userDataProvider).whenData((value) {
+      // print('ali');
+
       return chatRepo.sendTextMessage(
-            messageText: messageText,
-            context: context,
-            receiverUid: receiverUid,
-            isGroupChat: isGroupChat,
-            sender: value!,
-            messageReply: ref.read(messageReplyProvider));
+          messageText: messageText,
+          context: context,
+          receiverUid: receiverUid,
+          isGroupChat: isGroupChat,
+          sender: value!,
+          messageReply: ref.read(messageReplyProvider));
     });
     ref.read(messageReplyProvider.state).update((state) => null);
   }
@@ -62,17 +65,19 @@ class ChatController {
   void sendFileMessage(BuildContext context, File file, String receiverUid,
       MessageEnum fileType, String? caption, bool isGroupChat) {
     //to handel errors
-    ref.read(userDataProvider).whenData((value) async =>
-        chatRepo.sendFileMessage(
-            context: context,
-            file: file,
-            ref: ref,
-            senderData: value!,
-            fileType: fileType,
-            isGroupChat: isGroupChat,
-            receiverUid: receiverUid,
-            caption: caption,
-            messageReply: ref.read(messageReplyProvider)));
+    ref.read(userDataProvider).whenData((value) async {
+      
+      return chatRepo.sendFileMessage(
+          context: context,
+          file: file,
+          ref: ref,
+          senderData: value!,
+          fileType: fileType,
+          isGroupChat: isGroupChat,
+          receiverUid: receiverUid,
+          caption: caption,
+          messageReply: ref.read(messageReplyProvider));
+    });
     ref.read(messageReplyProvider.state).update((state) => null);
   }
 

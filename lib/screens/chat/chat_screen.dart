@@ -170,10 +170,10 @@ class ChatScreen extends ConsumerWidget {
             child: StreamBuilder<bool>(
                 stream: ref.read(groupControllerProvider).isUserJoined(uid),
                 builder: (context, snapshot) {
-                  debugPrint('user is  ${snapshot.data}');
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const CustomIndicator();
                   }
+                  // debugPrint('user is  ${snapshot.data}');
                   return Column(
                     children: [
                       Expanded(

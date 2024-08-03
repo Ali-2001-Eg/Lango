@@ -140,7 +140,7 @@ ThemeData lightMode(context, ref) => ThemeData.light().copyWith(
       iconTheme: const IconThemeData(
         color: lightButton,
       ),
-      textTheme: TextTheme(bodyMedium: getTextTheme(context, ref)),
+      textTheme: TextTheme(bodyMedium: lightTextStyle),
       hoverColor: lightReplyColor,
       iconButtonTheme: const IconButtonThemeData(
         style: ButtonStyle(
@@ -152,8 +152,7 @@ ThemeData lightMode(context, ref) => ThemeData.light().copyWith(
       indicatorColor: lightBar,
       appBarTheme: AppBarTheme(
         color: lightAppBar,
-        titleTextStyle:
-            getTextTheme(context, ref).copyWith(color: Colors.white),
+        titleTextStyle: lightTextStyle.copyWith(color: Colors.white),
         elevation: 0,
       ),
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
@@ -177,19 +176,22 @@ ThemeData darkMode(context, ref) => ThemeData.dark().copyWith(
           iconColor: MaterialStatePropertyAll<Color>(Colors.grey),
         ),
       ),
-      appBarTheme: const AppBarTheme(
+      appBarTheme: AppBarTheme(
         color: appBarColor,
-        titleTextStyle: TextStyle(color: Colors.grey),
+        titleTextStyle: darkTextStyle.copyWith(color: Colors.grey),
         elevation: 0,
       ),
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
         elevation: 0,
         backgroundColor: tabColor,
       ),
+      textTheme: TextTheme(bodyMedium: darkTextStyle),
       inputDecorationTheme: const InputDecorationTheme(
-          fillColor: mobileChatBoxColor, iconColor: greyColor),
+        fillColor: mobileChatBoxColor,
+        iconColor: greyColor,
+      ),
     );
-TextStyle get darkTextStyle => GoogleFonts.lato(
+TextStyle get darkTextStyle => GoogleFonts.aBeeZee(
       color: textColor,
       fontWeight: FontWeight.w500,
       height: 2,

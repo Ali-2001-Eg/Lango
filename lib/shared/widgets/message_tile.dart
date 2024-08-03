@@ -57,10 +57,10 @@ class MessageTile extends ConsumerWidget {
         child: Container(
           constraints: BoxConstraints(
             maxWidth: size(context).width / 1.5,
-            minHeight: 40,
-            minWidth: size(context).width / 2,
+            // minHeight: size(context).height * 0.1,
+            minWidth: size(context).width / 3,
           ),
-          margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+          margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
           decoration: BoxDecoration(
             borderRadius: isMe
                 ? const BorderRadius.only(
