@@ -37,12 +37,13 @@ class ContactRepo {
           selectedPhoneNum = '+2$selectedPhoneNum';
         } */
         if (kDebugMode) {
-          debugPrint(selectedPhoneNum);
+          debugPrint('selected contact $selectedPhoneNum');
         }
-        /*  if (kDebugMode) {
-          debugPrint(userData.phoneNumber);
-        } */
-        if (selectedPhoneNum == userData.phoneNumber && context.mounted) {
+        if (kDebugMode) {
+          debugPrint('contact number on firebase ${userData.phoneNumber}');
+        }
+        if (userData.phoneNumber.contains(selectedPhoneNum) &&
+            context.mounted) {
           Navigator.pushNamed(
             context,
             ChatScreen.routeName,
@@ -61,6 +62,8 @@ class ContactRepo {
         } else {
           if (context.mounted) {
             customSnackBar(S.of(context).non_register_user, context);
+
+            // return;
           }
         }
       }

@@ -10,7 +10,6 @@ import 'package:Lango/screens/chat/chat_screen.dart';
 import 'package:Lango/shared/notifiers/theme_notifier.dart';
 // import 'package:Lango/shared/utils/base/error_screen.dart';
 import 'package:Lango/shared/utils/functions.dart';
-import 'package:Lango/shared/widgets/custom_indicator.dart';
 import 'package:Lango/shared/widgets/time_text_formatter.dart';
 import '../../controllers/chat_controller.dart';
 import '../../shared/utils/colors.dart';

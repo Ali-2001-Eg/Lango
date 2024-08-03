@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print, empty_catches
 
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -43,6 +44,9 @@ class ChatRepo {
           await firestore.collection('users').doc(receiverUid).get();
       receiverUserData = UserModel.fromJson(receiverData.data()!);
     }
+    // print('repo uid ${receiverUserData?.name}');
+    // print(sender.name);
+    // print(timeSent);
     _saveContacts(
       sender,
       receiverUserData,
@@ -92,7 +96,7 @@ class ChatRepo {
         'groupId': sender.groupId,
         'isGroupChat': isGroupChat
       },
-    ).then((value) => debugPrint('body is: {$body}'));
+    );
   }
 
   Future<void> sendGifMessage({
@@ -194,6 +198,7 @@ class ChatRepo {
         phoneNumber: phoneNumber,
         type: type,
         lastMessage: message);
+    // print(senderChatContact);
     await firestore
         .collection('users')
         .doc(senderData.uid)
@@ -252,7 +257,7 @@ class ChatRepo {
           .collection('messages')
           .doc(messageId)
           .set(message.toJson());
-
+      // log(message.toJson().toString());
       //for receiver collection
       await firestore
           .collection('users')
@@ -362,6 +367,7 @@ class ChatRepo {
               'chats/${fileType.type}/${senderData.uid}/${user!.uid}/$messageId',
               file,
             );
+    print('url is $downloadUrl');
     String contactMessage;
     switch (fileType) {
       case MessageEnum.text:

@@ -71,7 +71,7 @@ class MyApp extends ConsumerWidget {
         home: Scaffold(
           body: ref.watch(userDataProvider).when(
             data: (user) {
-              //debugPrint('user is  ${user}');
+              // debugPrint('user from main  ${user?.toJson()}');
               if (user == null) {
                 return const LandingScreen();
               }

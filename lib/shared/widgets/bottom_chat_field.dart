@@ -228,8 +228,11 @@ class _BottomChatFieldWidgetState extends ConsumerState<BottomChatFieldWidget> {
 
   Future<void> _sendTextMessage() async {
     // debugPrint(isRecorderInit);
-    print(_messageController.text);
     if (isTyping && _messageController.text.isNotEmpty) {
+      // print(_messageController.text);
+      // print(widget.isGroupChat);
+      // print(widget.receiverUid);
+
       ref.read(chatControllerProvider).sendTextMessage(
           context,
           _messageController.text.trim(),
@@ -264,7 +267,8 @@ class _BottomChatFieldWidgetState extends ConsumerState<BottomChatFieldWidget> {
         ? await pickImageFromGallery(context)
         : await pickImageFromCamera(context);
     if (image != null) {
-      _navToConfirmFile(image, MessageEnum.image, '', widget.isGroupChat);
+      _navToConfirmFile(
+          context, image, MessageEnum.image, '', widget.isGroupChat);
       // _sendFileMessage(image, MessageEnum.image);
     }
   }
@@ -274,13 +278,15 @@ class _BottomChatFieldWidgetState extends ConsumerState<BottomChatFieldWidget> {
         ? await pickVideoFromGallery(context)
         : await pickVideoFromCamera(context);
     if (video != null) {
-      _navToConfirmFile(video, MessageEnum.video, '', widget.isGroupChat);
+      _navToConfirmFile(
+          context, video, MessageEnum.video, '', widget.isGroupChat);
 
       // _sendFileMessage(video, MessageEnum.video);
     }
   }
 
   void _sendFileMessage(File file, MessageEnum messageEnum) {
+    print('Ali');
     ref.read(chatControllerProvider).sendFileMessage(context, file,
         widget.receiverUid, messageEnum, null, widget.isGroupChat);
   }
@@ -299,8 +305,8 @@ class _BottomChatFieldWidgetState extends ConsumerState<BottomChatFieldWidget> {
       int filenameIndex = filePath.lastIndexOf('/') + 1;
       String filename = filePath.substring(filenameIndex);
 
-      _navToConfirmFile(
-          File(filePath), MessageEnum.pdf, filename, widget.isGroupChat);
+      _navToConfirmFile(context, File(filePath), MessageEnum.pdf, filename,
+          widget.isGroupChat);
     }
   }
 
@@ -406,8 +412,8 @@ class _BottomChatFieldWidgetState extends ConsumerState<BottomChatFieldWidget> {
     );
   }
 
-  _navToConfirmFile(
-      File file, MessageEnum type, String filename, bool isGroupChat) {
+  _navToConfirmFile(BuildContext context, File file, MessageEnum type,
+      String filename, bool isGroupChat) {
     Navigator.push(
         context,
         MaterialPageRoute(

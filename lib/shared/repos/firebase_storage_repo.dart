@@ -11,6 +11,8 @@ class FirebaseStorageRepo {
   Future<String> storeFileToFirebaseStorage(String ref, File file) async {
     TaskSnapshot snap = await storage.ref().child(ref).putFile(file);
     String downloadUrl = await snap.ref.getDownloadURL();
+    print('repo url is $downloadUrl');
+
     return downloadUrl;
   }
 }
